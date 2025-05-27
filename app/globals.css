@@ -8,6 +8,19 @@
 /* テキストシャドウのスタイル */
 @import "../styles/text-shadow.css";
 
+/* スタンプアニメーション */
+@keyframes stamp {
+  0% { transform: translateY(-20px) rotate(-12deg); opacity: 1; }
+  30% { transform: translateY(5px) rotate(0deg) scale(1.2); opacity: 1; }
+  40% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.9; }
+  50% { transform: translateY(0) rotate(0deg) scale(1.1); opacity: 0.8; }
+  100% { transform: translateY(0) rotate(-12deg) scale(1); opacity: 0.7; }
+}
+
+.animate-stamp {
+  animation: stamp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
 :root {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
