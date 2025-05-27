@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -29,14 +30,14 @@ export default function Hero() {
                 size="lg"
                 className="bg-accent hover:bg-accent-dark text-white border-0 shadow-md"
               >
-                ブログを読む →
+                <Link href="/blog">ブログを読む →</Link>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
                 className="bg-secondary-dark/50 border-accent text-white hover:bg-accent/70 hover:border-accent-dark shadow-md font-medium backdrop-blur-sm"
               >
-                About me
+                <Link href="/about">About me</Link>
               </Button>
             </div>
           </div>
