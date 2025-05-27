@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌟 Portfolio 2025
 
-## Getting Started
+ポップで可愛い雰囲気のパスポート/名刺風デザインを採用した、次世代のポートフォリオサイトです。クリエイターのプロフィール情報を直感的かつ魅力的に表示するWebアプリケーションです。
 
-First, run the development server:
+## 🚀 特徴
+
+- **パスポート/名刺風デザイン** - ユニークでポップなプロフィール表示
+- **インタラクティブなDEV STAMP機能** - クリックでスタンプが押せる楽しい機能
+- **詳細プロフィールページ** - 略歴、スキル評価、趣味特技、資格などの詳細情報表示
+- **フローティングナビゲーション** - 効率的な画面遷移をサポート
+- **レスポンシブデザイン** - モバイル対応済み
+
+## 💻 技術スタック
+
+- **フロントエンド**
+  - React 19.0.0
+  - TypeScript 5.0.0
+  - Next.js 15.3.2
+  - Tailwind CSS 3.3.0
+
+- **インフラ**
+  - Cloudflare (Deploymentプラットフォーム)
+  - Node.js 20.12.0
+
+- **テスト**
+  - Vitest
+  - Testing Library
+  - Jest Axe (アクセシビリティテスト)
+
+## 🔧 インストール方法
+
+1. リポジトリをクローンします：
+
+```bash
+git clone https://github.com/yourusername/portfolio-2025.git
+cd portfolio-2025
+```
+
+2. 依存関係をインストールします：
+
+```bash
+npm install
+```
+
+3. 環境変数を設定（必要な場合）：
+
+```bash
+cp .env.example .env.local
+# .env.localファイルを編集してください
+```
+
+## 📋 使用方法
+
+### 開発サーバー
+
+ローカル開発サーバーを起動します：
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで [http://localhost:3000](http://localhost:3000) を開いてサイトを確認できます。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### ビルドと起動
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+プロダクションビルドを作成し、サーバーを起動します：
 
-## Learn More
+```bash
+npm run build
+npm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Cloudflareへのデプロイ
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run deploy
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### テスト
 
-## Deploy on Vercel
+```bash
+# 全テストの実行
+npm test
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# 監視モードでテスト実行
+npm run test:watch
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# UIでテスト結果を確認
+npm run test:ui
+
+# カバレッジレポートの生成
+npm run test:coverage
+```
+
+## 📁 プロジェクト構成
+
+```
+portfolio-2025/
+├── app/                  # Next.js App Routerベースのページ
+│   ├── about/            # About/プロフィールページ
+│   │   ├── details/      # 詳細プロフィールページ
+│   │   └── page.tsx      # メインAboutページ
+│   └── page.tsx          # トップページ
+├── components/           # 再利用可能なコンポーネント
+│   ├── section/          # セクションレベルのコンポーネント
+│   └── ui/               # UIコンポーネント
+├── lib/                  # ユーティリティ関数
+├── public/               # 静的アセット
+├── styles/               # グローバルスタイル
+├── utils/                # ヘルパー関数
+└── ...設定ファイル
+```
+
+## 🔍 主要機能の詳細
+
+### 🪪 Aboutページ（パスポート/名刺風）
+
+パスポートや名刺を思わせる魅力的なデザインのプロフィールカード。ユーザー情報、スキル一覧、自己紹介文が直感的に配置されています。
+
+#### DEV STAMP機能
+
+クリックするとスタンプが押され、カウンターがインクリメントされます。遊び心のあるインタラクション要素として実装されています。
+
+### 📝 詳細プロフィールページ
+
+- **略歴** - 時系列で表示された職歴と実績
+- **スキル詳細** - スキルレベルを視覚的に表示
+- **趣味・特技** - 個人的な興味や活動の詳細
+- **資格** - 技術資格とその他資格の一覧
+- **連絡先** - SNSリンクや連絡手段
+
+## 📄 ライセンス
+
+[MIT](LICENSE)
+
+## 👤 作者・連絡先
+
+作成者: [あなたの名前]
+- GitHub: [o-ga09](https://github.com/o-ga09)
+- Twitter: [@o_ga09](https://twitter.com/o_ga09)
