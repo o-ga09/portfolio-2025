@@ -5,6 +5,9 @@
 /* 一時的にtw-animate-cssを無効化 */
 /* @import "tw-animate-css"; */
 
+/* テキストシャドウのスタイル */
+@import "../styles/text-shadow.css";
+
 :root {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

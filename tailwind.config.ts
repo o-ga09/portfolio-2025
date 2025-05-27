@@ -14,6 +14,13 @@ const config: Config = {
       outlineColor: {
         DEFAULT: "var(--ring)",
       },
+      textShadow: {
+        DEFAULT: "0 2px 4px rgba(0,0,0,0.2)",
+        sm: "0 1px 2px rgba(0,0,0,0.2)",
+        md: "0 3px 6px rgba(0,0,0,0.25)",
+        lg: "0 4px 8px rgba(0,0,0,0.3)",
+        xl: "0 6px 12px rgba(0,0,0,0.35)",
+      },
       colors: {
         border: "var(--border)",
         ring: "var(--ring)",
