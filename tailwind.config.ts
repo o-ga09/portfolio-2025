@@ -1,10 +1,24 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: [
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {
+      borderColor: {
+        DEFAULT: "var(--border)",
+      },
+      outlineColor: {
+        DEFAULT: "var(--ring)",
+      },
       colors: {
+        border: "var(--border)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
         primary: {
           DEFAULT: "#B3DBD8",
           light: "#CBE8E6",
@@ -34,6 +48,30 @@ const config: Config = {
           DEFAULT: "#5EB95E",
           light: "#7CC97C",
           dark: "#4A9A4A",
+        },
+      },
+      animation: {
+        "bounce-slow": "bounceSlow 3s infinite ease-in-out",
+        wobble: "wobble 3s infinite ease-in-out",
+        fadeIn: "fadeIn 0.8s ease-out forwards",
+      },
+      keyframes: {
+        bounceSlow: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-15px)" },
+        },
+        wobble: {
+          "0%, 100%": { transform: "translateX(0)" },
+          "15%": { transform: "translateX(-5px) rotate(-5deg)" },
+          "30%": { transform: "translateX(5px) rotate(5deg)" },
+          "45%": { transform: "translateX(-5px) rotate(-3deg)" },
+          "60%": { transform: "translateX(5px) rotate(3deg)" },
+          "75%": { transform: "translateX(-5px) rotate(-1deg)" },
+          "90%": { transform: "translateX(5px) rotate(1deg)" },
+        },
+        fadeIn: {
+          from: { opacity: "0" },
+          to: { opacity: "1" },
         },
       },
     },
