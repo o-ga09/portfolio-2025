@@ -22,16 +22,16 @@ export default function About() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <Header />
       <main className="flex-grow flex items-center justify-center py-8 px-4 md:px-8">
         <div className="max-w-4xl w-full mx-auto">
-          <h1 className="text-4xl font-bold text-center mb-6 text-purple-600 drop-shadow-md">
+          <h1 className="text-4xl font-bold text-center mb-6 text-primary drop-shadow-md">
             About Me
           </h1>
 
           {/* パスポート/名刺風のデザイン */}
-          <div className="bg-white rounded-xl overflow-hidden shadow-2xl border-4 border-indigo-300 relative">
+          <div className="bg-card rounded-xl overflow-hidden shadow-2xl border-4 border-primary/30 relative">
             {/* パスポート上部の装飾バー */}
             <div className="h-4 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500"></div>
 
@@ -100,35 +100,43 @@ export default function About() {
                 {/* 右側: テキスト情報 */}
                 <div className="col-span-2 space-y-5">
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                    <h2 className="text-2xl font-bold text-foreground mb-2">
                       個人情報
                     </h2>
-                    <div className="h-1 w-14 bg-pink-400 rounded mb-3"></div>
+                    <div className="h-1 w-14 bg-primary rounded mb-3"></div>
                     <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                       <div>
-                        <p className="text-sm text-gray-500">氏名</p>
-                        <p className="font-medium">オーガ</p>
+                        <p className="text-sm text-muted-foreground">氏名</p>
+                        <p className="font-medium text-foreground">オーガ</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">肩書き</p>
-                        <p className="font-medium">フルスタックエンジニア</p>
+                        <p className="text-sm text-muted-foreground">肩書き</p>
+                        <p className="font-medium text-foreground">
+                          フルスタックエンジニア
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">趣味</p>
-                        <p className="font-medium">推し活、ライブ、個人開発</p>
+                        <p className="text-sm text-muted-foreground">趣味</p>
+                        <p className="font-medium text-foreground">
+                          推し活、ライブ、個人開発
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">好きな技術</p>
-                        <p className="font-medium">Go, TypeScript, k8s</p>
+                        <p className="text-sm text-muted-foreground">
+                          好きな技術
+                        </p>
+                        <p className="font-medium text-foreground">
+                          Go, TypeScript, k8s
+                        </p>
                       </div>
                     </div>
                   </div>
 
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                    <h2 className="text-2xl font-bold text-foreground mb-2">
                       スキル
                     </h2>
-                    <div className="h-1 w-14 bg-indigo-400 rounded mb-3"></div>
+                    <div className="h-1 w-14 bg-primary rounded mb-3"></div>
                     <div className="grid grid-cols-3 gap-3">
                       {[
                         "Go",
@@ -143,9 +151,9 @@ export default function About() {
                       ].map((skill) => (
                         <div
                           key={skill}
-                          className="bg-gradient-to-r from-purple-100 to-pink-100 px-3 py-2 rounded-lg shadow-sm border border-pink-200"
+                          className="bg-gradient-to-r from-primary/10 to-secondary/10 px-3 py-2 rounded-lg shadow-sm border border-border"
                         >
-                          <p className="font-medium text-sm text-purple-700 text-center">
+                          <p className="font-medium text-sm text-primary text-center">
                             {skill}
                           </p>
                         </div>
@@ -154,11 +162,11 @@ export default function About() {
                   </div>
 
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-800 mb-2">
+                    <h2 className="text-2xl font-bold text-foreground mb-2">
                       自己紹介
                     </h2>
-                    <div className="h-1 w-14 bg-pink-400 rounded mb-3"></div>
-                    <p className="text-gray-700 leading-relaxed">
+                    <div className="h-1 w-14 bg-primary rounded mb-3"></div>
+                    <p className="text-foreground/90 leading-relaxed">
                       フルスタックエンジニアとして活動しているオーガです。バックエンドはGoを中心に、フロントエンドはReact/Next.jsを得意としています。クラウドインフラの構築や運用も担当しています。趣味は推し活とライブ参戦で、特に山本彩さんの10年来のファンです。休日はゲーム（ゼノブレイド）やアニメ鑑賞を楽しんでいます。新潟出身で日本酒が大好きです。
                     </p>
                   </div>
