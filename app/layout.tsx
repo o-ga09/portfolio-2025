@@ -91,7 +91,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja" style={{ viewTransitionName: "root" }}>
+      <head>
+        <meta name="view-transition" content="same-origin" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

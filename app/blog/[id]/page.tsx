@@ -8,6 +8,7 @@ interface BlogPostParams {
   params: {
     id: string;
   };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export function generateMetadata({ params }: BlogPostParams): Metadata {
@@ -62,7 +63,41 @@ export default function BlogPostPage({ params }: BlogPostParams) {
     <main className="container mx-auto px-4 py-12">
       <article className="max-w-3xl mx-auto">
         <div className="mb-8">
-          <div className="flex flex-wrap gap-2 mb-4">
+          {/* ブログ画像部分 - viewTransitionで対応するためのイメージ要素 */}
+          <div
+            className="h-72 bg-gray-100 flex items-center justify-center mb-12 rounded-xl overflow-hidden shadow-lg transform-gpu"
+            style={{ viewTransitionName: `blog-image-${params.id}` }}
+          >
+            {post.imageType === "green" && (
+              <div className="w-48 h-36 relative">
+                <div className="absolute inset-0 bg-green-200 rounded-t-3xl"></div>
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-40 h-24 bg-white rounded-full"></div>
+                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-36 h-18 bg-pink-100 rounded-full"></div>
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-12 bg-pink-200 rounded-full"></div>
+              </div>
+            )}
+            {post.imageType === "orange" && (
+              <div className="w-48 h-48 relative">
+                <div className="absolute inset-0 bg-orange-400 rounded-full"></div>
+                <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-40 h-6 bg-orange-300 rounded-full"></div>
+                <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-36 h-4 bg-green-400 rounded-full"></div>
+                <div className="absolute top-18 left-1/2 transform -translate-x-1/2 w-32 h-12 bg-amber-800 rounded-full"></div>
+                <div className="absolute top-24 left-1/2 transform -translate-x-1/2 w-28 h-8 bg-yellow-300 rounded-full"></div>
+                <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-36 h-10 bg-orange-300 rounded-full"></div>
+              </div>
+            )}
+            {post.imageType === "black" && (
+              <div className="w-48 h-48 relative">
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-36 h-24 bg-white rounded-t-full"></div>
+                <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-black rounded-full"></div>
+                <div className="absolute bottom-18 right-12 w-6 h-6 bg-red-500 rounded-full"></div>
+                <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 w-24 h-12 bg-gray-800 rounded-full"></div>
+                <div className="absolute bottom-30 left-1/2 transform -translate-x-1/2 w-16 h-8 bg-orange-400 rounded-full"></div>
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-wrap gap-2 mb-4 animate-[slide-up_800ms_ease-out]">
             {post.tags.map((tag) => (
               <Link
                 key={tag}
@@ -73,8 +108,16 @@ export default function BlogPostPage({ params }: BlogPostParams) {
               </Link>
             ))}
           </div>
-          <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-          <time dateTime={post.date} className="text-gray-500">
+          <h1
+            className="text-4xl font-bold mb-4 animate-[slide-up_800ms_ease-out_200ms_both]"
+            style={{ viewTransitionName: `blog-title-${params.id}` }}
+          >
+            {post.title}
+          </h1>
+          <time
+            dateTime={post.date}
+            className="text-gray-500 animate-[fade-in_1s_ease-in_400ms_both]"
+          >
             {post.date}
           </time>
         </div>

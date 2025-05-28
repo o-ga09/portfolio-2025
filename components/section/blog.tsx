@@ -20,9 +20,16 @@ export default function Blog() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {latestPosts.map((post) => (
-            <Link href={`/blog/${post.id}`} key={post.id}>
-              <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
-                <div className="h-48 bg-gray-100 flex items-center justify-center">
+            <Link
+              href={`/blog/${post.id}`}
+              key={post.id}
+              className="transition-transform hover:scale-105 duration-300"
+            >
+              <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                <div
+                  className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden"
+                  style={{ viewTransitionName: `blog-image-${post.id}` }}
+                >
                   {post.imageType === "green" && (
                     <div className="w-32 h-24 relative">
                       <div className="absolute inset-0 bg-green-200 rounded-t-3xl"></div>
@@ -55,7 +62,10 @@ export default function Blog() {
                   <div className="flex items-center mb-2 text-xs text-gray-500">
                     <time dateTime={post.date}>{post.date}</time>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3
+                    className="text-xl font-semibold text-gray-900 mb-2"
+                    style={{ viewTransitionName: `blog-title-${post.id}` }}
+                  >
                     {post.title}
                   </h3>
                   <p className="text-gray-600 text-sm mb-4 flex-grow">
