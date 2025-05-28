@@ -1,46 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
-interface BlogPost {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-  imageType: "green" | "orange" | "black";
-  tags: string[];
-}
-
-// ダミーのブログ記事データ
-const blogPosts: BlogPost[] = [
-  {
-    id: "react-190-features",
-    title: "React 190.0.0で追加された革新的機能",
-    description:
-      "最新のReactバージョンで導入された機能について詳しく解説します。",
-    date: "2025-05-20",
-    imageType: "green",
-    tags: ["React", "フロントエンド", "JavaScript"],
-  },
-  {
-    id: "nextjs-15-evolution",
-    title: "Next.js 15の進化とパフォーマンス改善",
-    description: "Next.js 15で導入された新機能とパフォーマンス最適化について。",
-    date: "2025-05-10",
-    imageType: "orange",
-    tags: ["Next.js", "パフォーマンス", "SSR"],
-  },
-  {
-    id: "tailwind-4-features",
-    title: "Tailwind CSS 4.0の新機能を実践で活用する",
-    description: "最新バージョンのTailwind CSSで開発効率を向上させる方法。",
-    date: "2025-04-28",
-    imageType: "black",
-    tags: ["Tailwind CSS", "CSS", "UI/UX"],
-  },
-];
+import { blogPosts } from "@/lib/blog-data";
 
 export default function Blog() {
+  const latestPosts = [...blogPosts]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+
   return (
     <section className="py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,7 +19,7 @@ export default function Blog() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {blogPosts.map((post) => (
+          {latestPosts.map((post) => (
             <Link href={`/blog/${post.id}`} key={post.id}>
               <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
                 <div className="h-48 bg-gray-100 flex items-center justify-center">
