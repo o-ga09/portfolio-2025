@@ -52,10 +52,10 @@ export default function TagsPage() {
               <Link
                 key={tag}
                 href={`/tags/${tag.toLowerCase()}`}
-                className="bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-full transition-colors flex items-center"
+                className="bg-primary/25 hover:bg-primary/35 text-primary-foreground font-semibold px-4 py-2 rounded-full transition-colors flex items-center shadow-sm"
               >
-                <span className="font-medium">{tag}</span>
-                <span className="ml-2 bg-primary/20 text-primary text-xs px-2 py-0.5 rounded-full">
+                <span>{tag}</span>
+                <span className="ml-2 bg-primary/80 text-primary-foreground text-xs px-2 py-0.5 rounded-full font-bold">
                   {tagCounts[tag]}
                 </span>
               </Link>
@@ -73,11 +73,11 @@ export default function TagsPage() {
                 <Link
                   key={tag}
                   href={`/tags/${tag.toLowerCase()}`}
-                  className="hover:text-primary transition-colors"
+                  className="hover:text-primary hover:underline transition-colors"
                   style={{ fontSize: `${getTagSize(tagCounts[tag])}rem` }}
                 >
-                  <span className="mr-1">{tag}</span>
-                  <span className="text-gray-400 text-sm">
+                  <span className="mr-1 font-medium">{tag}</span>
+                  <span className="text-gray-600 text-sm font-normal">
                     ({tagCounts[tag]})
                   </span>
                 </Link>
