@@ -28,14 +28,16 @@ export default function BlogArchivePage() {
   });
 
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col">
+    <main className="min-h-screen bg-background flex flex-col">
       <Header />
       <div className="flex-grow container max-w-4xl mx-auto px-4 py-8">
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-2 mt-4 border-b pb-4">
+          <h1 className="text-4xl font-bold mb-2 mt-4 border-b border-border pb-4 text-foreground">
             ブログアーカイブ
           </h1>
-          <p className="text-gray-600 mt-2">過去の記事をすべて表示しています</p>
+          <p className="text-muted-foreground mt-2">
+            過去の記事をすべて表示しています
+          </p>
         </div>
 
         <div className="mb-8">
@@ -48,7 +50,7 @@ export default function BlogArchivePage() {
 
         {sortedMonths.map((yearMonth) => (
           <div key={yearMonth} className="mb-12">
-            <h2 className="text-2xl font-bold mb-4 border-b border-gray-200 pb-2">
+            <h2 className="text-2xl font-bold mb-4 border-b border-border pb-2 text-foreground">
               {yearMonth}
             </h2>
             <ul className="space-y-6">
@@ -59,7 +61,7 @@ export default function BlogArchivePage() {
                 >
                   <time
                     dateTime={post.date}
-                    className="text-sm text-gray-500 mb-1 block"
+                    className="text-sm text-muted-foreground mb-1 block"
                   >
                     {post.date}
                   </time>
@@ -67,17 +69,19 @@ export default function BlogArchivePage() {
                     href={`/blog/${post.id}`}
                     className="block"
                   >
-                    <h3 className="text-xl font-semibold hover:text-primary transition-colors">
+                    <h3 className="text-xl font-semibold text-foreground hover:text-primary transition-colors">
                       {post.title}
                     </h3>
                   </ViewTransitionsLink>
-                  <p className="text-gray-600 mt-1">{post.description}</p>
+                  <p className="text-muted-foreground mt-1">
+                    {post.description}
+                  </p>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {post.tags.map((tag) => (
                       <ViewTransitionsLink
                         key={tag}
                         href={`/tags/${tag.toLowerCase()}`}
-                        className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded hover:bg-gray-200 transition-colors"
+                        className="bg-secondary/50 text-secondary-foreground text-xs px-2 py-1 rounded hover:bg-secondary transition-colors"
                       >
                         {tag}
                       </ViewTransitionsLink>

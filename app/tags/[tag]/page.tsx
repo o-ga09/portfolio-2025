@@ -50,20 +50,20 @@ export default async function TagPage({ params }: TagPageProps) {
     decodedTag.charAt(0).toUpperCase() + decodedTag.slice(1);
 
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col">
+    <main className="min-h-screen bg-background flex flex-col">
       <Header />
       <div className="flex-grow container max-w-4xl mx-auto px-4 py-8">
         <div className="mb-8">
           <div className="flex items-center mb-2">
-            <span className="text-sm text-gray-500 mr-2">タグ:</span>
+            <span className="text-sm text-muted-foreground mr-2">タグ:</span>
             <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
               {normalizedTag}
             </span>
           </div>
-          <h1 className="text-3xl font-bold mb-3 mt-4 border-b pb-4">
+          <h1 className="text-3xl font-bold mb-3 mt-4 border-b border-border pb-4 text-foreground">
             「{normalizedTag}」に関する記事
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-muted-foreground mb-6">
             {posts.length}件の記事が見つかりました
           </p>
 
@@ -88,17 +88,17 @@ export default async function TagPage({ params }: TagPageProps) {
               className="border-b border-gray-100 pb-8 last:border-0"
             >
               <ViewTransitionsLink href={`/blog/${post.id}`} className="block">
-                <h2 className="text-2xl font-semibold hover:text-primary transition-colors mb-2">
+                <h2 className="text-2xl font-semibold hover:text-primary transition-colors mb-2 text-foreground">
                   {post.title}
                 </h2>
               </ViewTransitionsLink>
               <time
                 dateTime={post.date}
-                className="text-sm text-gray-500 mb-3 block"
+                className="text-sm text-muted-foreground mb-3 block"
               >
                 {post.date}
               </time>
-              <p className="text-gray-700 mb-4">{post.description}</p>
+              <p className="text-muted-foreground mb-4">{post.description}</p>
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((t) => (
                   <ViewTransitionsLink
@@ -107,7 +107,7 @@ export default async function TagPage({ params }: TagPageProps) {
                     className={`text-xs px-2 py-1 rounded ${
                       t.toLowerCase() === tag.toLowerCase()
                         ? "bg-primary/20 text-primary font-medium"
-                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                        : "bg-secondary/50 text-secondary-foreground hover:bg-secondary"
                     }`}
                   >
                     {t}

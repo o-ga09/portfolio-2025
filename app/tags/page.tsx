@@ -29,14 +29,14 @@ export default function TagsPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col">
+    <main className="min-h-screen bg-background flex flex-col">
       <Header />
       <div className="flex-grow container max-w-4xl mx-auto px-4 py-8">
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-3 mt-4 border-b pb-4">
+          <h1 className="text-4xl font-bold mb-3 mt-4 border-b border-border pb-4 text-foreground">
             タグ一覧
           </h1>
-          <p className="text-gray-600 mt-2">記事のタグから探す</p>
+          <p className="text-muted-foreground mt-2">記事のタグから探す</p>
         </div>
 
         <div className="mb-8">
@@ -53,7 +53,7 @@ export default function TagsPage() {
         </div>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 border-b border-gray-200 pb-2">
+          <h2 className="text-2xl font-bold mb-6 border-b border-border pb-2 text-foreground">
             人気のタグ
           </h2>
           <div className="flex flex-wrap gap-4">
@@ -61,7 +61,7 @@ export default function TagsPage() {
               <ViewTransitionsLink
                 key={tag}
                 href={`/tags/${tag.toLowerCase()}`}
-                className="bg-primary/25 hover:bg-primary/35 text-primary-foreground font-semibold px-4 py-2 rounded-full transition-colors flex items-center shadow-sm"
+                className="bg-primary/25 hover:bg-primary/35 text-primary font-semibold px-4 py-2 rounded-full transition-colors flex items-center shadow-sm"
               >
                 <span>{tag}</span>
                 <span className="ml-2 bg-primary/80 text-primary-foreground text-xs px-2 py-0.5 rounded-full font-bold">
@@ -73,20 +73,20 @@ export default function TagsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-6 border-b border-gray-200 pb-2">
+          <h2 className="text-2xl font-bold mb-6 border-b border-border pb-2 text-foreground">
             すべてのタグ
           </h2>
-          <div className="bg-gray-50 p-6 rounded-xl">
+          <div className="bg-card p-6 rounded-xl">
             <div className="flex flex-wrap gap-3">
               {sortedTags.map((tag) => (
                 <ViewTransitionsLink
                   key={tag}
                   href={`/tags/${tag.toLowerCase()}`}
-                  className="hover:text-primary hover:underline transition-colors"
+                  className="text-foreground hover:text-primary hover:underline transition-colors"
                   style={{ fontSize: `${getTagSize(tagCounts[tag])}rem` }}
                 >
                   <span className="mr-1 font-medium">{tag}</span>
-                  <span className="text-gray-600 text-sm font-normal">
+                  <span className="text-muted-foreground text-sm font-normal">
                     ({tagCounts[tag]})
                   </span>
                 </ViewTransitionsLink>

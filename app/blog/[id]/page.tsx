@@ -55,24 +55,24 @@ export default async function BlogPostPage({
         )
         .replace(
           /\`\`\`([a-z]*)\n([\s\S]*?)\`\`\`/gm,
-          '<pre class="bg-gray-100 dark:bg-gray-800 p-4 rounded-md my-4 overflow-auto"><code>$2</code></pre>'
+          '<pre class="bg-secondary/30 p-4 rounded-md my-4 overflow-auto"><code>$2</code></pre>'
         )
         .replace(
           /\`([^`]+)\`/g,
-          '<code class="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded">$1</code>'
+          '<code class="bg-secondary/30 px-1 py-0.5 rounded">$1</code>'
         )
         .replace(/\n\n/g, '<p class="my-4"></p>')
     : "<p>この記事にはコンテンツがありません。</p>";
 
   return (
-    <main className="min-h-screen bg-gray-50 flex flex-col">
+    <main className="min-h-screen bg-background flex flex-col">
       <Header />
       <div className="flex-grow container max-w-3xl mx-auto px-4 py-8">
         <article>
           <div className="mb-8">
             {/* ブログ画像部分 - viewTransitionで対応するためのイメージ要素 */}
             <div
-              className="h-64 bg-gray-100 flex items-center justify-center mb-8 rounded-xl overflow-hidden shadow-lg transform-gpu"
+              className="h-64 bg-card flex items-center justify-center mb-8 rounded-xl overflow-hidden shadow-lg transform-gpu"
               style={{ viewTransitionName: `blog-image-${id}` }}
             >
               {post.imageType === "green" && (
@@ -109,29 +109,29 @@ export default async function BlogPostPage({
                 <ViewTransitionsLink
                   key={tag}
                   href={`/tags/${tag.toLowerCase()}`}
-                  className="bg-gray-100 text-gray-600 hover:bg-gray-200 text-xs px-2 py-1 rounded transition-colors"
+                  className="bg-secondary/50 text-secondary-foreground hover:bg-secondary text-xs px-2 py-1 rounded transition-colors"
                 >
                   {tag}
                 </ViewTransitionsLink>
               ))}
             </div>
             <h1
-              className="text-4xl font-bold mb-4 border-b pb-4"
+              className="text-4xl font-bold mb-4 border-b border-border pb-4 text-foreground"
               style={{ viewTransitionName: `blog-title-${id}` }}
             >
               {post.title}
             </h1>
-            <time dateTime={post.date} className="text-gray-500">
+            <time dateTime={post.date} className="text-muted-foreground">
               {post.date}
             </time>
           </div>
 
           <div
-            className="prose prose-lg max-w-none"
+            className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground/90 prose-strong:text-foreground prose-code:text-foreground"
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
 
-          <div className="mt-12 pt-8 border-t border-gray-200 mb-8">
+          <div className="mt-12 pt-8 border-t border-border mb-8">
             <Button asChild>
               <ViewTransitionsLink href="/blog">
                 ← ブログ一覧に戻る
