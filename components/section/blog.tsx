@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/lib/blog-data";
 
@@ -20,15 +20,18 @@ export default function Blog() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {latestPosts.map((post) => (
-            <Link
+            <ViewTransitionsLink
               href={`/blog/${post.id}`}
               key={post.id}
               className="transition-transform hover:scale-105 duration-300"
             >
               <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                 <div
-                  className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden"
-                  style={{ viewTransitionName: `blog-image-${post.id}` }}
+                  className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden transform-gpu"
+                  style={{
+                    viewTransitionName: `blog-image-${post.id}`,
+                    contain: "layout paint",
+                  }}
                 >
                   {post.imageType === "green" && (
                     <div className="w-32 h-24 relative">
@@ -83,13 +86,15 @@ export default function Blog() {
                   </div>
                 </div>
               </article>
-            </Link>
+            </ViewTransitionsLink>
           ))}
         </div>
 
         <div className="mt-12 text-center">
           <Button asChild>
-            <Link href="/blog/archive">過去の記事をすべて見る</Link>
+            <ViewTransitionsLink href="/blog/archive">
+              過去の記事をすべて見る
+            </ViewTransitionsLink>
           </Button>
         </div>
       </div>

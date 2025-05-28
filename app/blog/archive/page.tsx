@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { groupPostsByYearMonth } from "@/lib/blog-data";
+import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 
 export const metadata: Metadata = {
   title: "ブログアーカイブ | ポートフォリオ",
@@ -35,9 +35,9 @@ export default function BlogArchivePage() {
 
         <div className="mb-8">
           <Button asChild>
-            <Link href="/blog" className="mr-2">
+            <ViewTransitionsLink href="/blog" className="mr-2">
               ← ブログトップに戻る
-            </Link>
+            </ViewTransitionsLink>
           </Button>
         </div>
 
@@ -58,21 +58,24 @@ export default function BlogArchivePage() {
                   >
                     {post.date}
                   </time>
-                  <Link href={`/blog/${post.id}`} className="block">
+                  <ViewTransitionsLink
+                    href={`/blog/${post.id}`}
+                    className="block"
+                  >
                     <h3 className="text-xl font-semibold hover:text-primary transition-colors">
                       {post.title}
                     </h3>
-                  </Link>
+                  </ViewTransitionsLink>
                   <p className="text-gray-600 mt-1">{post.description}</p>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {post.tags.map((tag) => (
-                      <Link
+                      <ViewTransitionsLink
                         key={tag}
                         href={`/tags/${tag.toLowerCase()}`}
                         className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded hover:bg-gray-200 transition-colors"
                       >
                         {tag}
-                      </Link>
+                      </ViewTransitionsLink>
                     ))}
                   </div>
                 </li>

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Link from "next/link";
+import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Button } from "@/components/ui/button";
 import { getTagCounts } from "@/lib/blog-data";
 
@@ -36,10 +36,14 @@ export default function TagsPage() {
 
         <div className="mb-8">
           <Button asChild variant="outline" className="mr-2">
-            <Link href="/blog">ブログトップへ</Link>
+            <ViewTransitionsLink href="/blog">
+              ブログトップへ
+            </ViewTransitionsLink>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/blog/archive">記事アーカイブへ</Link>
+            <ViewTransitionsLink href="/blog/archive">
+              記事アーカイブへ
+            </ViewTransitionsLink>
           </Button>
         </div>
 
@@ -49,7 +53,7 @@ export default function TagsPage() {
           </h2>
           <div className="flex flex-wrap gap-4">
             {popularTags.map((tag) => (
-              <Link
+              <ViewTransitionsLink
                 key={tag}
                 href={`/tags/${tag.toLowerCase()}`}
                 className="bg-primary/25 hover:bg-primary/35 text-primary-foreground font-semibold px-4 py-2 rounded-full transition-colors flex items-center shadow-sm"
@@ -58,7 +62,7 @@ export default function TagsPage() {
                 <span className="ml-2 bg-primary/80 text-primary-foreground text-xs px-2 py-0.5 rounded-full font-bold">
                   {tagCounts[tag]}
                 </span>
-              </Link>
+              </ViewTransitionsLink>
             ))}
           </div>
         </section>
@@ -70,7 +74,7 @@ export default function TagsPage() {
           <div className="bg-gray-50 p-6 rounded-xl">
             <div className="flex flex-wrap gap-3">
               {sortedTags.map((tag) => (
-                <Link
+                <ViewTransitionsLink
                   key={tag}
                   href={`/tags/${tag.toLowerCase()}`}
                   className="hover:text-primary hover:underline transition-colors"
@@ -80,7 +84,7 @@ export default function TagsPage() {
                   <span className="text-gray-600 text-sm font-normal">
                     ({tagCounts[tag]})
                   </span>
-                </Link>
+                </ViewTransitionsLink>
               ))}
             </div>
           </div>

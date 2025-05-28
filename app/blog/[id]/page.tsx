@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Button } from "@/components/ui/button";
 import { getPostById } from "@/lib/blog-data";
 
@@ -65,7 +65,7 @@ export default function BlogPostPage({ params }: BlogPostParams) {
         <div className="mb-8">
           {/* ブログ画像部分 - viewTransitionで対応するためのイメージ要素 */}
           <div
-            className="h-72 bg-gray-100 flex items-center justify-center mb-12 rounded-xl overflow-hidden shadow-lg transform-gpu"
+            className="h-64 bg-gray-100 flex items-center justify-center mb-8 rounded-xl overflow-hidden shadow-lg transform-gpu"
             style={{ viewTransitionName: `blog-image-${params.id}` }}
           >
             {post.imageType === "green" && (
@@ -97,27 +97,24 @@ export default function BlogPostPage({ params }: BlogPostParams) {
             )}
           </div>
 
-          <div className="flex flex-wrap gap-2 mb-4 animate-[slide-up_800ms_ease-out]">
+          <div className="flex flex-wrap gap-2 mb-4">
             {post.tags.map((tag) => (
-              <Link
+              <ViewTransitionsLink
                 key={tag}
                 href={`/tags/${tag.toLowerCase()}`}
                 className="bg-gray-100 text-gray-600 hover:bg-gray-200 text-xs px-2 py-1 rounded transition-colors"
               >
                 {tag}
-              </Link>
+              </ViewTransitionsLink>
             ))}
           </div>
           <h1
-            className="text-4xl font-bold mb-4 animate-[slide-up_800ms_ease-out_200ms_both]"
+            className="text-4xl font-bold mb-4"
             style={{ viewTransitionName: `blog-title-${params.id}` }}
           >
             {post.title}
           </h1>
-          <time
-            dateTime={post.date}
-            className="text-gray-500 animate-[fade-in_1s_ease-in_400ms_both]"
-          >
+          <time dateTime={post.date} className="text-gray-500">
             {post.date}
           </time>
         </div>
@@ -129,7 +126,9 @@ export default function BlogPostPage({ params }: BlogPostParams) {
 
         <div className="mt-12 pt-8 border-t border-gray-200">
           <Button asChild>
-            <Link href="/blog">← ブログ一覧に戻る</Link>
+            <ViewTransitionsLink href="/blog">
+              ← ブログ一覧に戻る
+            </ViewTransitionsLink>
           </Button>
         </div>
       </article>
