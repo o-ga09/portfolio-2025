@@ -7,15 +7,18 @@ import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
 
 interface TagPageProps {
-  params: {
+  params: Promise<{
     tag: string;
-  };
+  }>;
 }
 
-// 動的なメタデータの生成
-export function generateMetadata({ params }: TagPageProps): Metadata {
-  const tag = decodeURIComponent(params.tag);
-  const normalizedTag = tag.charAt(0).toUpperCase() + tag.slice(1);
+export async function generateMetadata({
+  params,
+}: TagPageProps): Promise<Metadata> {
+  const { tag } = await params;
+  const decodedTag = decodeURIComponent(tag);
+  const normalizedTag =
+    decodedTag.charAt(0).toUpperCase() + decodedTag.slice(1);
 
   return {
     title: `${normalizedTag} に関する記事 | ポートフォリオ`,
@@ -32,17 +35,19 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function TagPage({ params }: TagPageProps) {
-  const tag = decodeURIComponent(params.tag);
+export default async function TagPage({ params }: TagPageProps) {
+  const { tag } = await params;
+  const decodedTag = decodeURIComponent(tag);
   const allTags = getAllTags();
 
   // タグが存在しない場合は404ページへ
-  if (!allTags.includes(tag.toLowerCase())) {
+  if (!allTags.includes(decodedTag.toLowerCase())) {
     notFound();
   }
 
-  const posts = getPostsByTag(tag);
-  const normalizedTag = tag.charAt(0).toUpperCase() + tag.slice(1);
+  const posts = getPostsByTag(decodedTag);
+  const normalizedTag =
+    decodedTag.charAt(0).toUpperCase() + decodedTag.slice(1);
 
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col">

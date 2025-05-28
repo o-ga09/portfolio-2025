@@ -12,7 +12,7 @@ export default function Blog() {
     <section className="py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-2">
             最新記事
           </h2>
           <div className="w-16 h-1 bg-primary"></div>
@@ -25,7 +25,7 @@ export default function Blog() {
               key={post.id}
               className="transition-transform hover:scale-105 duration-300"
             >
-              <article className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+              <article className="bg-card rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                 <div
                   className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden transform-gpu"
                   style={{
@@ -62,23 +62,23 @@ export default function Blog() {
                   )}
                 </div>
                 <div className="p-6 flex-grow flex flex-col">
-                  <div className="flex items-center mb-2 text-xs text-gray-500">
+                  <div className="flex items-center mb-2 text-xs text-muted-foreground">
                     <time dateTime={post.date}>{post.date}</time>
                   </div>
                   <h3
-                    className="text-xl font-semibold text-gray-900 mb-2"
+                    className="text-xl font-semibold text-foreground mb-2"
                     style={{ viewTransitionName: `blog-title-${post.id}` }}
                   >
                     {post.title}
                   </h3>
-                  <p className="text-gray-600 text-sm mb-4 flex-grow">
+                  <p className="text-muted-foreground text-sm mb-4 flex-grow">
                     {post.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mt-auto">
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded"
+                        className="bg-secondary/50 text-secondary-foreground text-xs px-2 py-1 rounded"
                       >
                         {tag}
                       </span>

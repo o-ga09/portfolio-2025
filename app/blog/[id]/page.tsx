@@ -6,15 +6,13 @@ import { getPostById } from "@/lib/blog-data";
 import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
 
-interface BlogPostParams {
-  params: {
-    id: string;
-  };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
-export function generateMetadata({ params }: BlogPostParams): Metadata {
-  const post = getPostById(params.id);
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const post = getPostById(id);
 
   if (!post) {
     return {
@@ -28,8 +26,13 @@ export function generateMetadata({ params }: BlogPostParams): Metadata {
   };
 }
 
-export default function BlogPostPage({ params }: BlogPostParams) {
-  const post = getPostById(params.id);
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const post = getPostById(id);
 
   if (!post) {
     notFound();
@@ -70,7 +73,7 @@ export default function BlogPostPage({ params }: BlogPostParams) {
             {/* ブログ画像部分 - viewTransitionで対応するためのイメージ要素 */}
             <div
               className="h-64 bg-gray-100 flex items-center justify-center mb-8 rounded-xl overflow-hidden shadow-lg transform-gpu"
-              style={{ viewTransitionName: `blog-image-${params.id}` }}
+              style={{ viewTransitionName: `blog-image-${id}` }}
             >
               {post.imageType === "green" && (
                 <div className="w-48 h-36 relative">
@@ -114,7 +117,7 @@ export default function BlogPostPage({ params }: BlogPostParams) {
             </div>
             <h1
               className="text-4xl font-bold mb-4 border-b pb-4"
-              style={{ viewTransitionName: `blog-title-${params.id}` }}
+              style={{ viewTransitionName: `blog-title-${id}` }}
             >
               {post.title}
             </h1>

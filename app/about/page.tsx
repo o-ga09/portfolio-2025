@@ -212,7 +212,7 @@ export default function About() {
             </ViewTransitionsLink>
 
             <ViewTransitionsLink
-              href="https://github.com/taichi"
+              href="https://github.com/o-ga09"
               target="_blank"
               rel="noopener noreferrer"
               className="w-14 h-14 bg-purple-200 hover:bg-purple-300 rounded-full flex items-center justify-center transform hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-purple-300 group"

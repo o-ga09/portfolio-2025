@@ -423,7 +423,7 @@ export default function AboutDetails() {
 
               <div className="flex flex-wrap gap-6 justify-center">
                 <a
-                  href="https://github.com/taichi"
+                  href="https://github.com/o-ga09"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 px-6 py-3 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors duration-300"
@@ -440,7 +440,7 @@ export default function AboutDetails() {
                 </a>
 
                 <a
-                  href="https://twitter.com/taichi"
+                  href="https://twitter.com/o_ga09"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 px-6 py-3 bg-blue-100 hover:bg-blue-200 rounded-full transition-colors duration-300"
