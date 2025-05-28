@@ -3,6 +3,8 @@ import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
 import { getAllTags, getPostsByTag } from "@/lib/blog-data";
+import Header from "@/components/section/header";
+import Footer from "@/components/section/footer";
 
 interface TagPageProps {
   params: {
@@ -43,8 +45,9 @@ export default function TagPage({ params }: TagPageProps) {
   const normalizedTag = tag.charAt(0).toUpperCase() + tag.slice(1);
 
   return (
-    <main className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen bg-gray-50 flex flex-col">
+      <Header />
+      <div className="flex-grow container max-w-4xl mx-auto px-4 py-8">
         <div className="mb-8">
           <div className="flex items-center mb-2">
             <span className="text-sm text-gray-500 mr-2">タグ:</span>
@@ -52,7 +55,7 @@ export default function TagPage({ params }: TagPageProps) {
               {normalizedTag}
             </span>
           </div>
-          <h1 className="text-3xl font-bold mb-3">
+          <h1 className="text-3xl font-bold mb-3 mt-4 border-b pb-4">
             「{normalizedTag}」に関する記事
           </h1>
           <p className="text-gray-600 mb-6">
@@ -123,7 +126,7 @@ export default function TagPage({ params }: TagPageProps) {
           </div>
         )}
 
-        <div className="mt-12 pt-6 border-t border-gray-200">
+        <div className="mt-12 pt-6 border-t border-gray-200 mb-8">
           <h2 className="text-xl font-semibold mb-4">他のタグを探す</h2>
           <div className="flex flex-wrap gap-2">
             {getAllTags()
@@ -152,6 +155,7 @@ export default function TagPage({ params }: TagPageProps) {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

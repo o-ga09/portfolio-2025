@@ -10,10 +10,11 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <main className="container mx-auto px-4 py-12">
+    <main className="min-h-screen bg-gray-50 flex flex-col">
       <Header />
-      <h1 className="text-4xl font-bold mb-8">ブログ</h1>
-      <Blog />
+      <div className="flex-grow">
+        <Blog />
+      </div>
       <Footer />
     </main>
   );

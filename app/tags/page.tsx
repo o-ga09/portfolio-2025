@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Button } from "@/components/ui/button";
 import { getTagCounts } from "@/lib/blog-data";
+import Header from "@/components/section/header";
+import Footer from "@/components/section/footer";
 
 export const metadata: Metadata = {
   title: "タグ一覧 | ポートフォリオ",
@@ -27,11 +29,14 @@ export default function TagsPage() {
   };
 
   return (
-    <main className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen bg-gray-50 flex flex-col">
+      <Header />
+      <div className="flex-grow container max-w-4xl mx-auto px-4 py-8">
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-3">タグ一覧</h1>
-          <p className="text-gray-600">記事のタグから探す</p>
+          <h1 className="text-4xl font-bold mb-3 mt-4 border-b pb-4">
+            タグ一覧
+          </h1>
+          <p className="text-gray-600 mt-2">記事のタグから探す</p>
         </div>
 
         <div className="mb-8">
@@ -67,7 +72,7 @@ export default function TagsPage() {
           </div>
         </section>
 
-        <section>
+        <section className="mb-8">
           <h2 className="text-2xl font-bold mb-6 border-b border-gray-200 pb-2">
             すべてのタグ
           </h2>
@@ -90,6 +95,7 @@ export default function TagsPage() {
           </div>
         </section>
       </div>
+      <Footer />
     </main>
   );
 }
