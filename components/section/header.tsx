@@ -60,7 +60,9 @@ export default function Header() {
               <Rss className="w-5 h-5" />
             </Button>
             <Button variant="ghost" size="icon">
-              <Github className="w-5 h-5" />
+              <Link href="https://github.com/o-ga09">
+                <Github className="w-5 h-5" />
+              </Link>
             </Button>
           </div>
         </div>
