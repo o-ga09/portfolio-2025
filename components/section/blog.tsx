@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import { truncate } from "@/lib/utils";
 import type { BlogPost } from "@/lib/blog-data";
+import Link from "next/link";
 
 interface BlogProps {
   initialPosts: BlogPost[];
@@ -142,9 +143,7 @@ export default function Blog({ initialPosts }: BlogProps) {
             </Button>
           )}
           <Button asChild>
-            <ViewTransitionsLink href="/blog/archive">
-              記事一覧を見る
-            </ViewTransitionsLink>
+            <Link href="/blog/archive">記事一覧を見る</Link>
           </Button>
         </div>
       </div>

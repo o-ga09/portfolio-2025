@@ -1,10 +1,10 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Button } from "@/components/ui/button";
 import { getPostById } from "@/lib/blog-data";
 import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
+import Link from "next/link";
 
 export async function generateMetadata({
   params,
@@ -106,13 +106,13 @@ export default async function BlogPostPage({
 
             <div className="flex flex-wrap gap-2 mb-4">
               {post.tags.map((tag) => (
-                <ViewTransitionsLink
+                <Link
                   key={tag}
                   href={`/tags/${tag.toLowerCase()}`}
                   className="bg-secondary/50 text-secondary-foreground hover:bg-secondary text-xs px-2 py-1 rounded transition-colors"
                 >
                   {tag}
-                </ViewTransitionsLink>
+                </Link>
               ))}
             </div>
             <h1
@@ -133,9 +133,7 @@ export default async function BlogPostPage({
 
           <div className="mt-12 pt-8 border-t border-border mb-8">
             <Button asChild>
-              <ViewTransitionsLink href="/blog">
-                ← ブログ一覧に戻る
-              </ViewTransitionsLink>
+              <Link href="/blog">← ブログ一覧に戻る</Link>
             </Button>
           </div>
         </article>

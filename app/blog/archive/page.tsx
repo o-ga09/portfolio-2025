@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { groupPostsByYearMonth } from "@/lib/blog-data";
-import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "ブログアーカイブ | ポートフォリオ",
@@ -42,9 +42,9 @@ export default async function BlogArchivePage() {
 
         <div className="mb-8">
           <Button asChild>
-            <ViewTransitionsLink href="/blog" className="mr-2">
+            <Link href="/blog" className="mr-2">
               ← ブログトップに戻る
-            </ViewTransitionsLink>
+            </Link>
           </Button>
         </div>
 
@@ -90,7 +90,7 @@ export default async function BlogArchivePage() {
                       </span>
                     )}
                   </div>
-                  <ViewTransitionsLink
+                  <Link
                     href={
                       post.type !== "blog" ? post.url ?? "" : `/blog/${post.id}`
                     }
@@ -103,19 +103,19 @@ export default async function BlogArchivePage() {
                     <h3 className="text-xl font-semibold text-gray-900 hover:text-primary dark:text-white dark:hover:text-primary transition-colors">
                       {post.title}
                     </h3>
-                  </ViewTransitionsLink>
+                  </Link>
                   <p className="text-gray-600 dark:text-gray-300 mt-1">
                     {post.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {post.tags.map((tag) => (
-                      <ViewTransitionsLink
+                      <Link
                         key={tag}
                         href={`/tags/${tag.toLowerCase()}`}
                         className="bg-secondary/50 text-secondary-foreground text-xs px-2 py-1 rounded hover:bg-secondary transition-colors"
                       >
                         {tag}
-                      </ViewTransitionsLink>
+                      </Link>
                     ))}
                   </div>
                 </li>

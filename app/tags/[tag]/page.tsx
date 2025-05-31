@@ -1,10 +1,10 @@
 import { Metadata } from "next";
-import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
 import { getAllTags, getPostsByTag } from "@/lib/blog-data";
 import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
+import Link from "next/link";
 
 interface TagPageProps {
   params: Promise<{
@@ -69,14 +69,10 @@ export default async function TagPage({ params }: TagPageProps) {
 
           <div className="mb-8 flex gap-2">
             <Button asChild variant="outline" size="sm">
-              <ViewTransitionsLink href="/tags">
-                ← タグ一覧に戻る
-              </ViewTransitionsLink>
+              <Link href="/tags">← タグ一覧に戻る</Link>
             </Button>
             <Button asChild variant="outline" size="sm">
-              <ViewTransitionsLink href="/blog">
-                ブログトップへ
-              </ViewTransitionsLink>
+              <Link href="/blog">ブログトップへ</Link>
             </Button>
           </div>
         </div>
@@ -87,11 +83,11 @@ export default async function TagPage({ params }: TagPageProps) {
               key={post.id}
               className="border-b border-gray-100 pb-8 last:border-0"
             >
-              <ViewTransitionsLink href={`/blog/${post.id}`} className="block">
+              <Link href={`/blog/${post.id}`} className="block">
                 <h2 className="text-2xl font-semibold hover:text-primary transition-colors mb-2 text-gray-900 dark:text-white">
                   {post.title}
                 </h2>
-              </ViewTransitionsLink>
+              </Link>
               <time
                 dateTime={post.date}
                 className="text-sm text-muted-foreground mb-3 block"
@@ -101,7 +97,7 @@ export default async function TagPage({ params }: TagPageProps) {
               <p className="text-muted-foreground mb-4">{post.description}</p>
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((t) => (
-                  <ViewTransitionsLink
+                  <Link
                     key={t}
                     href={`/tags/${t.toLowerCase()}`}
                     className={`text-xs px-2 py-1 rounded ${
@@ -111,7 +107,7 @@ export default async function TagPage({ params }: TagPageProps) {
                     }`}
                   >
                     {t}
-                  </ViewTransitionsLink>
+                  </Link>
                 ))}
               </div>
             </article>
@@ -124,9 +120,7 @@ export default async function TagPage({ params }: TagPageProps) {
               このタグの記事はまだありません。
             </p>
             <Button asChild>
-              <ViewTransitionsLink href="/blog">
-                ブログトップへ戻る
-              </ViewTransitionsLink>
+              <Link href="/blog">ブログトップへ戻る</Link>
             </Button>
           </div>
         )}
@@ -140,22 +134,22 @@ export default async function TagPage({ params }: TagPageProps) {
               .map((t) => {
                 const displayTag = t.charAt(0).toUpperCase() + t.slice(1);
                 return (
-                  <ViewTransitionsLink
+                  <Link
                     key={t}
                     href={`/tags/${t}`}
                     className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm transition-colors"
                   >
                     {displayTag}
-                  </ViewTransitionsLink>
+                  </Link>
                 );
               })}
             {(await getAllTags()).length > 11 && (
-              <ViewTransitionsLink
+              <Link
                 href="/tags"
                 className="text-primary hover:underline text-sm ml-2 flex items-center"
               >
                 すべてのタグを見る...
-              </ViewTransitionsLink>
+              </Link>
             )}
           </div>
         </div>

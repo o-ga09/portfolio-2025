@@ -4,11 +4,11 @@ import Footer from "@/components/section/footer";
 import Header from "@/components/section/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { blogPosts } from "@/lib/blog-data";
+import Link from "next/link";
 
 interface SearchResult {
   id: string;
@@ -94,11 +94,11 @@ export default function SearchPage() {
                   key={result.id}
                   className="bg-card rounded-lg p-6 shadow-md"
                 >
-                  <ViewTransitionsLink href={`/blog/${result.id}`}>
+                  <Link href={`/blog/${result.id}`}>
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 hover:text-primary transition-colors">
                       {result.title}
                     </h2>
-                  </ViewTransitionsLink>
+                  </Link>
                   <div className="flex items-center mb-2 text-xs text-muted-foreground">
                     <time dateTime={result.date}>{result.date}</time>
                   </div>
@@ -107,13 +107,13 @@ export default function SearchPage() {
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {result.tags.map((tag) => (
-                      <ViewTransitionsLink
+                      <Link
                         key={tag}
                         href={`/tags/${tag.toLowerCase()}`}
                         className="text-xs bg-secondary/50 text-secondary-foreground px-2 py-1 rounded hover:bg-secondary/80 transition-colors"
                       >
                         {tag}
-                      </ViewTransitionsLink>
+                      </Link>
                     ))}
                   </div>
                 </article>

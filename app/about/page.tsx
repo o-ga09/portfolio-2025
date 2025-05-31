@@ -3,7 +3,7 @@ import Footer from "@/components/section/footer";
 import Header from "@/components/section/header";
 import React, { useState } from "react";
 import Image from "next/image";
-import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
+import Link from "next/link";
 
 export default function About() {
   const [isStamping, setIsStamping] = useState(false);
@@ -188,7 +188,7 @@ export default function About() {
 
           {/* More... ボタン */}
           <div className="flex justify-center mt-8">
-            <ViewTransitionsLink
+            <Link
               href="/about/details"
               className="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden font-medium transition duration-300 ease-out border-2 border-purple-500 rounded-full shadow-md"
             >
@@ -212,12 +212,12 @@ export default function About() {
                 More...
               </span>
               <span className="relative invisible">More...</span>
-            </ViewTransitionsLink>
+            </Link>
           </div>
 
           {/* フローティングナビゲーションボタン */}
           <div className="fixed bottom-24 right-6 md:right-12 flex flex-col space-y-4">
-            <ViewTransitionsLink
+            <Link
               href="/"
               className="w-14 h-14 bg-pink-200 hover:bg-pink-300 rounded-full flex items-center justify-center transform hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-pink-300 group"
               title="ホームへ戻る"
@@ -225,9 +225,9 @@ export default function About() {
               <span className="text-pink-600 text-2xl group-hover:animate-pulse">
                 ♡
               </span>
-            </ViewTransitionsLink>
+            </Link>
 
-            <ViewTransitionsLink
+            <Link
               href="https://github.com/o-ga09"
               target="_blank"
               rel="noopener noreferrer"
@@ -237,9 +237,9 @@ export default function About() {
               <span className="text-purple-600 text-2xl group-hover:animate-pulse">
                 ★
               </span>
-            </ViewTransitionsLink>
+            </Link>
 
-            <ViewTransitionsLink
+            <Link
               href="https://music.apple.com/jp/song/%E3%82%AB%E3%83%95%E3%82%A7%E3%83%A2%E3%82%AB/1784641766"
               target="_blank"
               className="w-14 h-14 bg-indigo-200 hover:bg-indigo-300 rounded-full flex items-center justify-center transform hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-indigo-300 group"
@@ -248,7 +248,7 @@ export default function About() {
               <span className="text-indigo-600 text-2xl group-hover:animate-pulse">
                 ♪
               </span>
-            </ViewTransitionsLink>
+            </Link>
           </div>
         </div>
       </main>

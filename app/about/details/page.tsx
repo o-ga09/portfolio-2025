@@ -1,7 +1,7 @@
 "use client";
 import Footer from "@/components/section/footer";
 import Header from "@/components/section/header";
-import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
+import Link from "next/link";
 import React from "react";
 
 export default function AboutDetails() {
@@ -12,7 +12,7 @@ export default function AboutDetails() {
         <div className="max-w-5xl mx-auto">
           {/* ナビゲーションリンク */}
           <div className="mb-8">
-            <ViewTransitionsLink
+            <Link
               href="/about"
               className="text-gray-900 dark:text-white hover:text-gray-900 dark:text-white/80 flex items-center gap-2 font-medium"
             >
@@ -31,7 +31,7 @@ export default function AboutDetails() {
                 ></path>
               </svg>
               プロフィールに戻る
-            </ViewTransitionsLink>
+            </Link>
           </div>
 
           <h1 className="text-4xl font-bold mb-10 text-gray-900 dark:text-white drop-shadow-md">
@@ -545,7 +545,7 @@ export default function AboutDetails() {
 
           {/* トップに戻るボタン */}
           <div className="mt-12 text-center">
-            <ViewTransitionsLink
+            <Link
               href="/about"
               className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary/80 to-secondary hover:from-primary hover:to-secondary/80 text-primary-foreground font-medium rounded-full transition-all duration-300 shadow-md hover:shadow-lg"
             >
@@ -564,7 +564,7 @@ export default function AboutDetails() {
                 ></path>
               </svg>
               プロフィールに戻る
-            </ViewTransitionsLink>
+            </Link>
           </div>
         </div>
       </main>
