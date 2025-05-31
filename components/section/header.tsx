@@ -7,6 +7,8 @@ import { Input } from "../ui/input";
 import ThemeToggle from "../theme/theme-toggle";
 
 export default function Header() {
+  const [isSearchFocused, setIsSearchFocused] = React.useState(false);
+
   const handleKeyDown = (e: KeyboardEvent) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "k") {
       e.preventDefault();
@@ -15,6 +17,7 @@ export default function Header() {
       ) as HTMLInputElement;
       if (searchInput) {
         searchInput.focus();
+        setIsSearchFocused(true);
       }
     }
   };
@@ -74,16 +77,38 @@ export default function Header() {
                 }
               }}
             >
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground/50 w-4 h-4" />
+              <Search
+                className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 transition-colors ${
+                  isSearchFocused ? "text-primary" : "text-foreground/50"
+                }`}
+              />
               <Input
                 type="search"
                 name="q"
-                placeholder="検索"
-                className="pl-10 pr-12 w-64"
+                placeholder="キーワードで検索..."
+                className={`pl-10 pr-12 w-64 transition-all ${
+                  isSearchFocused ? "ring-2 ring-primary/30" : ""
+                }`}
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => setIsSearchFocused(false)}
               />
-              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1">
-                <Command className="w-3 h-3 text-foreground/50" />
-                <span className="text-xs text-foreground/50">K</span>
+              <div
+                className={`absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-1 px-1.5 py-0.5 rounded ${
+                  isSearchFocused ? "bg-primary/10" : ""
+                }`}
+              >
+                <Command
+                  className={`w-3 h-3 transition-colors ${
+                    isSearchFocused ? "text-primary" : "text-foreground/50"
+                  }`}
+                />
+                <span
+                  className={`text-xs transition-colors ${
+                    isSearchFocused ? "text-primary" : "text-foreground/50"
+                  }`}
+                >
+                  K
+                </span>
               </div>
             </form>
             <ThemeToggle />
