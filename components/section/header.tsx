@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Search, Command, Rss, Github } from "lucide-react";
 import React from "react";
@@ -6,6 +7,25 @@ import { Input } from "../ui/input";
 import ThemeToggle from "../theme/theme-toggle";
 
 export default function Header() {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+      e.preventDefault();
+      const searchInput = document.querySelector(
+        'input[type="search"]'
+      ) as HTMLInputElement;
+      if (searchInput) {
+        searchInput.focus();
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <header className="bg-background border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,10 +63,21 @@ export default function Header() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <div className="relative hidden sm:block">
+            <form
+              action="/search"
+              className="relative hidden sm:block"
+              onSubmit={(e) => {
+                const form = e.currentTarget;
+                const input = form.querySelector("input");
+                if (!input?.value.trim()) {
+                  e.preventDefault();
+                }
+              }}
+            >
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground/50 w-4 h-4" />
               <Input
                 type="search"
+                name="q"
                 placeholder="検索"
                 className="pl-10 pr-12 w-64"
               />
@@ -54,7 +85,7 @@ export default function Header() {
                 <Command className="w-3 h-3 text-foreground/50" />
                 <span className="text-xs text-foreground/50">K</span>
               </div>
-            </div>
+            </form>
             <ThemeToggle />
             <Button variant="ghost" size="icon">
               <Rss className="w-5 h-5" />
