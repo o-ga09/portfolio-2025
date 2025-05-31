@@ -178,7 +178,7 @@ export default function Header() {
       {/* モバイルメニューのオーバーレイ */}
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
           onClick={closeMenu}
           aria-hidden="true"
         />
@@ -186,77 +186,86 @@ export default function Header() {
 
       {/* モバイルメニュー本体 */}
       <div
-        className={`md:hidden fixed inset-y-0 right-0 w-full max-w-sm bg-white dark:bg-gray-900 border-l border-border shadow-xl z-50 transition-transform duration-300 ease-in-out ${
+        className={`md:hidden fixed inset-y-0 right-0 w-full max-w-sm bg-white dark:bg-gray-900 shadow-xl z-50 transition-all duration-300 ease-in-out rounded-l-3xl overflow-hidden ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex justify-end p-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={closeMenu}
-            aria-label="メニューを閉じる"
-            className="text-gray-900 dark:text-white"
-          >
-            <X className="h-6 w-6" />
-          </Button>
-        </div>
-        <nav className="flex flex-col px-6 py-8 space-y-6">
-          <Link
-            href="/blog"
-            className="text-xl font-medium text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors"
-            onClick={closeMenu}
-          >
-            Blog
-          </Link>
-          <Link
-            href="/about"
-            className="text-xl font-medium text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors"
-            onClick={closeMenu}
-          >
-            About
-          </Link>
-          <Link
-            href="/tags"
-            className="text-xl font-medium text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors"
-            onClick={closeMenu}
-          >
-            Tags
-          </Link>
-          <Link
-            href="/recap"
-            className="text-xl font-medium text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors"
-            onClick={closeMenu}
-          >
-            Recap
-          </Link>
-          <div className="flex items-center space-x-4 pt-8 border-t border-border/30">
-            <Link href="/api/feed">
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="RSS Feed"
-                className="text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary"
-              >
-                <Rss className="h-5 w-5" />
-              </Button>
-            </Link>
-            <Link
-              href="https://github.com/o-ga09"
-              target="_blank"
-              rel="noopener noreferrer"
+        {/* グラデーション装飾 */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 dark:from-primary/5 dark:to-secondary/5" />
+
+        {/* メニューコンテンツ */}
+        <div className="relative z-10">
+          <div className="flex justify-end p-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={closeMenu}
+              aria-label="メニューを閉じる"
+              className="text-gray-900 dark:text-white hover:bg-primary/10 dark:hover:bg-primary/20 rounded-full transition-all duration-200"
             >
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="GitHub"
-                className="text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary"
-              >
-                <Github className="h-5 w-5" />
-              </Button>
-            </Link>
+              <X className="h-6 w-6" />
+            </Button>
           </div>
-        </nav>
+
+          <nav className="flex flex-col px-8 py-8 space-y-4">
+            {[
+              { href: "/blog", label: "Blog", emoji: "📝" },
+              { href: "/about", label: "About", emoji: "👋" },
+              { href: "/tags", label: "Tags", emoji: "🏷️" },
+              { href: "/recap", label: "Recap", emoji: "✨" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="group relative flex items-center space-x-3 p-3 text-lg font-medium text-gray-900 dark:text-white rounded-2xl hover:bg-primary/10 dark:hover:bg-primary/20 transition-all duration-200"
+                onClick={closeMenu}
+              >
+                <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/20 dark:bg-primary/10 group-hover:scale-110 transition-transform duration-200">
+                  {item.emoji}
+                </span>
+                <span className="group-hover:translate-x-1 transition-transform duration-200">
+                  {item.label}
+                </span>
+              </Link>
+            ))}
+
+            <div className="flex items-center space-x-4 pt-8 mt-4 border-t border-primary/10 dark:border-primary/5">
+              <Link href="/api/feed">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="RSS Feed"
+                  className="text-gray-900 dark:text-white hover:bg-primary/10 dark:hover:bg-primary/20 rounded-xl transition-all duration-200"
+                >
+                  <div className="p-2 rounded-lg bg-warning/20 dark:bg-warning/10">
+                    <Rss className="h-5 w-5" />
+                  </div>
+                </Button>
+              </Link>
+              <Link
+                href="https://github.com/o-ga09"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="GitHub"
+                  className="text-gray-900 dark:text-white hover:bg-primary/10 dark:hover:bg-primary/20 rounded-xl transition-all duration-200"
+                >
+                  <div className="p-2 rounded-lg bg-secondary/20 dark:bg-secondary/10">
+                    <Github className="h-5 w-5" />
+                  </div>
+                </Button>
+              </Link>
+            </div>
+          </nav>
+        </div>
+
+        {/* 装飾的な要素 */}
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-primary/5 to-transparent" />
+        <div className="absolute top-20 -left-6 w-12 h-12 bg-accent/20 rounded-full blur-xl" />
+        <div className="absolute bottom-40 -right-6 w-16 h-16 bg-secondary/20 rounded-full blur-xl" />
       </div>
     </header>
   );
