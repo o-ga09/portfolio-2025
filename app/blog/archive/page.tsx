@@ -32,10 +32,10 @@ export default function BlogArchivePage() {
       <Header />
       <div className="flex-grow container max-w-4xl mx-auto px-4 py-8">
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-2 mt-4 border-b border-border pb-4 text-foreground">
+          <h1 className="text-4xl font-bold mb-2 mt-4 border-b border-border pb-4 text-gray-900 dark:text-white">
             ブログアーカイブ
           </h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-gray-600 dark:text-gray-300 mt-2">
             過去の記事をすべて表示しています
           </p>
         </div>
@@ -50,7 +50,7 @@ export default function BlogArchivePage() {
 
         {sortedMonths.map((yearMonth) => (
           <div key={yearMonth} className="mb-12">
-            <h2 className="text-2xl font-bold mb-4 border-b border-border pb-2 text-foreground">
+            <h2 className="text-2xl font-bold mb-4 border-b border-border pb-2 text-gray-900 dark:text-white">
               {yearMonth}
             </h2>
             <ul className="space-y-6">
@@ -69,11 +69,11 @@ export default function BlogArchivePage() {
                     href={`/blog/${post.id}`}
                     className="block"
                   >
-                    <h3 className="text-xl font-semibold text-foreground hover:text-primary transition-colors">
+                    <h3 className="text-xl font-semibold text-gray-900 hover:text-primary dark:text-white dark:hover:text-primary transition-colors">
                       {post.title}
                     </h3>
                   </ViewTransitionsLink>
-                  <p className="text-muted-foreground mt-1">
+                  <p className="text-gray-600 dark:text-gray-300 mt-1">
                     {post.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mt-2">

@@ -33,10 +33,12 @@ export default function TagsPage() {
       <Header />
       <div className="flex-grow container max-w-4xl mx-auto px-4 py-8">
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-3 mt-4 border-b border-border pb-4 text-foreground">
+          <h1 className="text-4xl font-bold mb-3 mt-4 border-b border-border pb-4 text-black dark:text-white">
             タグ一覧
           </h1>
-          <p className="text-muted-foreground mt-2">記事のタグから探す</p>
+          <p className="text-gray-600 dark:text-gray-300 mt-2">
+            記事のタグから探す
+          </p>
         </div>
 
         <div className="mb-8">
@@ -53,7 +55,7 @@ export default function TagsPage() {
         </div>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-bold mb-6 border-b border-border pb-2 text-foreground">
+          <h2 className="text-2xl font-bold mb-6 border-b border-border pb-2 text-black dark:text-white">
             人気のタグ
           </h2>
           <div className="flex flex-wrap gap-4">
@@ -61,10 +63,10 @@ export default function TagsPage() {
               <ViewTransitionsLink
                 key={tag}
                 href={`/tags/${tag.toLowerCase()}`}
-                className="bg-primary/25 hover:bg-primary/35 text-primary font-semibold px-4 py-2 rounded-full transition-colors flex items-center shadow-sm"
+                className="bg-primary/25 hover:bg-primary/35 text-gray-900 dark:text-white font-semibold px-4 py-2 rounded-full transition-colors flex items-center shadow-sm"
               >
                 <span>{tag}</span>
-                <span className="ml-2 bg-primary/80 text-primary-foreground text-xs px-2 py-0.5 rounded-full font-bold">
+                <span className="ml-2 bg-primary/80 text-gray-900 dark:text-white text-xs px-2 py-0.5 rounded-full font-bold">
                   {tagCounts[tag]}
                 </span>
               </ViewTransitionsLink>
@@ -73,7 +75,7 @@ export default function TagsPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-6 border-b border-border pb-2 text-foreground">
+          <h2 className="text-2xl font-bold mb-6 border-b border-border pb-2 text-black dark:text-white">
             すべてのタグ
           </h2>
           <div className="bg-card p-6 rounded-xl">
@@ -82,11 +84,11 @@ export default function TagsPage() {
                 <ViewTransitionsLink
                   key={tag}
                   href={`/tags/${tag.toLowerCase()}`}
-                  className="text-foreground hover:text-primary hover:underline transition-colors"
+                  className="text-gray-800 hover:text-primary hover:underline transition-colors dark:text-gray-100"
                   style={{ fontSize: `${getTagSize(tagCounts[tag])}rem` }}
                 >
                   <span className="mr-1 font-medium">{tag}</span>
-                  <span className="text-muted-foreground text-sm font-normal">
+                  <span className="text-gray-600 dark:text-gray-400 text-sm font-normal">
                     ({tagCounts[tag]})
                   </span>
                 </ViewTransitionsLink>

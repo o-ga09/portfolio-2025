@@ -100,32 +100,40 @@ export default function About() {
                 {/* 右側: テキスト情報 */}
                 <div className="col-span-2 space-y-5">
                   <div>
-                    <h2 className="text-2xl font-bold text-foreground mb-2">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                       個人情報
                     </h2>
                     <div className="h-1 w-14 bg-primary rounded mb-3"></div>
                     <div className="grid grid-cols-2 gap-x-6 gap-y-3">
                       <div>
-                        <p className="text-sm text-muted-foreground">氏名</p>
-                        <p className="font-medium text-foreground">オーガ</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          氏名
+                        </p>
+                        <p className="font-medium text-gray-900 dark:text-white">
+                          オーガ
+                        </p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">肩書き</p>
-                        <p className="font-medium text-foreground">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          肩書き
+                        </p>
+                        <p className="font-medium text-gray-900 dark:text-white">
                           フルスタックエンジニア
                         </p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">趣味</p>
-                        <p className="font-medium text-foreground">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          趣味
+                        </p>
+                        <p className="font-medium text-gray-900 dark:text-white">
                           推し活、ライブ、個人開発
                         </p>
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
                           好きな技術
                         </p>
-                        <p className="font-medium text-foreground">
+                        <p className="font-medium text-gray-900 dark:text-white">
                           Go, TypeScript, k8s
                         </p>
                       </div>
@@ -133,7 +141,7 @@ export default function About() {
                   </div>
 
                   <div>
-                    <h2 className="text-2xl font-bold text-foreground mb-2">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                       スキル
                     </h2>
                     <div className="h-1 w-14 bg-primary rounded mb-3"></div>
@@ -153,7 +161,7 @@ export default function About() {
                           key={skill}
                           className="bg-gradient-to-r from-primary/10 to-secondary/10 px-3 py-2 rounded-lg shadow-sm border border-border"
                         >
-                          <p className="font-medium text-sm text-primary text-center">
+                          <p className="font-medium text-sm text-gray-900 dark:text-white text-center">
                             {skill}
                           </p>
                         </div>
@@ -162,11 +170,11 @@ export default function About() {
                   </div>
 
                   <div>
-                    <h2 className="text-2xl font-bold text-foreground mb-2">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                       自己紹介
                     </h2>
                     <div className="h-1 w-14 bg-primary rounded mb-3"></div>
-                    <p className="text-foreground/90 leading-relaxed">
+                    <p className="text-gray-800 dark:text-gray-200 leading-relaxed">
                       フルスタックエンジニアとして活動しているオーガです。バックエンドはGoを中心に、フロントエンドはReact/Next.jsを得意としています。クラウドインフラの構築や運用も担当しています。趣味は推し活とライブ参戦で、特に山本彩さんの10年来のファンです。休日はゲーム（ゼノブレイド）やアニメ鑑賞を楽しんでいます。新潟出身で日本酒が大好きです。
                     </p>
                   </div>

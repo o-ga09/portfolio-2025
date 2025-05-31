@@ -66,12 +66,12 @@ export default function Blog() {
                     <time dateTime={post.date}>{post.date}</time>
                   </div>
                   <h3
-                    className="text-xl font-semibold text-foreground mb-2"
+                    className="text-xl font-semibold text-gray-900 dark:text-white mb-2"
                     style={{ viewTransitionName: `blog-title-${post.id}` }}
                   >
                     {post.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm mb-4 flex-grow">
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow">
                     {post.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mt-auto">

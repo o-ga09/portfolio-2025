@@ -14,7 +14,7 @@ export default function AboutDetails() {
           <div className="mb-8">
             <ViewTransitionsLink
               href="/about"
-              className="text-primary hover:text-primary/80 flex items-center gap-2 font-medium"
+              className="text-gray-900 dark:text-white hover:text-gray-900 dark:text-white/80 flex items-center gap-2 font-medium"
             >
               <svg
                 className="w-5 h-5"
@@ -34,7 +34,7 @@ export default function AboutDetails() {
             </ViewTransitionsLink>
           </div>
 
-          <h1 className="text-4xl font-bold mb-10 text-primary drop-shadow-md">
+          <h1 className="text-4xl font-bold mb-10 text-gray-900 dark:text-white drop-shadow-md">
             詳細プロフィール
           </h1>
 
@@ -49,7 +49,7 @@ export default function AboutDetails() {
 
               <div className="space-y-6">
                 <div className="flex flex-col md:flex-row gap-4">
-                  <div className="flex-none w-32 text-primary font-medium">
+                  <div className="flex-none w-32 text-gray-900 dark:text-white font-medium">
                     2023年〜現在
                   </div>
                   <div>
@@ -63,7 +63,7 @@ export default function AboutDetails() {
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-4">
-                  <div className="flex-none w-32 text-primary font-medium">
+                  <div className="flex-none w-32 text-gray-900 dark:text-white font-medium">
                     2020年〜2023年
                   </div>
                   <div>
@@ -77,7 +77,7 @@ export default function AboutDetails() {
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-4">
-                  <div className="flex-none w-32 text-primary font-medium">
+                  <div className="flex-none w-32 text-gray-900 dark:text-white font-medium">
                     2017年〜2020年
                   </div>
                   <div>
@@ -102,7 +102,7 @@ export default function AboutDetails() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* 技術資格 */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-bold text-primary border-b border-border pb-2">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white border-b border-border pb-2">
                     技術資格
                   </h3>
 
@@ -159,7 +159,7 @@ export default function AboutDetails() {
 
                 {/* その他の資格 */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-bold text-primary border-b border-border pb-2">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white border-b border-border pb-2">
                     その他の資格
                   </h3>
 
@@ -222,7 +222,7 @@ export default function AboutDetails() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h3 className="font-bold text-lg mb-3 text-primary">
+                  <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white">
                     バックエンド
                   </h3>
                   <div className="space-y-3">
@@ -297,7 +297,7 @@ export default function AboutDetails() {
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-lg mb-3 text-primary">
+                  <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white">
                     フロントエンド
                   </h3>
                   <div className="space-y-3">
@@ -382,7 +382,7 @@ export default function AboutDetails() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="font-bold text-lg mb-4 text-primary border-b border-border pb-2">
+                  <h3 className="font-bold text-lg mb-4 text-gray-900 dark:text-white border-b border-border pb-2">
                     趣味
                   </h3>
                   <ul className="space-y-3 list-disc list-inside text-foreground">
@@ -414,7 +414,7 @@ export default function AboutDetails() {
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-lg mb-4 text-primary border-b border-border pb-2">
+                  <h3 className="font-bold text-lg mb-4 text-gray-900 dark:text-white border-b border-border pb-2">
                     日常生活
                   </h3>
 

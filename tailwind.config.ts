@@ -26,7 +26,10 @@ const config: Config = {
         border: "var(--border)",
         ring: "var(--ring)",
         background: "var(--background)",
-        foreground: "var(--foreground)",
+        foreground: {
+          DEFAULT: "oklch(0.1 0 0)",
+          muted: "oklch(0.3 0 0)",
+        },
         primary: {
           DEFAULT: "#B3DBD8",
           light: "#CBE8E6",
