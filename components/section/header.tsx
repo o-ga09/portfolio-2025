@@ -34,31 +34,34 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
-            <Link href="/" className="text-xl font-bold text-foreground">
+            <Link
+              href="/"
+              className="text-xl font-bold text-gray-900 dark:text-white"
+            >
               o-ga09 blog
             </Link>
             <nav className="hidden md:flex space-x-6">
               <Link
                 href="/blog"
-                className="text-foreground/70 hover:text-foreground"
+                className="text-gray-900 dark:text-white/70 hover:text-gray-900 dark:hover:text-white dark:hover:bg-white/10 rounded-md px-2 py-1 transition-colors"
               >
                 Blog
               </Link>
               <Link
                 href="/about"
-                className="text-foreground/70 hover:text-foreground"
+                className="text-gray-900 dark:text-white/70 hover:text-gray-900 dark:hover:text-white dark:hover:bg-white/10 rounded-md px-2 py-1 transition-colors"
               >
                 About
               </Link>
               <Link
                 href="/tags"
-                className="text-foreground/70 hover:text-foreground"
+                className="text-gray-900 dark:text-white/70 hover:text-gray-900 dark:hover:text-white dark:hover:bg-white/10 rounded-md px-2 py-1 transition-colors"
               >
                 Tags
               </Link>
               <Link
                 href="/recap"
-                className="text-foreground/70 hover:text-foreground"
+                className="text-gray-900 dark:text-white/70 hover:text-gray-900 dark:hover:text-white dark:hover:bg-white/10 rounded-md px-2 py-1 transition-colors"
               >
                 Recap
               </Link>
@@ -79,7 +82,9 @@ export default function Header() {
             >
               <Search
                 className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 transition-colors ${
-                  isSearchFocused ? "text-primary" : "text-foreground/50"
+                  isSearchFocused
+                    ? "text-primary"
+                    : "text-gray-900 dark:text-white/50"
                 }`}
               />
               <Input
@@ -99,12 +104,16 @@ export default function Header() {
               >
                 <Command
                   className={`w-3 h-3 transition-colors ${
-                    isSearchFocused ? "text-primary" : "text-foreground/50"
+                    isSearchFocused
+                      ? "text-primary"
+                      : "text-gray-900 dark:text-white/50"
                   }`}
                 />
                 <span
                   className={`text-xs transition-colors ${
-                    isSearchFocused ? "text-primary" : "text-foreground/50"
+                    isSearchFocused
+                      ? "text-primary"
+                      : "text-gray-900 dark:text-white/50"
                   }`}
                 >
                   K
@@ -113,12 +122,12 @@ export default function Header() {
             </form>
             <ThemeToggle />
             <Button variant="ghost" size="icon" asChild>
-              <Link href="/api/feed" aria-label="RSS フィード">
+              <Link href="/api/feed" aria-label="RSS フィード" target="_blank">
                 <Rss className="w-5 h-5" />
               </Link>
             </Button>
             <Button variant="ghost" size="icon">
-              <Link href="https://github.com/o-ga09">
+              <Link href="https://github.com/o-ga09" target="_blank">
                 <Github className="w-5 h-5" />
               </Link>
             </Button>

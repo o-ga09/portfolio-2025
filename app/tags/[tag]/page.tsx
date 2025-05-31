@@ -60,7 +60,7 @@ export default async function TagPage({ params }: TagPageProps) {
               {normalizedTag}
             </span>
           </div>
-          <h1 className="text-3xl font-bold mb-3 mt-4 border-b border-border pb-4 text-foreground">
+          <h1 className="text-3xl font-bold mb-3 mt-4 border-b border-border pb-4 text-gray-900 dark:text-white">
             「{normalizedTag}」に関する記事
           </h1>
           <p className="text-muted-foreground mb-6">
@@ -88,7 +88,7 @@ export default async function TagPage({ params }: TagPageProps) {
               className="border-b border-gray-100 pb-8 last:border-0"
             >
               <ViewTransitionsLink href={`/blog/${post.id}`} className="block">
-                <h2 className="text-2xl font-semibold hover:text-primary transition-colors mb-2 text-foreground">
+                <h2 className="text-2xl font-semibold hover:text-primary transition-colors mb-2 text-gray-900 dark:text-white">
                   {post.title}
                 </h2>
               </ViewTransitionsLink>

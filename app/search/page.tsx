@@ -64,12 +64,12 @@ export default function SearchPage() {
       <Header />
       <main className="flex-grow container max-w-4xl mx-auto px-4 py-8">
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-3 mt-4 text-foreground">
+          <h1 className="text-4xl font-bold mb-3 mt-4 text-gray-900 dark:text-white">
             検索結果
           </h1>
           <form onSubmit={handleSubmit} className="flex gap-2 mb-8">
             <div className="relative flex-grow">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground/50 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-900 dark:text-white/50 w-4 h-4" />
               <Input
                 type="search"
                 placeholder="キーワードを入力"
@@ -95,7 +95,7 @@ export default function SearchPage() {
                   className="bg-card rounded-lg p-6 shadow-md"
                 >
                   <ViewTransitionsLink href={`/blog/${result.id}`}>
-                    <h2 className="text-xl font-semibold text-foreground mb-2 hover:text-primary transition-colors">
+                    <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 hover:text-primary transition-colors">
                       {result.title}
                     </h2>
                   </ViewTransitionsLink>

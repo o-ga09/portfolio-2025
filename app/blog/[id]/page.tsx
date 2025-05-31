@@ -116,7 +116,7 @@ export default async function BlogPostPage({
               ))}
             </div>
             <h1
-              className="text-4xl font-bold mb-4 border-b border-border pb-4 text-foreground"
+              className="text-4xl font-bold mb-4 border-b border-border pb-4 text-gray-900 dark:text-white"
               style={{ viewTransitionName: `blog-title-${id}` }}
             >
               {post.title}
@@ -127,7 +127,7 @@ export default async function BlogPostPage({
           </div>
 
           <div
-            className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground/90 prose-strong:text-foreground prose-code:text-foreground"
+            className="prose prose-lg max-w-none prose-headings:text-gray-900 dark:text-white prose-p:text-gray-900 dark:text-white/90 prose-strong:text-gray-900 dark:text-white prose-code:text-gray-900 dark:text-white"
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
 
