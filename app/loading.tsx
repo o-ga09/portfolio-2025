@@ -10,7 +10,7 @@ export default function Loading() {
         <div className="relative">
           <div className="relative mx-auto mb-6">
             <Image
-              src="/main.png"
+              src="/main.webp"
               alt="読み込み中のキャラクター"
               width={200}
               height={200}

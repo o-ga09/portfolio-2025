@@ -15,7 +15,7 @@ export default function NotFound() {
             {/* メインの円形背景 */}
             <div className="absolute inset-4 -inset-x-4 bg-gradient-to-br from-pink-200 to-secondary-light rounded-full"></div>
             <Image
-              src="/main.png"
+              src="/main.webp"
               alt="迷子になったキャラクター"
               width={200}
               height={200}

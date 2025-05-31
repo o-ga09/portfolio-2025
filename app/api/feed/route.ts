@@ -9,7 +9,7 @@ export async function GET() {
     id: "https://o-ga09.dev/",
     link: "https://o-ga09.dev/",
     language: "ja",
-    image: "https://o-ga09.dev/main.png",
+    image: "https://o-ga09.dev/main.webp",
     favicon: "https://o-ga09.dev/favicon.ico",
     copyright: `All rights reserved ${new Date().getFullYear()}, o-ga09.dev`,
     updated: new Date(),

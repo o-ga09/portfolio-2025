@@ -45,7 +45,7 @@ export default function Hero() {
                 {/* 丸い画像を配置 */}
                 <div className="w-full h-full overflow-hidden rounded-full border-4 border-foreground/30 relative">
                   <Image
-                    src="/main.png"
+                    src="/main.webp"
                     alt="o-ga09"
                     fill
                     sizes="(max-width: 640px) 280px, 320px"

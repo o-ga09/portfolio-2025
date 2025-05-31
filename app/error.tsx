@@ -23,7 +23,7 @@ export default function Error({
         <div className="relative">
           <div className="relative mx-auto mb-6">
             <Image
-              src="/main_3.png"
+              src="/main_3.webp"
               alt="困っているキャラクター"
               width={200}
               height={200}

@@ -41,7 +41,7 @@ export default function About() {
                 <div className="space-y-4 flex flex-col items-center">
                   <div className="relative w-48 h-48 rounded-lg overflow-hidden border-4 border-pink-200 shadow-md">
                     <Image
-                      src="/main.png"
+                      src="/main.webp"
                       alt="Profile Picture"
                       fill
                       className="object-cover"

@@ -49,7 +49,7 @@ export const metadata: Metadata = {
       "オーガのブログへようこそ！ここでは、オーガの趣味や特技、好きなこと、技術ブログについて紹介しています。",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.webp",
         width: 1200,
         height: 630,
         alt: "オーガのブログ - 自己紹介サイト",
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     title: "オーガのブログ - 自己紹介サイト",
     description:
       "オーガのブログへようこそ！ここでは、オーガの趣味や特技、好きなこと、技術ブログについて紹介しています。",
-    images: ["/og-image.png"],
+    images: ["/og-image.webp"],
     creator: "@o-ga09",
     site: "@o-ga09",
   },
