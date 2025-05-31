@@ -87,8 +87,10 @@ export default function Header() {
               </div>
             </form>
             <ThemeToggle />
-            <Button variant="ghost" size="icon">
-              <Rss className="w-5 h-5" />
+            <Button variant="ghost" size="icon" asChild>
+              <Link href="/api/feed" aria-label="RSS フィード">
+                <Rss className="w-5 h-5" />
+              </Link>
             </Button>
             <Button variant="ghost" size="icon">
               <Link href="https://github.com/o-ga09">
