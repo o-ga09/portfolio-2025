@@ -1,8 +1,7 @@
 import { ExternalArticle } from "./external-articles";
 import { fetchExternalArticles } from "./rss-feed";
 
-// Blog記事の型定義
-interface BlogPost {
+export interface BlogPost {
   id: string;
   title: string;
   description: string;

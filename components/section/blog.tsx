@@ -1,14 +1,21 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Button } from "@/components/ui/button";
-import { getAllPosts } from "@/lib/blog-data";
+import { ChevronDown } from "lucide-react";
 import { truncate } from "@/lib/utils";
+import type { BlogPost } from "@/lib/blog-data";
 
-export default async function Blog() {
-  const blogs = await getAllPosts();
-  const latestPosts = [...blogs]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 3);
+interface BlogProps {
+  initialPosts: BlogPost[];
+}
+
+export default function Blog({ initialPosts }: BlogProps) {
+  const [showAllPosts, setShowAllPosts] = useState(false);
+  const [posts] = useState(initialPosts);
+
+  const displayPosts = showAllPosts ? posts : posts.slice(0, 3);
 
   return (
     <section className="py-16 lg:py-24">
@@ -21,7 +28,7 @@ export default async function Blog() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {latestPosts.map((post) => (
+          {displayPosts.map((post) => (
             <ViewTransitionsLink
               href={post.type !== "blog" ? post.url ?? "" : `/blog/${post.id}`}
               key={post.id}
@@ -122,10 +129,21 @@ export default async function Blog() {
           ))}
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-12 text-center space-y-4">
+          {!showAllPosts && posts.length > 3 && (
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full max-w-xs mx-auto flex items-center justify-center gap-2"
+              onClick={() => setShowAllPosts(true)}
+            >
+              <ChevronDown className="w-5 h-5" />
+              もっと読む
+            </Button>
+          )}
           <Button asChild>
             <ViewTransitionsLink href="/blog/archive">
-              過去の記事をすべて見る
+              記事一覧を見る
             </ViewTransitionsLink>
           </Button>
         </div>
