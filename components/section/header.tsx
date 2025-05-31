@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Search, Command, Rss, Github } from "lucide-react";
+import { Search, Command, Rss, Github, Menu, X } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -8,7 +8,21 @@ import ThemeToggle from "../theme/theme-toggle";
 
 export default function Header() {
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
+  // スクロール制御
+  React.useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  // キーボードイベントの処理
   const handleKeyDown = (e: KeyboardEvent) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "k") {
       e.preventDefault();
@@ -29,8 +43,11 @@ export default function Header() {
     };
   }, []);
 
+  // メニューを閉じる
+  const closeMenu = () => setIsMobileMenuOpen(false);
+
   return (
-    <header className="bg-background border-b border-border">
+    <header className="bg-background border-b border-border relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
@@ -120,19 +137,126 @@ export default function Header() {
                 </span>
               </div>
             </form>
-            <ThemeToggle />
-            <Button variant="ghost" size="icon" asChild>
-              <Link href="/api/feed" aria-label="RSS フィード" target="_blank">
-                <Rss className="w-5 h-5" />
+
+            <div className="flex items-center space-x-4">
+              <ThemeToggle />
+              <Link href="/api/feed" className="hidden sm:block">
+                <Button variant="ghost" size="icon" aria-label="RSS Feed">
+                  <Rss className="h-4 w-4" />
+                </Button>
               </Link>
-            </Button>
-            <Button variant="ghost" size="icon">
-              <Link href="https://github.com/o-ga09" target="_blank">
-                <Github className="w-5 h-5" />
+              <Link
+                href="https://github.com/o-ga09"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:block"
+              >
+                <Button variant="ghost" size="icon" aria-label="GitHub">
+                  <Github className="h-4 w-4" />
+                </Button>
               </Link>
-            </Button>
+
+              {/* モバイルメニューボタン */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="メニュー"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <Menu className="h-6 w-6" />
+                )}
+              </Button>
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* モバイルメニューのオーバーレイ */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
+          onClick={closeMenu}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* モバイルメニュー本体 */}
+      <div
+        className={`md:hidden fixed inset-y-0 right-0 w-full max-w-sm bg-white dark:bg-gray-900 border-l border-border shadow-xl z-50 transition-transform duration-300 ease-in-out ${
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex justify-end p-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={closeMenu}
+            aria-label="メニューを閉じる"
+            className="text-gray-900 dark:text-white"
+          >
+            <X className="h-6 w-6" />
+          </Button>
+        </div>
+        <nav className="flex flex-col px-6 py-8 space-y-6">
+          <Link
+            href="/blog"
+            className="text-xl font-medium text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors"
+            onClick={closeMenu}
+          >
+            Blog
+          </Link>
+          <Link
+            href="/about"
+            className="text-xl font-medium text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors"
+            onClick={closeMenu}
+          >
+            About
+          </Link>
+          <Link
+            href="/tags"
+            className="text-xl font-medium text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors"
+            onClick={closeMenu}
+          >
+            Tags
+          </Link>
+          <Link
+            href="/recap"
+            className="text-xl font-medium text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary transition-colors"
+            onClick={closeMenu}
+          >
+            Recap
+          </Link>
+          <div className="flex items-center space-x-4 pt-8 border-t border-border/30">
+            <Link href="/api/feed">
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="RSS Feed"
+                className="text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary"
+              >
+                <Rss className="h-5 w-5" />
+              </Button>
+            </Link>
+            <Link
+              href="https://github.com/o-ga09"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                aria-label="GitHub"
+                className="text-gray-900 dark:text-white hover:text-primary dark:hover:text-primary"
+              >
+                <Github className="h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
+        </nav>
       </div>
     </header>
   );
