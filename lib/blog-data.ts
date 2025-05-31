@@ -1,5 +1,8 @@
+import { ExternalArticle } from "./external-articles";
+import { fetchExternalArticles } from "./rss-feed";
+
 // Blog記事の型定義
-export interface BlogPost {
+interface BlogPost {
   id: string;
   title: string;
   description: string;
@@ -7,6 +10,9 @@ export interface BlogPost {
   content?: string;
   imageType?: "green" | "orange" | "black";
   tags: string[];
+  type?: "blog" | "qiita" | "zenn";
+  url?: string;
+  likes?: number;
 }
 
 // ブログ記事のモックデータ
@@ -14,6 +20,7 @@ export const blogPosts: BlogPost[] = [
   {
     id: "react-190-features",
     title: "React 190.0.0で追加された革新的機能",
+    type: "blog",
     description:
       "最新のReactバージョンで導入された機能について詳しく解説します。",
     date: "2025-05-20",
@@ -73,6 +80,7 @@ React 190.0.0は、パフォーマンス、開発者体験、AIとの統合な�
   {
     id: "nextjs-15-evolution",
     title: "Next.js 15の進化とパフォーマンス改善",
+    type: "blog",
     description: "Next.js 15で導入された新機能とパフォーマンス最適化について。",
     date: "2025-05-10",
     content: `
@@ -118,6 +126,7 @@ Next.js 15では、初期ロード時間が平均40%削減され、大規模ア�
   {
     id: "tailwind-4-features",
     title: "Tailwind CSS 4.0の新機能を実践で活用する",
+    type: "blog",
     description: "最新バージョンのTailwind CSSで開発効率を向上させる方法。",
     date: "2025-04-28",
     content: `
@@ -224,11 +233,12 @@ function FeatureCard({ title, description, icon }) {
 // タグ関連のユーティリティ関数
 
 // すべてのタグを取得
-export function getAllTags() {
+export async function getAllTags(): Promise<string[]> {
   const tags = new Set<string>();
+  const posts = await getAllPosts();
 
-  blogPosts.forEach((post) => {
-    post.tags.forEach((tag) => {
+  posts.forEach((post: BlogPost) => {
+    post.tags.forEach((tag: string) => {
       tags.add(tag.toLowerCase());
     });
   });
@@ -237,21 +247,21 @@ export function getAllTags() {
 }
 
 // タグとその記事数を取得
-export function getTagCounts() {
+export async function getTagCounts(): Promise<{
+  tagCounts: Record<string, number>;
+  sortedTags: string[];
+}> {
   const tagCounts: Record<string, number> = {};
+  const posts = await getAllPosts();
 
-  blogPosts.forEach((post) => {
-    post.tags.forEach((tag) => {
-      if (tagCounts[tag]) {
-        tagCounts[tag]++;
-      } else {
-        tagCounts[tag] = 1;
-      }
+  posts.forEach((post: BlogPost) => {
+    post.tags.forEach((tag: string) => {
+      tagCounts[tag] = (tagCounts[tag] || 0) + 1;
     });
   });
 
   // タグを記事数の多い順にソート
-  const sortedTags = Object.keys(tagCounts).sort((a, b) => {
+  const sortedTags = Object.keys(tagCounts).sort((a: string, b: string) => {
     // 記事数で降順ソート
     if (tagCounts[b] !== tagCounts[a]) {
       return tagCounts[b] - tagCounts[a];
@@ -264,29 +274,32 @@ export function getTagCounts() {
 }
 
 // 特定のタグを持つ記事を取得
-export function getPostsByTag(tag: string) {
+export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
   const normalizedTag = tag.toLowerCase();
+  const posts = await getAllPosts();
 
-  return blogPosts
-    .filter((post) => post.tags.some((t) => t.toLowerCase() === normalizedTag))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-}
-
-// 記事を日付順にソート
-export function getSortedPosts() {
-  return [...blogPosts].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  return posts
+    .filter((post: BlogPost) =>
+      post.tags.some((t: string) => t.toLowerCase() === normalizedTag)
+    )
+    .sort(
+      (a: BlogPost, b: BlogPost) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
 }
 
 // IDから記事を取得
-export function getPostById(id: string) {
-  return blogPosts.find((post) => post.id === id);
+export function getPostById(id: string): BlogPost | undefined {
+  return blogPosts.find((post: BlogPost) => post.id === id);
 }
 
 // 年月ごとに記事をグループ化
-export function groupPostsByYearMonth() {
-  return blogPosts.reduce((acc, post) => {
+export async function groupPostsByYearMonth(
+  postsPromise: Promise<BlogPost[]> = getAllPosts()
+): Promise<Record<string, BlogPost[]>> {
+  const posts = await postsPromise;
+
+  return posts.reduce((acc: Record<string, BlogPost[]>, post: BlogPost) => {
     const date = new Date(post.date);
     const yearMonth = `${date.getFullYear()}年${date.getMonth() + 1}月`;
 
@@ -296,5 +309,45 @@ export function groupPostsByYearMonth() {
 
     acc[yearMonth].push(post);
     return acc;
-  }, {} as Record<string, BlogPost[]>);
+  }, {});
+}
+
+// 外部記事をBlogPost形式に変換
+export function convertExternalToBlogPost(article: ExternalArticle): BlogPost {
+  return {
+    id: article.id,
+    title: article.title,
+    description: article.description,
+    date: article.date,
+    tags: article.tags,
+    type: article.source,
+    url: article.url,
+    likes: article.likes,
+    imageType: article.source === "qiita" ? "green" : "orange",
+  };
+}
+
+// 全ての記事（ブログ、Qiita、Zenn）を取得
+export async function getAllPosts(): Promise<BlogPost[]> {
+  try {
+    const externalArticles = await fetchExternalArticles();
+    const externalPosts = externalArticles.map(convertExternalToBlogPost);
+
+    const internalPosts = blogPosts.map((post: BlogPost) => ({
+      ...post,
+      type: "blog" as const,
+    }));
+
+    return [...internalPosts, ...externalPosts].sort(
+      (a: BlogPost, b: BlogPost) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+  } catch (error) {
+    console.error("Error fetching all posts:", error);
+    // エラー時は内部記事のみを返す
+    return blogPosts.map((post: BlogPost) => ({
+      ...post,
+      type: "blog" as const,
+    }));
+  }
 }

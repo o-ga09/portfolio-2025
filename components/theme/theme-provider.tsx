@@ -47,8 +47,6 @@ export function ThemeProvider({
   useEffect(() => {
     const root = window.document.documentElement;
 
-    console.log("Current theme:", theme); // デバッグ用
-
     root.classList.remove("light", "dark");
 
     if (theme === "system") {
@@ -57,12 +55,10 @@ export function ThemeProvider({
         ? "dark"
         : "light";
       root.classList.add(systemTheme);
-      console.log("System theme applied:", systemTheme); // デバッグ用
       return;
     }
 
     root.classList.add(theme);
-    console.log("Theme applied:", theme); // デバッグ用
   }, [theme]);
 
   const value = {

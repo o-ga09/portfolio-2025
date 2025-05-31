@@ -1,10 +1,12 @@
 import React from "react";
 import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Button } from "@/components/ui/button";
-import { blogPosts } from "@/lib/blog-data";
+import { getAllPosts } from "@/lib/blog-data";
+import { truncate } from "@/lib/utils";
 
-export default function Blog() {
-  const latestPosts = [...blogPosts]
+export default async function Blog() {
+  const blogs = await getAllPosts();
+  const latestPosts = [...blogs]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);
 
@@ -21,9 +23,11 @@ export default function Blog() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {latestPosts.map((post) => (
             <ViewTransitionsLink
-              href={`/blog/${post.id}`}
+              href={post.type !== "blog" ? post.url ?? "" : `/blog/${post.id}`}
               key={post.id}
               className="transition-transform hover:scale-105 duration-300"
+              target={post.type !== "blog" ? "_blank" : undefined}
+              rel={post.type !== "blog" ? "noopener noreferrer" : undefined}
             >
               <article className="bg-card rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                 <div
@@ -62,8 +66,36 @@ export default function Blog() {
                   )}
                 </div>
                 <div className="p-6 flex-grow flex flex-col">
-                  <div className="flex items-center mb-2 text-xs text-muted-foreground">
+                  <div className="flex items-center mb-2 text-xs text-muted-foreground space-x-2">
                     <time dateTime={post.date}>{post.date}</time>
+                    {post.type !== "blog" && (
+                      <>
+                        <span>•</span>
+                        <span className="flex items-center">
+                          <span
+                            className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                              post.type === "qiita"
+                                ? "bg-green-100 text-green-800"
+                                : "bg-blue-100 text-blue-800"
+                            }`}
+                          >
+                            {post.type === "qiita" ? "Qiita" : "Zenn"}
+                          </span>
+                          {post.likes && (
+                            <span className="ml-2 flex items-center text-gray-500">
+                              <svg
+                                className="w-4 h-4 mr-1"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                              >
+                                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                              </svg>
+                              {post.likes}
+                            </span>
+                          )}
+                        </span>
+                      </>
+                    )}
                   </div>
                   <h3
                     className="text-xl font-semibold text-gray-900 dark:text-white mb-2"
@@ -72,7 +104,7 @@ export default function Blog() {
                     {post.title}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow">
-                    {post.description}
+                    {truncate(post.description, 100)}
                   </p>
                   <div className="flex flex-wrap gap-2 mt-auto">
                     {post.tags.map((tag) => (

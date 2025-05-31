@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   description: "過去のブログ記事のアーカイブ",
 };
 
-export default function BlogArchivePage() {
-  const groupedPosts = groupPostsByYearMonth();
+export default async function BlogArchivePage() {
+  const groupedPosts = await groupPostsByYearMonth();
   // 年月の降順でソート
   const sortedMonths = Object.keys(groupedPosts).sort((a, b) => {
     // 「2025年5月」から年と月を抽出して比較
@@ -59,15 +59,46 @@ export default function BlogArchivePage() {
                   key={post.id}
                   className="border-l-4 border-primary pl-4 py-1"
                 >
-                  <time
-                    dateTime={post.date}
-                    className="text-sm text-muted-foreground mb-1 block"
-                  >
-                    {post.date}
-                  </time>
+                  <div className="flex items-center gap-2 mb-1">
+                    <time
+                      dateTime={post.date}
+                      className="text-sm text-muted-foreground block"
+                    >
+                      {post.date}
+                    </time>
+                    {post.type !== "blog" && (
+                      <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                          post.type === "qiita"
+                            ? "bg-green-100 text-green-800"
+                            : "bg-blue-100 text-blue-800"
+                        }`}
+                      >
+                        {post.type === "qiita" ? "Qiita" : "Zenn"}
+                        {post.likes && (
+                          <span className="ml-1 flex items-center">
+                            <svg
+                              className="w-3 h-3 mr-0.5"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                            </svg>
+                            {post.likes}
+                          </span>
+                        )}
+                      </span>
+                    )}
+                  </div>
                   <ViewTransitionsLink
-                    href={`/blog/${post.id}`}
+                    href={
+                      post.type !== "blog" ? post.url ?? "" : `/blog/${post.id}`
+                    }
                     className="block"
+                    target={post.type !== "blog" ? "_blank" : undefined}
+                    rel={
+                      post.type !== "blog" ? "noopener noreferrer" : undefined
+                    }
                   >
                     <h3 className="text-xl font-semibold text-gray-900 hover:text-primary dark:text-white dark:hover:text-primary transition-colors">
                       {post.title}

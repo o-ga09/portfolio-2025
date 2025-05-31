@@ -10,8 +10,8 @@ export const metadata: Metadata = {
   description: "ブログ記事のタグ一覧",
 };
 
-export default function TagsPage() {
-  const { tagCounts, sortedTags } = getTagCounts();
+export default async function TagsPage() {
+  const { tagCounts, sortedTags } = await getTagCounts();
 
   // 人気タグを抽出（上位5つ）
   const popularTags = sortedTags.slice(0, 5);

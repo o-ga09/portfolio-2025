@@ -28,7 +28,7 @@ export async function generateMetadata({
 
 // 動的なルートの生成
 export async function generateStaticParams() {
-  const tags = getAllTags();
+  const tags = await getAllTags();
 
   return tags.map((tag) => ({
     tag: tag.toLowerCase(),
@@ -38,14 +38,14 @@ export async function generateStaticParams() {
 export default async function TagPage({ params }: TagPageProps) {
   const { tag } = await params;
   const decodedTag = decodeURIComponent(tag);
-  const allTags = getAllTags();
+  const allTags = await getAllTags();
 
   // タグが存在しない場合は404ページへ
   if (!allTags.includes(decodedTag.toLowerCase())) {
     notFound();
   }
 
-  const posts = getPostsByTag(decodedTag);
+  const posts = await getPostsByTag(decodedTag);
   const normalizedTag =
     decodedTag.charAt(0).toUpperCase() + decodedTag.slice(1);
 
@@ -134,7 +134,7 @@ export default async function TagPage({ params }: TagPageProps) {
         <div className="mt-12 pt-6 border-t border-gray-200 mb-8">
           <h2 className="text-xl font-semibold mb-4">他のタグを探す</h2>
           <div className="flex flex-wrap gap-2">
-            {getAllTags()
+            {(await getAllTags())
               .filter((t) => t.toLowerCase() !== tag.toLowerCase())
               .slice(0, 10)
               .map((t) => {
@@ -149,7 +149,7 @@ export default async function TagPage({ params }: TagPageProps) {
                   </ViewTransitionsLink>
                 );
               })}
-            {getAllTags().length > 11 && (
+            {(await getAllTags()).length > 11 && (
               <ViewTransitionsLink
                 href="/tags"
                 className="text-primary hover:underline text-sm ml-2 flex items-center"
