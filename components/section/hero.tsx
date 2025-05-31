@@ -13,17 +13,14 @@ export default function Hero() {
               className="text-4xl lg:text-6xl font-bold"
               style={{ textShadow: "0px 1px 2px rgba(0,0,0,0.3)" }}
             >
-              Hey, I&apos;m <span className="text-accent">o-ga09</span>
+              I&apos;m <span className="text-accent">o-ga09</span>
               <span className="inline-block ml-2">👋</span>
             </h1>
             <p
               className="text-lg lg:text-xl text-foreground leading-relaxed"
               style={{ textShadow: "0px 1px 1px rgba(0,0,0,0.2)" }}
             >
-              不定期で気ままに Web
-              開発に関する記事をお届けします。バックエンドに関する
-              <br />
-              分野の記事が中心です。
+              山本彩推しソフトウェアエンジニアです
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
