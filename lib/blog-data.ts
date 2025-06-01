@@ -1,6 +1,20 @@
 import { ExternalArticle } from "./external-articles";
 import { fetchExternalArticles } from "./rss-feed";
 
+// キャッシュに関するインターフェースの定義
+interface CacheData<T> {
+  data: T;
+  timestamp: number;
+}
+
+// キャッシュ保存用のオブジェクト
+const cache: {
+  posts?: CacheData<BlogPost[]>;
+} = {};
+
+// キャッシュの有効期限（ミリ秒）- 現在は1日に設定
+const CACHE_TTL = 24 * 60 * 60 * 1000;
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -328,7 +342,15 @@ export function convertExternalToBlogPost(article: ExternalArticle): BlogPost {
 
 // 全ての記事（ブログ、Qiita、Zenn）を取得
 export async function getAllPosts(): Promise<BlogPost[]> {
+  // キャッシュの確認
+  const now = Date.now();
+  if (cache.posts && now - cache.posts.timestamp < CACHE_TTL) {
+    console.log("Using cached posts data");
+    return cache.posts.data;
+  }
+
   try {
+    console.log("Fetching fresh posts data");
     const externalArticles = await fetchExternalArticles();
     const externalPosts = externalArticles.map(convertExternalToBlogPost);
 
@@ -337,16 +359,45 @@ export async function getAllPosts(): Promise<BlogPost[]> {
       type: "blog" as const,
     }));
 
-    return [...internalPosts, ...externalPosts].sort(
+    const sortedPosts = [...internalPosts, ...externalPosts].sort(
       (a: BlogPost, b: BlogPost) =>
         new Date(b.date).getTime() - new Date(a.date).getTime()
     );
+
+    // キャッシュの更新
+    cache.posts = {
+      data: sortedPosts,
+      timestamp: now,
+    };
+
+    return sortedPosts;
   } catch (error) {
     console.error("Error fetching all posts:", error);
-    // エラー時は内部記事のみを返す
-    return blogPosts.map((post: BlogPost) => ({
+
+    // キャッシュがある場合は期限切れでもキャッシュを返す
+    if (cache.posts) {
+      console.log("Using expired cache due to error");
+      return cache.posts.data;
+    }
+
+    // キャッシュもない場合は内部記事のみを返す
+    const internalPosts = blogPosts.map((post: BlogPost) => ({
       ...post,
       type: "blog" as const,
     }));
+
+    // エラー時のデータもキャッシュしておく
+    cache.posts = {
+      data: internalPosts,
+      timestamp: now - CACHE_TTL + 60000, // 1分後に再試行できるよう調整
+    };
+
+    return internalPosts;
   }
+}
+
+// キャッシュを手動でクリアする関数
+export function clearPostsCache(): void {
+  console.log("Clearing posts cache");
+  delete cache.posts;
 }

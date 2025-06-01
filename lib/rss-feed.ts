@@ -5,6 +5,20 @@ import {
   ZENN_FEED_URL,
 } from "./external-articles";
 
+// キャッシュに関するインターフェースの定義
+interface CacheData<T> {
+  data: T;
+  timestamp: number;
+}
+
+// キャッシュ保存用のオブジェクト
+const feedCache: {
+  externalArticles?: CacheData<ExternalArticle[]>;
+} = {};
+
+// キャッシュの有効期限（ミリ秒）- 現在は10分に設定
+const FEED_CACHE_TTL = 10 * 60 * 1000;
+
 interface RSSItem {
   title: string;
   link: string;
@@ -87,6 +101,17 @@ async function fetchRSSFeed(
  * 外部記事を取得します
  */
 export async function fetchExternalArticles(): Promise<ExternalArticle[]> {
+  // キャッシュが有効な場合はキャッシュから取得
+  const cachedData = feedCache.externalArticles;
+  const now = Date.now();
+  if (
+    cachedData &&
+    now - cachedData.timestamp < FEED_CACHE_TTL &&
+    cachedData.data
+  ) {
+    return cachedData.data;
+  }
+
   try {
     const [qiitaFeed, zennFeed] = await Promise.all([
       fetchRSSFeed(QIITA_FEED_URL, "Qiita"),
@@ -123,11 +148,25 @@ export async function fetchExternalArticles(): Promise<ExternalArticle[]> {
       })
     );
 
-    return [...qiitaArticles, ...zennArticles].sort(
+    const allArticles = [...qiitaArticles, ...zennArticles].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
+
+    // 取得したデータをキャッシュに保存
+    feedCache.externalArticles = {
+      data: allArticles,
+      timestamp: Date.now(),
+    };
+
+    return allArticles;
   } catch (error) {
     console.error("Error fetching external articles:", error);
     return []; // エラーが発生した場合は空の配列を返す
   }
+}
+
+// キャッシュを手動でクリアする関数
+export function clearFeedCache(): void {
+  console.log("Clearing RSS feed cache");
+  delete feedCache.externalArticles;
 }
