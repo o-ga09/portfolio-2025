@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
-import { truncate } from "@/lib/utils";
 import type { BlogPost } from "@/lib/blog-data";
 import Link from "next/link";
+import { truncateText } from "@/utils/formatting";
 
 interface BlogProps {
   initialPosts: BlogPost[];
@@ -112,7 +112,7 @@ export default function Blog({ initialPosts }: BlogProps) {
                     {post.title}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 flex-grow">
-                    {truncate(post.description, 100)}
+                    {truncateText(post.description, 50)}
                   </p>
                   <div className="flex flex-wrap gap-2 mt-auto">
                     {post.tags.map((tag) => (
