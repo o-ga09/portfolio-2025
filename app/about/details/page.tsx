@@ -1,10 +1,210 @@
-"use client";
 import Footer from "@/components/section/footer";
 import Header from "@/components/section/header";
 import Link from "next/link";
 import React from "react";
 
+type ProfileHistory = {
+  year: string;
+  company: string;
+  position: string;
+  description: string;
+};
+
+type Qualification = {
+  name: string;
+  year: string;
+  description?: string;
+};
+
+type Skill = {
+  type?: "backend" | "frontend";
+  name: string;
+  level: string;
+  description?: string;
+  progress?: number;
+};
+
+type Hobby = {
+  title: string;
+  description: string;
+};
+
+type Other = {
+  title: string;
+  description: string;
+};
+
+type Product = {
+  name: string;
+  description: string;
+  link: string;
+};
+
 export default function AboutDetails() {
+  const profileHistory: ProfileHistory[] = [
+    {
+      year: "2022年〜現在",
+      company: "株式会社ワクト",
+      position: "バックエンドエンジニア",
+      description:
+        "Node.js x AWSのWebシステムの保守や不動産の自社システムのGo x React x AWSのリプレイス案件に参画。自社では、グループ横断のテックイベントの運営や勉強会、社内LT会の主催に注力する。また、社外イベントやカンファレンスへの参加も積極的です。",
+    },
+    {
+      year: "2020年〜2022年",
+      company: "アイテル株式会社",
+      position: "システムエンジニア",
+      description:
+        "金融業界がメインのSES企業に新卒で入社。マーケティングオートメーションツールのシステム保守に従事。一部、開発工程において結合テスト／システムテストでのテストシナリオの策定、実施を担当。",
+    },
+    {
+      year: "2016年〜2020年",
+      company: "会津大学",
+      position: "学部",
+      description:
+        "コンピュータサイエンス学部で、プログラミングやデータベース、ネットワークなどの基礎を学ぶ。特に、卒業研究ではブロックチェーンを用いたアプリケーションに取り組みました。",
+    },
+  ];
+
+  const qualifications_tech: Qualification[] = [
+    {
+      name: "AWS Certified Solutions Architect Associate",
+      year: "2025年取得",
+      description:
+        "AWS上でのアーキテクチャ設計に関する専門知識を証明する資格。",
+    },
+    {
+      name: "AWS Certified Developer Associate",
+      year: "2024年取得",
+      description:
+        "AWS上でのアプリケーション開発に関する専門知識を証明する資格。",
+    },
+    {
+      name: "AWS Certified Cloud Practitioner",
+      year: "2023年取得",
+      description:
+        "AWSの基本的なサービスとクラウドコンセプトに関する知識を証明する資格。",
+    },
+  ];
+
+  const qualifications_other: Qualification[] = [];
+
+  const remark = "";
+
+  const skills: Skill[] = [
+    {
+      type: "backend",
+      name: "Go",
+      level: "上級",
+      description: "API開発の実装における経験。",
+      progress: 85,
+    },
+    {
+      type: "backend",
+      name: "TypeScript",
+      level: "中級",
+      description:
+        "ReactやNext.jsを用いたフロントエンド開発の経験。Expressやを用いたバックエンド開発の経験。",
+      progress: 70,
+    },
+    {
+      type: "backend",
+      name: "Kubernetes",
+      level: "上級",
+      description: "",
+      progress: 50,
+    },
+    {
+      type: "frontend",
+      name: "React",
+      level: "中級",
+      description: "個人開発でのWebアプリケーション開発経験。",
+      progress: 75,
+    },
+    {
+      type: "backend",
+      name: "Docker",
+      level: "上級",
+      description: "コンテナ化技術を用いた開発環境の構築と運用。",
+      progress: 85,
+    },
+    {
+      type: "backend",
+      name: "MySQL",
+      level: "中級",
+      description: "データベース設計とパフォーマンスチューニングの経験。",
+      progress: 70,
+    },
+    {
+      type: "backend",
+      name: "AWS",
+      level: "中級",
+      description: "クラウドインフラの設計と運用に関する専門知識。",
+      progress: 90,
+    },
+  ];
+
+  const hobbies: Hobby[] = [
+    {
+      title: "推し活",
+      description:
+        "山本彩さんのファンとして10年以上活動中。ライブやイベントに積極的に参加しています。",
+    },
+    {
+      title: "ゲーム",
+      description:
+        "ドラクエ、モンハン（MH3rd、MH3G、MH4、MH4G、MHW、MHW:I、MHR、MHR:S）、ゼノブレイド",
+    },
+    {
+      title: "アニメ・映画鑑賞",
+      description: "ハイキュー！！、鬼滅の刃、推しの子、ダイヤのA、メジャー",
+    },
+    {
+      title: "個人開発",
+      description:
+        "趣味で新しい技術を試しながら個人アプリやツールを開発。GitHubではオープンソースにも貢献中。",
+    },
+  ];
+
+  const others: Other[] = [
+    {
+      title: "出身地",
+      description: "新潟県。豊かな自然と食文化に恵まれた環境で育ちました。",
+    },
+    {
+      title: "好きな食べ物",
+      description: "日本酒に合う料理全般。特に新潟の海の幸と山の幸が好みです。",
+    },
+    {
+      title: "休日の過ごし方",
+      description:
+        "個人開発、推し関連のライブやイベント参加、アニメ鑑賞、ゲーム、友人とのダーツを楽しんでいます。",
+    },
+    {
+      title: "どうでもいい自慢",
+      description: "俳優の高橋克実さんと出身小中高が一緒",
+    },
+  ];
+
+  const products: Product[] = [
+    {
+      name: "推しの歌詞のワンフレーズで曲名を当てるクイズゲーム",
+      description:
+        "個人開発のWebアプリケーション。推しの歌詞に共鳴するフレーズを当てるクイズゲームです。",
+      link: "https://sy-quiz.t09-blog.com/",
+    },
+    {
+      name: "パワプロのパワフェスモードの計算ツール",
+      description:
+        "パワプロのパワフェスモードでの試合結果や選手のステータスを計算するツール。",
+      link: "https://pawafes-calc-20220223.dt.r.appspot.com/",
+    },
+    {
+      name: "モンハンAPI",
+      description: "モンスターハンターシリーズのデータを提供するAPI。",
+      link: "https://mh-api.com",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
@@ -46,49 +246,22 @@ export default function AboutDetails() {
                 <span className="text-pink-500 mr-3">❖</span>
                 略歴
               </h2>
-
               <div className="space-y-6">
-                <div className="flex flex-col md:flex-row gap-4">
-                  <div className="flex-none w-32 text-gray-900 dark:text-white font-medium">
-                    2023年〜現在
+                {profileHistory.map((item, index) => (
+                  <div key={index} className="flex flex-col md:flex-row gap-4">
+                    <div className="flex-none w-32 text-gray-900 dark:text-white font-medium">
+                      {item.year}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-gray-900 dark:text-white">
+                        {item.company}
+                      </h3>
+                      <p className="text-muted-foreground mt-1">
+                        {item.position}として、{item.description}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 dark:text-white">
-                      株式会社クラウドテクノロジーズ
-                    </h3>
-                    <p className="text-muted-foreground mt-1">
-                      テックリード・アーキテクトとして、マイクロサービスアーキテクチャの設計および実装をリード。Kubernetes上での大規模分散システムの構築と運用最適化を担当。
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col md:flex-row gap-4">
-                  <div className="flex-none w-32 text-gray-900 dark:text-white font-medium">
-                    2020年〜2023年
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 dark:text-white">
-                      株式会社テックイノベーション
-                    </h3>
-                    <p className="text-muted-foreground mt-1">
-                      バックエンドエンジニアとして、Goを使用したマイクロサービスの開発に従事。AWS環境でのインフラ構築とCI/CDパイプラインの整備を行う。
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex flex-col md:flex-row gap-4">
-                  <div className="flex-none w-32 text-gray-900 dark:text-white font-medium">
-                    2017年〜2020年
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 dark:text-white">
-                      株式会社フロントテクノロジーズ
-                    </h3>
-                    <p className="text-muted-foreground mt-1">
-                      フロントエンドエンジニアとして、React/TypeScriptを用いたWebアプリケーションの開発に従事。UI/UXの設計から実装、テスト自動化まで幅広く担当。
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </section>
 
@@ -107,53 +280,24 @@ export default function AboutDetails() {
                   </h3>
 
                   <div className="space-y-3">
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-yellow-400 mt-1"></div>
-                      <div className="ml-3">
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          Certified Kubernetes Administrator (CKA)
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          2022年取得
-                        </p>
+                    {qualifications_tech.map((qual, index) => (
+                      <div key={index} className="flex items-start">
+                        <div className="flex-shrink-0 h-5 w-5 rounded-full bg-yellow-400 mt-1"></div>
+                        <div className="ml-3">
+                          <p className="font-medium text-gray-900 dark:text-white">
+                            {qual.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {qual.year}
+                          </p>
+                          {qual.description && (
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {qual.description}
+                            </p>
+                          )}
+                        </div>
                       </div>
-                    </div>
-
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-yellow-400 mt-1"></div>
-                      <div className="ml-3">
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          AWS Certified Solutions Architect Professional
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          2021年取得
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-yellow-400 mt-1"></div>
-                      <div className="ml-3">
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          Google Cloud Professional Cloud Architect
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          2022年取得
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-yellow-400 mt-1"></div>
-                      <div className="ml-3">
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          情報処理安全確保支援士
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          2023年取得
-                        </p>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
 
@@ -164,51 +308,38 @@ export default function AboutDetails() {
                   </h3>
 
                   <div className="space-y-3">
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-yellow-400 mt-1"></div>
-                      <div className="ml-3">
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          TOEIC 900点
+                    {qualifications_other.length > 0 ? (
+                      qualifications_other.map((qual, index) => (
+                        <div key={index} className="flex items-start">
+                          <div className="flex-shrink-0 h-5 w-5 rounded-full bg-yellow-400 mt-1"></div>
+                          <div className="ml-3">
+                            <p className="font-medium text-gray-900 dark:text-white">
+                              {qual.name}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {qual.year}
+                            </p>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <>
+                        <p className="text-gray-600 dark:text-gray-400">
+                          特にありません
                         </p>
-                        <p className="text-xs text-muted-foreground">
-                          2020年取得
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-yellow-400 mt-1"></div>
-                      <div className="ml-3">
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          日商簿記検定2級
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          2018年取得
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-5 w-5 rounded-full bg-yellow-400 mt-1"></div>
-                      <div className="ml-3">
-                        <p className="font-medium text-gray-900 dark:text-white">
-                          日本酒ソムリエ
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          2019年取得
-                        </p>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          新潟の地酒を中心に日本酒の知識を深め、ペアリングの提案なども行っています。
-                        </p>
-                      </div>
-                    </div>
+                      </>
+                    )}
                   </div>
 
-                  <div className="bg-secondary/20 border border-border rounded-lg p-4 mt-6">
-                    <p className="text-sm text-gray-900 dark:text-white/80 italic">
-                      「技術だけでなく幅広い知識を持つことで、多角的な視点からの問題解決を心がけています。特に日本酒ソムリエの資格は、地元新潟への愛着と文化への理解を深めるきっかけになりました。」
-                    </p>
-                  </div>
+                  {remark === "" ? (
+                    <></>
+                  ) : (
+                    <div className="bg-secondary/20 border border-border rounded-lg p-4 mt-6">
+                      <p className="text-sm text-gray-900 dark:text-white/80 italic">
+                        {remark}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </section>
@@ -226,73 +357,32 @@ export default function AboutDetails() {
                     バックエンド
                   </h3>
                   <div className="space-y-3">
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="font-medium text-sm text-gray-900 dark:text-white">
-                          Go
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          上級
-                        </span>
-                      </div>
-                      <div className="w-full bg-secondary/30 rounded-full h-2">
-                        <div
-                          className="bg-indigo-500 h-2 rounded-full"
-                          style={{ width: "90%" }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="font-medium text-sm text-gray-900 dark:text-white">
-                          MySQL/PostgreSQL
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          中級〜上級
-                        </span>
-                      </div>
-                      <div className="w-full bg-secondary/30 rounded-full h-2">
-                        <div
-                          className="bg-indigo-500 h-2 rounded-full"
-                          style={{ width: "85%" }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="font-medium text-sm text-gray-900 dark:text-white">
-                          Docker/Kubernetes
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          上級
-                        </span>
-                      </div>
-                      <div className="w-full bg-secondary/30 rounded-full h-2">
-                        <div
-                          className="bg-indigo-500 h-2 rounded-full"
-                          style={{ width: "95%" }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="font-medium text-sm text-gray-900 dark:text-white">
-                          AWS/GCP
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          中級〜上級
-                        </span>
-                      </div>
-                      <div className="w-full bg-secondary/30 rounded-full h-2">
-                        <div
-                          className="bg-indigo-500 h-2 rounded-full"
-                          style={{ width: "80%" }}
-                        ></div>
-                      </div>
-                    </div>
+                    {skills
+                      .filter((skill) => skill.type === "backend")
+                      .map((skill, index) => (
+                        <div key={index} className="flex items-start">
+                          <div className="flex-shrink-0 h-5 w-5 rounded-full bg-indigo-400 mt-1"></div>
+                          <div className="ml-3">
+                            <span className="font-medium text-gray-900 dark:text-white">
+                              {skill.name}
+                            </span>
+                            <span className="text-xs text-muted-foreground">
+                              {skill.level}
+                            </span>
+                            {skill.description && (
+                              <span className="text-sm text-muted-foreground mt-1">
+                                {skill.description}
+                              </span>
+                            )}
+                            <div className="w-full bg-secondary/30 rounded-full h-2">
+                              <div
+                                className="bg-pink-500 h-2 rounded-full"
+                                style={{ width: `${skill.progress}%` }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                   </div>
                 </div>
 
@@ -301,73 +391,32 @@ export default function AboutDetails() {
                     フロントエンド
                   </h3>
                   <div className="space-y-3">
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="font-medium text-sm text-gray-900 dark:text-white">
-                          TypeScript/JavaScript
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          上級
-                        </span>
-                      </div>
-                      <div className="w-full bg-secondary/30 rounded-full h-2">
-                        <div
-                          className="bg-pink-500 h-2 rounded-full"
-                          style={{ width: "90%" }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="font-medium text-sm text-gray-900 dark:text-white">
-                          React/Next.js
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          上級
-                        </span>
-                      </div>
-                      <div className="w-full bg-secondary/30 rounded-full h-2">
-                        <div
-                          className="bg-pink-500 h-2 rounded-full"
-                          style={{ width: "85%" }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="font-medium text-sm text-gray-900 dark:text-white">
-                          HTML/CSS/Tailwind
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          中級〜上級
-                        </span>
-                      </div>
-                      <div className="w-full bg-secondary/30 rounded-full h-2">
-                        <div
-                          className="bg-pink-500 h-2 rounded-full"
-                          style={{ width: "80%" }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex justify-between mb-1">
-                        <span className="font-medium text-sm text-gray-900 dark:text-white">
-                          UI/UXデザイン
-                        </span>
-                        <span className="text-xs text-muted-foreground">
-                          中級
-                        </span>
-                      </div>
-                      <div className="w-full bg-secondary/30 rounded-full h-2">
-                        <div
-                          className="bg-pink-500 h-2 rounded-full"
-                          style={{ width: "75%" }}
-                        ></div>
-                      </div>
-                    </div>
+                    {skills
+                      .filter((skill) => skill.type === "frontend")
+                      .map((skill, index) => (
+                        <div key={index} className="flex items-start">
+                          <div className="flex-shrink-0 h-5 w-5 rounded-full bg-indigo-400 mt-1"></div>
+                          <div className="ml-3">
+                            <p className="font-medium text-gray-900 dark:text-white">
+                              {skill.name}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {skill.level}
+                            </p>
+                            {skill.description && (
+                              <p className="text-sm text-muted-foreground mt-1">
+                                {skill.description}
+                              </p>
+                            )}
+                            <div className="w-full bg-secondary/30 rounded-full h-2">
+                              <div
+                                className="bg-pink-500 h-2 rounded-full"
+                                style={{ width: "85%" }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                   </div>
                 </div>
               </div>
@@ -386,30 +435,19 @@ export default function AboutDetails() {
                     趣味
                   </h3>
                   <ul className="space-y-3 list-disc list-inside text-gray-900 dark:text-white">
-                    <li>
-                      <span className="font-medium">推し活</span>
-                      <p className="ml-6 text-sm mt-1 text-muted-foreground">
-                        山本彩さんのファンとして10年以上活動中。ライブやイベントに積極的に参加しています。
-                      </p>
-                    </li>
-                    <li>
-                      <span className="font-medium">ゲーム</span>
-                      <p className="ml-6 text-sm mt-1 text-muted-foreground">
-                        特にゼノブレイドシリーズが好きで、全作品をクリア済み。RPGやストラテジーゲームもよくプレイします。
-                      </p>
-                    </li>
-                    <li>
-                      <span className="font-medium">アニメ・映画鑑賞</span>
-                      <p className="ml-6 text-sm mt-1 text-muted-foreground">
-                        SFやファンタジー系が好みで、新作アニメを毎シーズン数本は欠かさず視聴。映画館にも頻繁に足を運びます。
-                      </p>
-                    </li>
-                    <li>
-                      <span className="font-medium">個人開発</span>
-                      <p className="ml-6 text-sm mt-1 text-muted-foreground">
-                        趣味で新しい技術を試しながら個人アプリやツールを開発。GitHubではオープンソースにも貢献中。
-                      </p>
-                    </li>
+                    {hobbies.map((hobby, index) => (
+                      <div key={index} className="flex items-start">
+                        <div className="flex-shrink-0 h-5 w-5 rounded-full bg-purple-400 mt-1"></div>
+                        <div className="ml-3">
+                          <p className="font-medium text-gray-900 dark:text-white">
+                            {hobby.title}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {hobby.description}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                   </ul>
                 </div>
 
@@ -419,45 +457,65 @@ export default function AboutDetails() {
                   </h3>
 
                   <div className="space-y-4">
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
-                        出身地
-                      </p>
-                      <p className="text-sm text-muted-foreground ml-4 mt-1">
-                        新潟県。豊かな自然と食文化に恵まれた環境で育ち、特に日本酒についての知識と愛好心が高まりました。
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
-                        好きな食べ物
-                      </p>
-                      <p className="text-sm text-muted-foreground ml-4 mt-1">
-                        日本酒に合う料理全般。特に新潟の海の幸と山の幸を使った郷土料理が好みです。
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
-                        休日の過ごし方
-                      </p>
-                      <p className="text-sm text-muted-foreground ml-4 mt-1">
-                        個人開発、推し関連のライブやイベント参加、アニメ鑑賞、ゲーム、友人とのダーツ。技術書や小説もよく読みます。
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
-                        好きな言葉
-                      </p>
-                      <p className="text-sm text-muted-foreground ml-4 mt-1">
-                        「継続は力なり」「Done is better than
-                        perfect」日々の小さな努力の積み重ねを大切にしています。
-                      </p>
-                    </div>
+                    {others.map((other, index) => (
+                      <div key={index} className="flex items-start">
+                        <div className="flex-shrink-0 h-5 w-5 rounded-full bg-purple-400 mt-1"></div>
+                        <div className="ml-3">
+                          <p className="font-medium text-gray-900 dark:text-white">
+                            {other.title}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {other.description}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
+            </section>
+
+            {/* プロダクトセクション */}
+            <section className="bg-card rounded-xl p-8 shadow-lg border-l-4 border-blue-400">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                <span className="text-blue-500 mr-3">❖</span>
+                プロダクト
+              </h2>
+
+              <div className="space-y-6">
+                {products.map((product, index) => (
+                  <div key={index} className="flex items-start">
+                    <div className="flex-shrink-0 h-5 w-5 rounded-full bg-blue-400 mt-1"></div>
+                    <div className="ml-3">
+                      <p className="font-medium text-gray-900 dark:text-white">
+                        {product.name}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {product.description}
+                      </p>
+                      <a
+                        href={product.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline mt-1 inline-block"
+                      >
+                        詳細を見る
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* 今後について */}
+            <section className="bg-card rounded-xl p-8 shadow-lg border-l-4 border-green-400">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
+                <span className="text-green-500 mr-3">❖</span>
+                今後について
+              </h2>
+              <p className="text-gray-900 dark:text-white">
+                バックエンドエンジニアでエンターテイメントのサービス基盤を作るエンジニアになりたい
+              </p>
             </section>
 
             {/* コンタクトセクション */}
@@ -520,7 +578,7 @@ export default function AboutDetails() {
                 </a>
 
                 <a
-                  href="mailto:contact@example.com"
+                  href="mailto:taitiabe1997@gmail.com"
                   className="flex items-center gap-3 px-6 py-3 bg-secondary/30 hover:bg-secondary rounded-full transition-colors duration-300"
                 >
                   <svg
@@ -538,6 +596,27 @@ export default function AboutDetails() {
                     ></path>
                   </svg>
                   <span className="text-gray-900 dark:text-white">Email</span>
+                </a>
+
+                <a
+                  href="https://lapras.com/person"
+                  className="flex items-center gap-3 px-6 py-3 bg-secondary/30 hover:bg-secondary rounded-full transition-colors duration-300"
+                >
+                  <svg
+                    className="w-6 h-6 text-gray-900 dark:text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    ></path>
+                  </svg>
+                  <span className="text-gray-900 dark:text-white">LAPRAS</span>
                 </a>
               </div>
             </section>

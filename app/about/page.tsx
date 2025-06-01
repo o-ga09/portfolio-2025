@@ -1,26 +1,11 @@
-"use client";
 import Footer from "@/components/section/footer";
 import Header from "@/components/section/header";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Stamp from "@/components/item/stemp";
 
 export default function About() {
-  const [isStamping, setIsStamping] = useState(false);
-  const [stampCount, setStampCount] = useState(0);
-
-  const handleStampClick = () => {
-    if (!isStamping) {
-      setIsStamping(true);
-      setStampCount((prev) => prev + 1);
-
-      // アニメーション終了後に状態をリセット
-      setTimeout(() => {
-        setIsStamping(false);
-      }, 1000);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
@@ -47,54 +32,7 @@ export default function About() {
                       className="object-cover"
                     />
                   </div>
-                  <div className="bg-pink-100 rounded-full px-5 py-2 text-pink-600 font-medium text-sm transform rotate-3 border border-pink-300 shadow-sm">
-                    Valid until: ∞
-                  </div>
-                  <div
-                    onClick={handleStampClick}
-                    className={`w-20 h-20 rounded-full bg-indigo-100 border-2 border-indigo-300 flex items-center justify-center cursor-pointer 
-                      ${
-                        isStamping
-                          ? "animate-stamp transform-gpu origin-center"
-                          : "transform -rotate-12 hover:rotate-0 transition-all duration-300 hover:shadow-md"
-                      } 
-                      relative`}
-                    title="スタンプを押してみよう！"
-                  >
-                    <span className="text-indigo-700 font-bold text-xs">
-                      DEV STAMP
-                    </span>
-
-                    {/* スタンプ押印時の効果 */}
-                    {isStamping && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-28 h-28 bg-indigo-600 rounded-full opacity-10 animate-ping"></div>
-                      </div>
-                    )}
-
-                    {/* スタンプカウンター */}
-                    {stampCount > 0 && (
-                      <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center border-2 border-white">
-                        {stampCount}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* スタンプが押された跡のマーク */}
-                  <div className="flex flex-wrap justify-center gap-2 max-w-xs">
-                    {[...Array(Math.min(stampCount, 5))].map((_, index) => (
-                      <div
-                        key={index}
-                        className={`w-8 h-8 rounded-full bg-indigo-100 border border-indigo-300 flex items-center justify-center opacity-70 transform rotate-${Math.floor(
-                          Math.random() * 45 - 22
-                        )}`}
-                      >
-                        <span className="text-indigo-700 font-bold text-[7px]">
-                          DEV
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  <Stamp />
                 </div>
 
                 {/* 右側: テキスト情報 */}
@@ -118,7 +56,39 @@ export default function About() {
                           肩書き
                         </p>
                         <p className="font-medium text-gray-900 dark:text-white">
-                          フルスタックエンジニア
+                          バックエンドエンジニア
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          生年月日
+                        </p>
+                        <p className="font-medium text-gray-900 dark:text-white">
+                          1997年9月27日
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          出身地
+                        </p>
+                        <p className="font-medium text-gray-900 dark:text-white">
+                          新潟県三条市
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          出身大学
+                        </p>
+                        <p className="font-medium text-gray-900 dark:text-white">
+                          会津大学 24期
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                          卒業年度
+                        </p>
+                        <p className="font-medium text-gray-900 dark:text-white">
+                          20卒
                         </p>
                       </div>
                       <div>
@@ -175,7 +145,7 @@ export default function About() {
                     </h2>
                     <div className="h-1 w-14 bg-primary rounded mb-3"></div>
                     <p className="text-gray-800 dark:text-gray-200 leading-relaxed">
-                      フルスタックエンジニアとして活動しているオーガです。バックエンドはGoを中心に、フロントエンドはReact/Next.jsを得意としています。クラウドインフラの構築や運用も担当しています。趣味は推し活とライブ参戦で、特に山本彩さんの10年来のファンです。休日はゲーム（ゼノブレイド）やアニメ鑑賞を楽しんでいます。新潟出身で日本酒が大好きです。
+                      バックエンドとして活動しているオーガです。バックエンドはGoを中心に、フロントエンドはReact/Next.jsを得意としています。クラウドインフラの構築や運用も担当しています。趣味は推し活とライブ参戦で、特に山本彩さんの10年来のファンです。休日はゲーム（ゼノブレイド）やアニメ鑑賞を楽しんでいます。新潟出身で日本酒が大好きです。
                     </p>
                   </div>
                 </div>
