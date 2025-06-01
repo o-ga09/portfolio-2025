@@ -208,13 +208,13 @@ export default function AboutDetails() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main className="flex-grow container mx-auto py-12 px-4 md:px-6">
+      <main className="flex-grow container mx-auto py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8">
         <div className="max-w-5xl mx-auto">
           {/* ナビゲーションリンク */}
-          <div className="mb-8">
+          <div className="mb-10">
             <Link
               href="/about"
-              className="text-gray-900 dark:text-white hover:text-gray-900 dark:text-white/80 flex items-center gap-2 font-medium"
+              className="text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-white/90 transition-colors duration-300 flex items-center gap-2 font-medium"
             >
               <svg
                 className="w-5 h-5"
@@ -234,14 +234,14 @@ export default function AboutDetails() {
             </Link>
           </div>
 
-          <h1 className="text-4xl font-bold mb-10 text-gray-900 dark:text-white drop-shadow-md">
+          <h1 className="text-4xl font-bold mb-12 text-gray-900 dark:text-white drop-shadow-md">
             詳細プロフィール
           </h1>
 
           {/* 詳細プロフィールのセクション */}
-          <div className="space-y-12">
+          <div className="space-y-16 md:space-y-20">
             {/* 略歴セクション */}
-            <section className="bg-card rounded-xl p-8 shadow-lg border-l-4 border-pink-400">
+            <section className="bg-card rounded-xl p-6 sm:p-8 md:p-10 shadow-lg border-l-4 border-pink-400 hover:shadow-xl transition-shadow duration-300">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
                 <span className="text-pink-500 mr-3">❖</span>
                 略歴
@@ -362,19 +362,19 @@ export default function AboutDetails() {
                       .map((skill, index) => (
                         <div key={index} className="flex items-start">
                           <div className="flex-shrink-0 h-5 w-5 rounded-full bg-indigo-400 mt-1"></div>
-                          <div className="ml-3">
+                          <div className="ml-3 w-full">
                             <span className="font-medium text-gray-900 dark:text-white">
                               {skill.name}
-                            </span>
-                            <span className="text-xs text-muted-foreground">
-                              {skill.level}
+                              <span className="text-xs text-muted-foreground ml-1">
+                                {skill.level}
+                              </span>
                             </span>
                             {skill.description && (
                               <span className="text-sm text-muted-foreground mt-1">
                                 {skill.description}
                               </span>
                             )}
-                            <div className="w-full bg-secondary/30 rounded-full h-2">
+                            <div className="w-full bg-secondary/30 rounded-full h-2 mt-2">
                               <div
                                 className="bg-pink-500 h-2 rounded-full"
                                 style={{ width: `${skill.progress}%` }}
@@ -396,22 +396,22 @@ export default function AboutDetails() {
                       .map((skill, index) => (
                         <div key={index} className="flex items-start">
                           <div className="flex-shrink-0 h-5 w-5 rounded-full bg-indigo-400 mt-1"></div>
-                          <div className="ml-3">
+                          <div className="ml-3 w-full">
                             <p className="font-medium text-gray-900 dark:text-white">
-                              {skill.name}
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              {skill.level}
+                              {skill.name}{" "}
+                              <span className="text-xs text-muted-foreground ml-1">
+                                {skill.level}
+                              </span>
                             </p>
                             {skill.description && (
                               <p className="text-sm text-muted-foreground mt-1">
                                 {skill.description}
                               </p>
                             )}
-                            <div className="w-full bg-secondary/30 rounded-full h-2">
+                            <div className="w-full bg-secondary/30 rounded-full h-2 mt-2">
                               <div
                                 className="bg-pink-500 h-2 rounded-full"
-                                style={{ width: "85%" }}
+                                style={{ width: `${skill.progress}%` }}
                               />
                             </div>
                           </div>

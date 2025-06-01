@@ -9,7 +9,7 @@ export default function About() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main className="flex-grow flex items-center justify-center py-8 px-4 md:px-8">
+      <main className="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 md:px-8 lg:py-16">
         <div className="max-w-4xl w-full mx-auto">
           <h1 className="text-4xl font-bold text-center mb-6 text-primary drop-shadow-md">
             About Me
@@ -21,15 +21,17 @@ export default function About() {
             <div className="h-4 bg-gradient-to-r from-pink-400 via-purple-500 to-indigo-500"></div>
 
             <div className="p-6 md:p-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
                 {/* 左側: 写真とスタンプ風の装飾 */}
-                <div className="space-y-4 flex flex-col items-center">
-                  <div className="relative w-48 h-48 rounded-lg overflow-hidden border-4 border-pink-200 shadow-md">
+                <div className="space-y-6 flex flex-col items-center">
+                  <div className="relative w-48 h-48 rounded-lg overflow-hidden border-4 border-pink-200 shadow-md hover:shadow-lg transition-shadow duration-300">
                     <Image
                       src="/main.webp"
                       alt="Profile Picture"
                       fill
                       className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 192px"
+                      priority
                     />
                   </div>
                   <Stamp />
@@ -115,7 +117,7 @@ export default function About() {
                       スキル
                     </h2>
                     <div className="h-1 w-14 bg-primary rounded mb-3"></div>
-                    <div className="grid grid-cols-3 gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                       {[
                         "Go",
                         "TypeScript",
@@ -129,7 +131,7 @@ export default function About() {
                       ].map((skill) => (
                         <div
                           key={skill}
-                          className="bg-gradient-to-r from-primary/10 to-secondary/10 px-3 py-2 rounded-lg shadow-sm border border-border"
+                          className="bg-gradient-to-r from-primary/10 to-secondary/10 px-3 py-2 rounded-lg shadow-sm border border-border hover:shadow-md transition-shadow duration-300"
                         >
                           <p className="font-medium text-sm text-gray-900 dark:text-white text-center">
                             {skill}
