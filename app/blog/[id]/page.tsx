@@ -1,10 +1,22 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { getPostById } from "@/lib/blog-data";
+import { getPostById, getAllPosts } from "@/lib/blog-data";
 import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
 import Link from "next/link";
+import markdownToHtml from "zenn-markdown-html";
+
+// 静的パスを生成
+export async function generateStaticParams() {
+  const posts = await getAllPosts();
+
+  return posts
+    .filter((post) => post.type === "blog")
+    .map((post) => ({
+      id: post.id,
+    }));
+}
 
 export async function generateMetadata({
   params,
@@ -12,7 +24,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const post = getPostById(id);
+  const post = await getPostById(id);
 
   if (!post) {
     return {
@@ -20,9 +32,46 @@ export async function generateMetadata({
     };
   }
 
+  const APP_URL = process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000";
+  const postUrl = `${APP_URL}/blog/${id}`;
+  const ogImageUrl = `${APP_URL}/og-image.webp`;
+
   return {
     title: `${post.title} | ブログ`,
     description: post.description,
+    keywords: post.tags.join(", "),
+    authors: [{ name: "@o-ga09" }],
+    creator: "@o-ga09",
+    publisher: "@o-ga09",
+    alternates: {
+      canonical: `/blog/${id}`,
+    },
+    openGraph: {
+      type: "article",
+      locale: "ja_JP",
+      url: postUrl,
+      siteName: "オーガのブログ",
+      title: post.title,
+      description: post.description,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+      publishedTime: post.date,
+      tags: post.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [ogImageUrl],
+      creator: "@o-ga09",
+      site: "@o-ga09",
+    },
   };
 }
 
@@ -32,36 +81,15 @@ export default async function BlogPostPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const post = getPostById(id);
+  const post = await getPostById(id);
 
   if (!post) {
     notFound();
   }
 
-  // マークダウンの簡易的な変換（実際のプロジェクトではマークダウンパーサーを使用してください）
+  // Zennマークダウンを使用してHTML変換
   const contentHtml = post.content
-    ? post.content
-        .replace(
-          /^# (.*$)/gm,
-          '<h1 class="text-3xl font-bold mt-8 mb-4">$1</h1>'
-        )
-        .replace(
-          /^## (.*$)/gm,
-          '<h2 class="text-2xl font-bold mt-6 mb-3">$1</h2>'
-        )
-        .replace(
-          /^### (.*$)/gm,
-          '<h3 class="text-xl font-semibold mt-5 mb-2">$1</h3>'
-        )
-        .replace(
-          /\`\`\`([a-z]*)\n([\s\S]*?)\`\`\`/gm,
-          '<pre class="bg-secondary/30 p-4 rounded-md my-4 overflow-auto"><code>$2</code></pre>'
-        )
-        .replace(
-          /\`([^`]+)\`/g,
-          '<code class="bg-secondary/30 px-1 py-0.5 rounded">$1</code>'
-        )
-        .replace(/\n\n/g, '<p class="my-4"></p>')
+    ? markdownToHtml(post.content)
     : "<p>この記事にはコンテンツがありません。</p>";
 
   return (
@@ -127,7 +155,7 @@ export default async function BlogPostPage({
           </div>
 
           <div
-            className="prose prose-lg max-w-none prose-headings:text-gray-900 dark:text-white prose-p:text-gray-900 dark:text-white/90 prose-strong:text-gray-900 dark:text-white prose-code:text-gray-900 dark:text-white"
+            className="znc"
             dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
 

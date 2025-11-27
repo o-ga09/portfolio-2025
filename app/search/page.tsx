@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { blogPosts } from "@/lib/blog-data";
 import Link from "next/link";
 
 interface SearchResult {
@@ -25,29 +24,27 @@ export default function SearchPage() {
   const query = searchParams.get("q") || "";
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [searchTerm, setSearchTerm] = useState(query);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const performSearch = (searchQuery: string) => {
+  const performSearch = async (searchQuery: string) => {
     if (!searchQuery.trim()) {
       setSearchResults([]);
       return;
     }
 
-    const results = blogPosts
-      .filter((post) => {
-        const searchTarget = [
-          post.title.toLowerCase(),
-          post.description.toLowerCase(),
-          ...(post.tags || []).map((tag) => tag.toLowerCase()),
-        ].join(" ");
-
-        return searchTarget.includes(searchQuery.toLowerCase());
-      })
-      .map((post) => ({
-        ...post,
-        matches: [], // TODO: ハイライト機能の実装のために使用
-      }));
-
-    setSearchResults(results);
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `/api/search?q=${encodeURIComponent(searchQuery)}`
+      );
+      const results: SearchResult[] = await response.json();
+      setSearchResults(results);
+    } catch (error) {
+      console.error("Search error:", error);
+      setSearchResults([]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -87,7 +84,11 @@ export default function SearchPage() {
             </p>
           )}
 
-          {searchResults.length > 0 ? (
+          {isLoading ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">検索中...</p>
+            </div>
+          ) : searchResults.length > 0 ? (
             <div className="space-y-6">
               {searchResults.map((result) => (
                 <article

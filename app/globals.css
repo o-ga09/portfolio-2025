@@ -8,6 +8,9 @@
 /* テキストシャドウのスタイル */
 @import "../styles/text-shadow.css";
 
+/* Zenn風マークダウンスタイル */
+@import "../styles/zenn-markdown.css";
+
 /* スタンプアニメーション */
 @keyframes stamp {
   0% { transform: translateY(-20px) rotate(-12deg); opacity: 1; }
