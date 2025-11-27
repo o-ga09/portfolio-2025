@@ -88,6 +88,9 @@ export function generateBlogPostMetadata(
   },
   id: string
 ): Metadata {
+  // 動的OG画像のURLを使用
+  const ogImageUrl = `${APP_URL}/blog/${id}/opengraph-image`;
+
   return generateSiteMetadata({
     title: post.title,
     description: post.description,
@@ -96,6 +99,7 @@ export function generateBlogPostMetadata(
     ogType: "article",
     publishedTime: post.date,
     tags: post.tags,
+    ogImage: ogImageUrl,
   });
 }
 
