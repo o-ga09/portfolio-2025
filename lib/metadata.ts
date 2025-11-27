@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 const APP_URL = process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000";
 const SITE_NAME = "オーガのブログ";
-const DEFAULT_OG_IMAGE = `${APP_URL}/og-image.webp`;
+const DEFAULT_OG_IMAGE = `${APP_URL}/og-image.png`;
 const CREATOR = "@o_ga09";
 
 /**
