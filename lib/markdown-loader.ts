@@ -3,7 +3,6 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { BlogPost } from "./blog-data";
-import { title } from "process";
 
 // contentsディレクトリからマークダウンファイルを読み込む
 export function loadMarkdownPosts(): BlogPost[] {
