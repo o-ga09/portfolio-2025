@@ -135,10 +135,10 @@ export function convertExternalToBlogPost(article: ExternalArticle): BlogPost {
 export async function getAllPosts(): Promise<BlogPost[]> {
   // キャッシュの確認
   const now = Date.now();
-  // if (cache.posts && now - cache.posts.timestamp < CACHE_TTL) {
-  //   console.log("Using cached posts data");
-  //   return cache.posts.data;
-  // }
+  if (cache.posts && now - cache.posts.timestamp < CACHE_TTL) {
+    console.log("Using cached posts data");
+    return cache.posts.data;
+  }
 
   try {
     console.log("Fetching fresh posts data");
@@ -147,22 +147,16 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
     const { loadMarkdownPosts } = await import("./markdown-loader");
     const markdownPosts = loadMarkdownPosts();
-    console.log("⚠️ Loaded markdown posts:", markdownPosts[0]);
     const internalPosts = [...markdownPosts, ...blogPosts].map(
       (post: BlogPost) => ({
         ...post,
         type: "blog" as const,
       })
     );
-    console.log(
-      "⚠️ Loaded internal posts:",
-      [...internalPosts, ...externalPosts].length
-    );
     const sortedPosts = [...internalPosts, ...externalPosts].sort(
       (a: BlogPost, b: BlogPost) =>
         new Date(b.date).getTime() - new Date(a.date).getTime()
     );
-    console.log("⚠️ Sorted posts:", sortedPosts.length);
     // キャッシュの更新
     cache.posts = {
       data: sortedPosts,

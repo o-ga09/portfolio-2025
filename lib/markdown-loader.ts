@@ -10,21 +10,15 @@ export function loadMarkdownPosts(): BlogPost[] {
   if (typeof window !== "undefined") {
     return [];
   }
-  console.log("⚠️ Loading markdown posts from contents directory");
   const contentsDir = path.join(process.cwd(), "contents");
-  console.log("⚠️ Contents directory path:", contentsDir);
 
   // contentsディレクトリが存在しない場合は空配列を返す
   if (!fs.existsSync(contentsDir)) {
-    console.log("⚠️ contents directory does not exist.");
     return [];
   }
-  console.log("⚠️ contents directory exists.");
 
   const files = fs.readdirSync(contentsDir);
-  console.log("⚠️ Files in contents directory:", files);
   const markdownFiles = files.filter((file) => file.endsWith(".md"));
-  console.log("⚠️ Markdown files in contents directory:", markdownFiles);
 
   const posts: BlogPost[] = markdownFiles.map((filename) => {
     const filePath = path.join(contentsDir, filename);
@@ -47,14 +41,6 @@ export function loadMarkdownPosts(): BlogPost[] {
       "black",
     ];
     const imageType = imageTypes[Math.floor(Math.random() * imageTypes.length)];
-    console.log(`⚠️ Assigned imageType for ${filename}:`, imageType);
-    console.log(
-      "⚠️ Frontmatter data:",
-      data.title,
-      data.description,
-      data.topics,
-      data.tags
-    );
     return {
       id,
       title: data.title || slug,
