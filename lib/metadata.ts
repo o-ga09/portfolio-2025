@@ -3,7 +3,19 @@ import { Metadata } from "next";
 const APP_URL = process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000";
 const SITE_NAME = "オーガのブログ";
 const DEFAULT_OG_IMAGE = `${APP_URL}/og-image.webp`;
-const CREATOR = "@o-ga09";
+const CREATOR = "@o_ga09";
+
+/**
+ * 絶対URLを生成するヘルパー関数
+ */
+function getAbsoluteUrl(path: string): string {
+  // パスが既に絶対URLの場合はそのまま返す
+  if (path.startsWith("http://") || path.startsWith("https://")) {
+    return path;
+  }
+  // 相対パスの場合はベースURLと結合
+  return `${APP_URL}${path.startsWith("/") ? path : `/${path}`}`;
+}
 
 interface GenerateMetadataOptions {
   title: string;
@@ -30,7 +42,8 @@ export function generateSiteMetadata({
   ogImage = DEFAULT_OG_IMAGE,
 }: GenerateMetadataOptions): Metadata {
   const fullTitle = `${title} | ${SITE_NAME}`;
-  const url = `${APP_URL}${path}`;
+  const url = getAbsoluteUrl(path);
+  const absoluteOgImage = getAbsoluteUrl(ogImage);
   const keywordsString = Array.isArray(keywords)
     ? keywords.join(", ")
     : keywords;
@@ -50,11 +63,11 @@ export function generateSiteMetadata({
       locale: "ja_JP",
       url,
       siteName: SITE_NAME,
-      title,
+      title: fullTitle,
       description,
       images: [
         {
-          url: ogImage,
+          url: absoluteOgImage,
           width: 1200,
           height: 630,
           alt: title,
@@ -65,9 +78,9 @@ export function generateSiteMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: fullTitle,
       description,
-      images: [ogImage],
+      images: [absoluteOgImage],
       creator: CREATOR,
       site: CREATOR,
     },
