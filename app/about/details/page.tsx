@@ -1,7 +1,10 @@
 import Footer from "@/components/section/footer";
 import Header from "@/components/section/header";
+import { aboutDetailsMetadata } from "@/lib/metadata";
 import Link from "next/link";
 import React from "react";
+
+export const metadata = aboutDetailsMetadata;
 
 type ProfileHistory = {
   year: string;

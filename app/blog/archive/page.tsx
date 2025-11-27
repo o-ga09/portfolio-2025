@@ -1,14 +1,11 @@
-import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { groupPostsByYearMonth } from "@/lib/blog-data";
+import { archiveMetadata } from "@/lib/metadata";
 import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "ブログアーカイブ | ポートフォリオ",
-  description: "過去のブログ記事のアーカイブ",
-};
+export const metadata = archiveMetadata;
 
 export default async function BlogArchivePage() {
   const groupedPosts = await groupPostsByYearMonth();

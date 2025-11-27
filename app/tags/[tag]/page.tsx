@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { notFound } from "next/navigation";
 import { getAllTags, getPostsByTag } from "@/lib/blog-data";
+import { generateTagMetadata } from "@/lib/metadata";
 import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
 import Link from "next/link";
@@ -20,42 +21,7 @@ export async function generateMetadata({
   const normalizedTag =
     decodedTag.charAt(0).toUpperCase() + decodedTag.slice(1);
 
-  const APP_URL = process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000";
-  const tagUrl = `${APP_URL}/tags/${encodeURIComponent(tag)}`;
-  const ogImageUrl = `${APP_URL}/og-image.webp`;
-
-  return {
-    title: `${normalizedTag} に関する記事 | オーガのブログ`,
-    description: `${normalizedTag} のタグが付いた記事の一覧`,
-    keywords: `${normalizedTag}, ブログ, 技術記事`,
-    alternates: {
-      canonical: `/tags/${encodeURIComponent(tag)}`,
-    },
-    openGraph: {
-      type: "website",
-      locale: "ja_JP",
-      url: tagUrl,
-      siteName: "オーガのブログ",
-      title: `${normalizedTag} に関する記事 | オーガのブログ`,
-      description: `${normalizedTag} のタグが付いた記事の一覧`,
-      images: [
-        {
-          url: ogImageUrl,
-          width: 1200,
-          height: 630,
-          alt: `${normalizedTag} に関する記事`,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${normalizedTag} に関する記事 | オーガのブログ`,
-      description: `${normalizedTag} のタグが付いた記事の一覧`,
-      images: [ogImageUrl],
-      creator: "@o-ga09",
-      site: "@o-ga09",
-    },
-  };
+  return generateTagMetadata(tag, normalizedTag);
 }
 
 // 動的なルートの生成

@@ -1,14 +1,11 @@
-import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { getTagCounts } from "@/lib/blog-data";
+import { tagsListMetadata } from "@/lib/metadata";
 import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "タグ一覧 | ポートフォリオ",
-  description: "ブログ記事のタグ一覧",
-};
+export const metadata = tagsListMetadata;
 
 export default async function TagsPage() {
   const { tagCounts, sortedTags } = await getTagCounts();

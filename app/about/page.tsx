@@ -1,9 +1,12 @@
 import Footer from "@/components/section/footer";
 import Header from "@/components/section/header";
+import { aboutMetadata } from "@/lib/metadata";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Stamp from "@/components/item/stemp";
+
+export const metadata = aboutMetadata;
 
 export default function About() {
   return (
