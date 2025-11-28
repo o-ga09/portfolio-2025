@@ -1,15 +1,13 @@
 ---
-title: "【備忘録】Flutterのsqfliteを使ったアプリのテストで詰まった時"
+title: "はじめての自分ブログへの投稿"
 emoji: "🥹"
-type: "tech" # tech: 技術記事 / idea: アイデア
+type: "tech"
 topics: [dart,flutter,errorhandling,sqflite,エラー解決法]
 published: true
-date: "2025-01-15"
-description: "Flutterのsqfliteでのテストにおけるトラブルシューティングとエラー解決方法"
+date: "2025-11-28"
+description: "はじめての自分ブログへの投稿です。これからどんなものを投稿するか書いています。"
 ---
 
-## テスト
+## はじめての自分ブログへの投稿
 
-- テスト
-- テスト
-- テスト
+はじめまして！これは私の初めてのブログ投稿です。QiitaやZennに書くほどでもないことを書いていきます。
