@@ -4,11 +4,12 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
+		"prebuild": "node scripts/generate-posts.js",
 		"build": "next build",
 		"postbuild": "cp -r contents .next/standalone/contents 2>/dev/null || true",
 		"start": "next start",
 		"lint": "next lint",
-		"build:cloudflare": "next build && opennextjs-cloudflare build && npm run copy:contents",
+		"build:cloudflare": "node scripts/generate-posts.js && next build && opennextjs-cloudflare build",
 		"copy:contents": "cp -r contents .open-next/server-functions/default/contents 2>/dev/null || true",
 		"deploy": "npm run build:cloudflare && opennextjs-cloudflare deploy",
 		"preview": "npm run build:cloudflare && opennextjs-cloudflare preview",

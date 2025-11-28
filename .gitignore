@@ -43,3 +43,6 @@ next-env.d.ts
 .dev.vars*
 
 .env
+
+# Generated files
+/public/posts.json
