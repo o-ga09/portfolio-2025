@@ -2,8 +2,7 @@ import { Metadata } from "next";
 
 const APP_URL = process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000";
 const SITE_NAME = "オーガのブログ";
-const DEFAULT_OG_IMAGE = `${APP_URL}/og-image.webp`;
-const DEFAULT_OG_TWITTER_IMAGE = `${APP_URL}/og-image.png`;
+const DEFAULT_OG_IMAGE = `${APP_URL}/og-image-1.webp`;
 const CREATOR = "@o_ga09";
 
 /**
@@ -42,7 +41,7 @@ export function generateSiteMetadata({
   publishedTime,
   tags,
   ogImage = DEFAULT_OG_IMAGE,
-  ogTwitterImage = DEFAULT_OG_TWITTER_IMAGE,
+  ogTwitterImage = DEFAULT_OG_IMAGE,
 }: GenerateMetadataOptions): Metadata {
   const fullTitle = `${title} | ${SITE_NAME}`;
   const url = getAbsoluteUrl(path);
@@ -117,6 +116,7 @@ export function generateBlogPostMetadata(
     publishedTime: post.date,
     tags: post.tags,
     ogImage: ogImageUrl,
+    ogTwitterImage: ogImageUrl,
   });
 }
 
