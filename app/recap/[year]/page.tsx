@@ -19,7 +19,6 @@ function NumberReel({
     return () => clearTimeout(t);
   }, []);
 
-  const digitHeightRem = 2; // larger: h-8 equivalent (2rem)
   return (
     <div className={`inline-flex items-end ${className}`} aria-hidden>
       {chars.map((ch, i) => {
