@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Search, Command, Rss, Github, Menu, X } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
@@ -7,6 +8,7 @@ import { Input } from "../ui/input";
 import ThemeToggle from "../theme/theme-toggle";
 
 export default function Header() {
+  const router = useRouter();
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
@@ -77,7 +79,12 @@ export default function Header() {
                 Tags
               </Link>
               <Link
-                href="/recap"
+                href="#"
+                onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                  e.preventDefault();
+                  const year = String(new Date().getFullYear());
+                  router.push(`/recap/${year}`);
+                }}
                 className="text-gray-900 dark:text-white/70 hover:text-gray-900 dark:hover:text-white dark:hover:bg-white/10 rounded-md px-2 py-1 transition-colors"
               >
                 Recap
@@ -216,9 +223,18 @@ export default function Header() {
             ].map((item) => (
               <Link
                 key={item.href}
-                href={item.href}
+                href={item.href === "/recap" ? "#" : item.href}
                 className="group relative flex items-center space-x-3 p-3 text-lg font-medium text-gray-900 dark:text-white rounded-2xl hover:bg-primary/10 dark:hover:bg-primary/20 transition-all duration-200"
-                onClick={closeMenu}
+                onClick={(e) => {
+                  if (item.href === "/recap") {
+                    e.preventDefault();
+                    const year = String(new Date().getFullYear());
+                    router.push(`/recap/${year}`);
+                    closeMenu();
+                    return;
+                  }
+                  closeMenu();
+                }}
               >
                 <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/20 dark:bg-primary/10 group-hover:scale-110 transition-transform duration-200">
                   {item.emoji}
