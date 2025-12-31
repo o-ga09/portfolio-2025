@@ -91,10 +91,6 @@ export default function RecapPage() {
           <h1 className="text-6xl sm:text-7xl font-extrabold leading-tight drop-shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
             {year}
           </h1>
-          <p className="mt-4 text-lg text-indigo-100/90 max-w-2xl mx-auto">
-            A creative look back — highlights, lessons, and moments that shaped
-            the year.
-          </p>
         </header>
 
         <section className="relative rounded-3xl bg-white/5 p-8 mb-8 overflow-hidden">
