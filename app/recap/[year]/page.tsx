@@ -3,6 +3,81 @@
 import React from "react";
 import { useParams } from "next/navigation";
 
+function NumberReel({
+  value,
+  className = "",
+}: {
+  value: number;
+  className?: string;
+}) {
+  const formatted = value.toLocaleString();
+  const chars = formatted.split("");
+  const [start, setStart] = React.useState(false);
+
+  React.useEffect(() => {
+    const t = setTimeout(() => setStart(true), 60);
+    return () => clearTimeout(t);
+  }, []);
+
+  const digitHeightRem = 2; // larger: h-8 equivalent (2rem)
+  return (
+    <div className={`inline-flex items-end ${className}`} aria-hidden>
+      {chars.map((ch, i) => {
+        if (ch === ",") {
+          return (
+            <div
+              key={`c-${i}`}
+              style={{
+                width: "0.6em",
+                height: "1em",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <span style={{ lineHeight: "1em" }}>,</span>
+            </div>
+          );
+        }
+        const target = Number(ch);
+        // Use em-based translation so it scales with current font-size
+        const translateEm = 10 + target; // two cycles (0-9 twice) then target
+        const transform = start
+          ? `translateY(-${translateEm}em)`
+          : `translateY(0)`;
+        return (
+          <div
+            key={i}
+            className="overflow-hidden flex-shrink-0"
+            style={{ height: "1em", width: "0.9em" }}
+          >
+            <div
+              style={{
+                transform,
+                transition: start
+                  ? "transform 900ms cubic-bezier(.2,.8,.2,1)"
+                  : "none",
+                willChange: "transform",
+                display: "block",
+              }}
+            >
+              {Array.from({ length: 20 }).map((_, n) => (
+                <span
+                  key={n}
+                  style={{ display: "block", height: "1em", lineHeight: "1em" }}
+                >
+                  {n % 10}
+                </span>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+      <span className="sr-only">{value}</span>
+    </div>
+  );
+}
+
 export default function RecapPage() {
   const params = useParams() as { year?: string } | null;
   const year = params?.year ?? "2025";
@@ -27,113 +102,134 @@ export default function RecapPage() {
           <div className="absolute -right-24 -top-24 w-64 h-64 bg-pink-400/20 rounded-full blur-3xl" />
           <div className="absolute -left-24 -bottom-24 w-72 h-72 bg-emerald-300/10 rounded-full blur-3xl" />
 
-          <div className="flex flex-col md:flex-row gap-6 items-center">
-            <div className="flex-1">
-              <h3 className="text-2xl font-bold mb-3">
-                Highlights of the year
-              </h3>
-              <p className="text-indigo-100/80 mb-6">
-                Placeholder highlights will be shown here. Connect real data
-                later to populate milestones, media, and metrics.
-              </p>
+          <h3 className="text-2xl font-bold mb-6">2025 の要約</h3>
 
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <li className="rounded-xl bg-white/6 p-4 backdrop-blur-sm">
-                  🎉 Launched a signature project
-                </li>
-                <li className="rounded-xl bg-white/6 p-4 backdrop-blur-sm">
-                  🚀 Major performance wins
-                </li>
-                <li className="rounded-xl bg-white/6 p-4 backdrop-blur-sm">
-                  💡 Creative experiments
-                </li>
-                <li className="rounded-xl bg-white/6 p-4 backdrop-blur-sm">
-                  🤝 New collaborations
-                </li>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div className="rounded-xl bg-white/6 p-8 text-center">
+              <div className="text-5xl sm:text-6xl font-extrabold leading-none">
+                <NumberReel value={64} />
+              </div>
+              <div className="text-base sm:text-lg text-indigo-100/80 mt-2">
+                connpass イベント参加数
+              </div>
+            </div>
+
+            <div className="rounded-xl bg-white/6 p-8 text-center">
+              <div className="text-5xl sm:text-6xl font-extrabold leading-none">
+                <NumberReel value={9} />
+              </div>
+              <div className="text-base sm:text-lg text-indigo-100/80 mt-2">
+                テックブログ記事
+              </div>
+            </div>
+
+            <div className="rounded-xl bg-white/6 p-8 text-center">
+              <div className="text-5xl sm:text-6xl font-extrabold leading-none">
+                <NumberReel value={2} />
+              </div>
+              <div className="text-base sm:text-lg text-indigo-100/80 mt-2">
+                読んだ本
+              </div>
+            </div>
+
+            <div className="rounded-xl bg-white/6 p-8 text-center">
+              <div className="text-5xl sm:text-6xl font-extrabold leading-none">
+                <NumberReel value={29} />
+              </div>
+              <div className="text-base sm:text-lg text-indigo-100/80 mt-2">
+                いいね
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="rounded-2xl bg-white/6 p-6">
+              <h4 className="text-xl sm:text-2xl font-bold mb-3">
+                参加したカンファレンス
+              </h4>
+              <ul className="list-disc list-inside text-indigo-100/80">
+                <li>AWS Summit</li>
+                <li>AWS CDK conference</li>
+                <li>Go Conference</li>
+                <li>TinyGo Conference</li>
+                <li>Hono Conference</li>
+                <li>Flutter kaigi</li>
               </ul>
             </div>
 
-            <div className="w-full md:w-80 flex-shrink-0">
-              <div className="h-48 rounded-2xl bg-gradient-to-tr from-pink-500 to-yellow-400 flex items-center justify-center text-black font-extrabold">
-                Gallery
-              </div>
-              <p className="mt-3 text-sm text-indigo-100/80">
-                Visual snapshots — replace with thumbnails or an Open Graph
-                image generator.
-              </p>
-            </div>
-          </div>
-        </section>
+            {/* ブログの詳細 */}
+            <div className="rounded-2xl bg-white/6 p-6">
+              <h4 className="text-xl sm:text-2xl font-bold mb-3">
+                ブログの詳細
+              </h4>
+              <div className="flex flex-col gap-4">
+                <div className="text-center p-3 bg-white/3 rounded-lg">
+                  <div className="text-3xl sm:text-4xl font-extrabold">
+                    <NumberReel value={32495} />
+                  </div>
+                  <div className="text-sm text-indigo-100/80 mt-1">
+                    文字の執筆
+                  </div>
+                </div>
 
-        <section className="rounded-3xl bg-white/5 p-8 mb-8">
-          <h3 className="text-2xl font-bold mb-4">Timeline</h3>
-          <div className="space-y-4">
-            <div className="flex items-start gap-4">
-              <div className="w-3 h-3 rounded-full bg-pink-400 mt-2" />
-              <div>
-                <div className="font-semibold">Q1 — Creative Kickoff</div>
-                <div className="text-sm text-indigo-100/80">
-                  Placeholder summary of the quarter achievements.
+                <div className="text-center p-3 bg-white/3 rounded-lg">
+                  <div className="text-3xl sm:text-4xl font-extrabold">
+                    <NumberReel value={9} />
+                  </div>
+                  <div className="text-sm text-indigo-100/80 mt-1">記事数</div>
+                </div>
+
+                <div className="text-center p-3 bg-white/3 rounded-lg">
+                  <div className="text-3xl sm:text-4xl font-extrabold">
+                    <NumberReel value={13806} />
+                  </div>
+                  <div className="text-sm text-indigo-100/80 mt-1">PV</div>
+                </div>
+
+                <div className="text-center p-3 bg-white/3 rounded-lg">
+                  <div className="text-3xl sm:text-4xl font-extrabold">
+                    <NumberReel value={100} />
+                  </div>
+                  <div className="text-sm text-indigo-100/80 mt-1">Likes</div>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="w-3 h-3 rounded-full bg-emerald-300 mt-2" />
-              <div>
-                <div className="font-semibold">Q2 — Growth & experiments</div>
-                <div className="text-sm text-indigo-100/80">
-                  Placeholder summary of the quarter achievements.
+            <div className="rounded-2xl bg-white/6 p-6">
+              <h4 className="text-xl sm:text-2xl font-bold mb-3">
+                その他の指標
+              </h4>
+              <div className="grid grid-cols-2 gap-3 text-base text-indigo-100/80">
+                <div>X フォロワー</div>
+                <div className="font-extrabold text-2xl">
+                  <NumberReel value={361} />
                 </div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="w-3 h-3 rounded-full bg-yellow-300 mt-2" />
-              <div>
-                <div className="font-semibold">Q3 — Milestones</div>
-                <div className="text-sm text-indigo-100/80">
-                  Placeholder summary of the quarter achievements.
+                <div>GitHub フォロワー</div>
+                <div className="font-extrabold text-2xl">
+                  <NumberReel value={8} />
                 </div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="w-3 h-3 rounded-full bg-indigo-400 mt-2" />
-              <div>
+                <div>GitHub スター</div>
+                <div className="font-extrabold text-2xl">
+                  <NumberReel value={13} />
+                </div>
+                <div>取得した資格</div>
                 <div className="font-semibold">
-                  Q4 — Reflection & next steps
-                </div>
-                <div className="text-sm text-indigo-100/80">
-                  Placeholder summary of the quarter achievements.
+                  AWS Solution Architect Associate
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="rounded-3xl bg-white/6 p-8 text-center">
-          <h3 className="text-2xl font-bold mb-3">
-            Want to make this interactive?
+        {/* 運営に参加したカンファレンス */}
+        <section className="rounded-3xl bg-white/5 p-8 mb-8">
+          <h3 className="text-2xl font-bold mb-4">
+            運営に参加したカンファレンス
           </h3>
-          <p className="text-indigo-100/80 mb-6">
-            I can integrate real posts, metrics, and generated images. Tell me
-            which sources you will use.
-          </p>
-          <div className="inline-flex gap-3">
-            <a
-              className="px-5 py-3 bg-gradient-to-r from-pink-500 to-violet-500 rounded-full font-semibold text-black"
-              href="#"
-            >
-              Connect data
-            </a>
-            <a
-              className="px-5 py-3 border border-white/10 rounded-full font-medium text-indigo-100/90"
-              href="#"
-            >
-              Preview export
-            </a>
-          </div>
+          <ul className="list-disc list-inside text-indigo-100/80">
+            <li>Go Conference</li>
+            <li>Hono Conference</li>
+          </ul>
         </section>
       </div>
     </main>
