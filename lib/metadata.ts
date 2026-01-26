@@ -2,7 +2,7 @@ import { Metadata } from "next";
 
 const APP_URL = process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000";
 const SITE_NAME = "オーガのブログ";
-const DEFAULT_OG_IMAGE = `${APP_URL}/og-image-1.webp`;
+const DEFAULT_OG_IMAGE = `${APP_URL}/og-img.png`;
 const CREATOR = "@o_ga09";
 
 /**
@@ -102,7 +102,7 @@ export function generateBlogPostMetadata(
     tags: string[];
     date: string;
   },
-  id: string
+  id: string,
 ): Metadata {
   // 動的OG画像のURLを使用
   const ogImageUrl = `${APP_URL}/blog/${id}/opengraph-image`;
@@ -125,7 +125,7 @@ export function generateBlogPostMetadata(
  */
 export function generateTagMetadata(
   tag: string,
-  normalizedTag: string
+  normalizedTag: string,
 ): Metadata {
   return generateSiteMetadata({
     title: `${normalizedTag} に関する記事`,
@@ -214,7 +214,7 @@ export function generateHomeMetadata(): Metadata {
   return {
     ...baseMetadata,
     metadataBase: new URL(
-      process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000"
+      process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000",
     ),
     robots: {
       index: true,
