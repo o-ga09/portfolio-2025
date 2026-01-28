@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 import { getPostById } from "@/lib/blog-data";
+import fs from "fs";
+import path from "path";
 
 // Node.js Runtimeを使用してfs/pathモジュールにアクセス可能にする
 export const runtime = "nodejs";
@@ -18,6 +20,11 @@ export default async function Image({
 }) {
   const { id } = await params;
   const post = await getPostById(id);
+
+  // アイコン画像をbase64に変換
+  const iconPath = path.join(process.cwd(), "public", "icon.png");
+  const iconBuffer = fs.readFileSync(iconPath);
+  const iconBase64 = `data:image/png;base64,${iconBuffer.toString("base64")}`;
 
   if (!post) {
     return new ImageResponse(
@@ -85,6 +92,7 @@ export default async function Image({
               maxWidth: "100%",
               overflow: "hidden",
               textOverflow: "ellipsis",
+              display: "flex",
             }}
           >
             {post.title}
@@ -109,6 +117,7 @@ export default async function Image({
                   borderRadius: "6px",
                   fontSize: 20,
                   fontWeight: "500",
+                  display: "flex",
                 }}
               >
                 #{tag}
@@ -119,6 +128,7 @@ export default async function Image({
                 color: "#94a3b8",
                 fontSize: 20,
                 marginLeft: "8px",
+                display: "flex",
               }}
             >
               {post.date}
@@ -145,28 +155,22 @@ export default async function Image({
             }}
           >
             {/* アバター */}
-            <div
+            <img
+              src={iconBase64}
+              alt="o-ga"
+              width="60"
+              height="60"
               style={{
-                width: "60px",
-                height: "60px",
                 borderRadius: "50%",
-                background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 32,
-                color: "white",
-                fontWeight: "bold",
               }}
-            >
-              O
-            </div>
+            />
             {/* ユーザー名 */}
             <div
               style={{
                 fontSize: 24,
                 fontWeight: "600",
                 color: "#334155",
+                display: "flex",
               }}
             >
               o-ga
@@ -176,20 +180,13 @@ export default async function Image({
           {/* サイト名/ロゴ */}
           <div
             style={{
+              fontSize: 28,
+              fontWeight: "bold",
+              color: "#6366f1",
               display: "flex",
-              alignItems: "center",
-              gap: "8px",
             }}
           >
-            <div
-              style={{
-                fontSize: 28,
-                fontWeight: "bold",
-                color: "#6366f1",
-              }}
-            >
-              オーガのブログ
-            </div>
+            オーガのブログ
           </div>
         </div>
       </div>
