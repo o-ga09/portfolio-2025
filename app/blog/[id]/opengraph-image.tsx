@@ -85,9 +85,6 @@ export default async function Image({
               maxWidth: "100%",
               overflow: "hidden",
               textOverflow: "ellipsis",
-              display: "-webkit-box",
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: "vertical",
             }}
           >
             {post.title}
@@ -188,9 +185,7 @@ export default async function Image({
               style={{
                 fontSize: 28,
                 fontWeight: "bold",
-                background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
-                backgroundClip: "text",
-                color: "transparent",
+                color: "#6366f1",
               }}
             >
               オーガのブログ
