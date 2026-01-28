@@ -21,41 +21,50 @@ export default async function Image({
 
   if (!post) {
     return new ImageResponse(
-      (
-        <div
-          style={{
-            fontSize: 48,
-            background: "linear-gradient(to bottom right, #1e293b, #334155)",
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "white",
-          }}
-        >
-          記事が見つかりません
-        </div>
-      ),
+      <div
+        style={{
+          fontSize: 48,
+          background: "linear-gradient(to bottom right, #1e293b, #334155)",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "white",
+        }}
+      >
+        記事が見つかりません
+      </div>,
       {
         ...size,
-      }
+      },
     );
   }
 
   return new ImageResponse(
-    (
+    <div
+      style={{
+        background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "24px",
+      }}
+    >
+      {/* メインカード */}
       <div
         style={{
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          background: "white",
+          borderRadius: "16px",
           width: "100%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-start",
           justifyContent: "space-between",
-          padding: "80px",
-          fontFamily: "sans-serif",
+          padding: "60px",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
         }}
       >
         {/* タイトル */}
@@ -63,20 +72,17 @@ export default async function Image({
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "flex-start",
-            flex: 1,
-            justifyContent: "center",
+            gap: "24px",
           }}
         >
           <h1
             style={{
-              fontSize: 64,
+              fontSize: 56,
               fontWeight: "bold",
-              color: "white",
+              color: "#1a1a1a",
               margin: 0,
-              lineHeight: 1.2,
-              textShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
-              maxWidth: "1000px",
+              lineHeight: 1.3,
+              maxWidth: "100%",
               overflow: "hidden",
               textOverflow: "ellipsis",
               display: "-webkit-box",
@@ -86,77 +92,115 @@ export default async function Image({
           >
             {post.title}
           </h1>
-        </div>
 
-        {/* 下部情報 */}
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          {/* タグ */}
+          {/* タグと日付 */}
           <div
             style={{
               display: "flex",
               gap: "12px",
               flexWrap: "wrap",
-              maxWidth: "700px",
+              alignItems: "center",
             }}
           >
-            {post.tags.slice(0, 4).map((tag) => (
+            {post.tags.slice(0, 3).map((tag) => (
               <div
                 key={tag}
                 style={{
-                  background: "rgba(255, 255, 255, 0.2)",
-                  backdropFilter: "blur(10px)",
-                  color: "white",
-                  padding: "8px 16px",
-                  borderRadius: "9999px",
-                  fontSize: 24,
-                  fontWeight: "600",
+                  background: "#f1f5f9",
+                  color: "#475569",
+                  padding: "6px 16px",
+                  borderRadius: "6px",
+                  fontSize: 20,
+                  fontWeight: "500",
                 }}
               >
-                {tag}
+                #{tag}
               </div>
             ))}
-          </div>
-
-          {/* サイト名と日付 */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "flex-end",
-              gap: "8px",
-            }}
-          >
             <div
               style={{
-                fontSize: 32,
-                fontWeight: "bold",
-                color: "white",
-                textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)",
-              }}
-            >
-              オーガのブログ
-            </div>
-            <div
-              style={{
-                fontSize: 24,
-                color: "rgba(255, 255, 255, 0.9)",
+                color: "#94a3b8",
+                fontSize: 20,
+                marginLeft: "8px",
               }}
             >
               {post.date}
             </div>
           </div>
         </div>
+
+        {/* 下部: ユーザー情報とサイト名 */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            borderTop: "2px solid #f1f5f9",
+            paddingTop: "24px",
+          }}
+        >
+          {/* ユーザー情報 */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "16px",
+            }}
+          >
+            {/* アバター */}
+            <div
+              style={{
+                width: "60px",
+                height: "60px",
+                borderRadius: "50%",
+                background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: 32,
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+              O
+            </div>
+            {/* ユーザー名 */}
+            <div
+              style={{
+                fontSize: 24,
+                fontWeight: "600",
+                color: "#334155",
+              }}
+            >
+              o-ga
+            </div>
+          </div>
+
+          {/* サイト名/ロゴ */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <div
+              style={{
+                fontSize: 28,
+                fontWeight: "bold",
+                background: "linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              オーガのブログ
+            </div>
+          </div>
+        </div>
       </div>
-    ),
+    </div>,
     {
       ...size,
-    }
+    },
   );
 }
