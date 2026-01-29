@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"prebuild": "node scripts/generate-posts.js",
+		"prebuild": "node scripts/generate-posts.js && node scripts/generate-icon-base64.js",
 		"build": "next build",
 		"postbuild": "cp -r contents .next/standalone/contents 2>/dev/null || true",
 		"start": "next start",

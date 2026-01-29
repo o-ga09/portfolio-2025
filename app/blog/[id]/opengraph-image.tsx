@@ -1,12 +1,6 @@
 import { getPostById } from "@/lib/blog-data-edge";
 import { ImageResponse } from "next/og";
-import fs from "fs";
-import path from "path";
-
-// ビルド時にアイコン画像をBase64エンコード（モジュールスコープで実行）
-const iconPath = path.join(process.cwd(), "public", "icon.png");
-const iconBuffer = fs.readFileSync(iconPath);
-const ICON_BASE64 = `data:image/png;base64,${iconBuffer.toString("base64")}`;
+import { ICON_BASE64 } from "@/lib/icon-base64";
 
 // Node.js Runtimeを使用
 export const runtime = "nodejs";
