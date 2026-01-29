@@ -1,5 +1,12 @@
 import { getPostById } from "@/lib/blog-data-edge";
 import { ImageResponse } from "next/og";
+import fs from "fs";
+import path from "path";
+
+// ビルド時にアイコン画像をBase64エンコード（モジュールスコープで実行）
+const iconPath = path.join(process.cwd(), "public", "icon.png");
+const iconBuffer = fs.readFileSync(iconPath);
+const ICON_BASE64 = `data:image/png;base64,${iconBuffer.toString("base64")}`;
 
 // Node.js Runtimeを使用
 export const runtime = "nodejs";
@@ -18,15 +25,6 @@ export default async function Image({
 }) {
   const { id } = await params;
   const post = await getPostById(id);
-
-  // アイコン画像をfetch APIで取得してbase64に変換
-  const iconUrl = new URL(
-    "/icon.png",
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-  );
-  const iconResponse = await fetch(iconUrl.toString());
-  const iconBuffer = await iconResponse.arrayBuffer();
-  const iconBase64 = `data:image/png;base64,${Buffer.from(iconBuffer).toString("base64")}`;
 
   if (!post) {
     return new ImageResponse(
@@ -158,7 +156,7 @@ export default async function Image({
           >
             {/* アバター */}
             <img
-              src={iconBase64}
+              src={ICON_BASE64}
               alt="o-ga"
               width="60"
               height="60"
