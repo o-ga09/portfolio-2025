@@ -1,9 +1,7 @@
+import { getPostById } from "@/lib/blog-data-edge";
 import { ImageResponse } from "next/og";
-import { getPostById } from "@/lib/blog-data";
-import fs from "fs";
-import path from "path";
 
-// Node.js Runtimeを使用してfs/pathモジュールにアクセス可能にする
+// Node.js Runtimeを使用
 export const runtime = "nodejs";
 
 export const alt = "Blog Post OG Image";
@@ -21,10 +19,14 @@ export default async function Image({
   const { id } = await params;
   const post = await getPostById(id);
 
-  // アイコン画像をbase64に変換
-  const iconPath = path.join(process.cwd(), "public", "icon.png");
-  const iconBuffer = fs.readFileSync(iconPath);
-  const iconBase64 = `data:image/png;base64,${iconBuffer.toString("base64")}`;
+  // アイコン画像をfetch APIで取得してbase64に変換
+  const iconUrl = new URL(
+    "/icon.png",
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
+  );
+  const iconResponse = await fetch(iconUrl.toString());
+  const iconBuffer = await iconResponse.arrayBuffer();
+  const iconBase64 = `data:image/png;base64,${Buffer.from(iconBuffer).toString("base64")}`;
 
   if (!post) {
     return new ImageResponse(
