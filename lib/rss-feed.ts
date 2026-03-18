@@ -200,20 +200,14 @@ export async function fetchSpeakerDeckSlides(): Promise<SlideArticle[]> {
     const feed = await fetchRSSFeed(SPEAKERDECK_FEED_URL, "SpeakerDeck");
 
     const slides = feed.items.map((item: RSSItem): SlideArticle => {
-      // Speaker DeckのURLから presentation IDを抽出
-      // 例: https://speakerdeck.com/tabe/presentation-title -> presentation-title
-      const urlParts = item.link.split("/");
-      const presentationSlug = urlParts[urlParts.length - 1] || "";
-
-      // IDフィールドから数値IDを抽出
-      // 例: tag:speakerdeck.com,2005:Talk/1507741 -> 1507741
-      let presentationId = presentationSlug;
-      if (item.id) {
-        const idMatch = item.id.match(/Talk\/(\d+)/);
-        if (idMatch && idMatch[1]) {
-          presentationId = idMatch[1];
-        }
-      }
+      // Speaker DeckのURLから埋め込みURLを生成
+      // 元のURL: https://speakerdeck.com/tabe/presentation-title
+      // 埋め込みURL: https://speakerdeck.com/player/tabe/presentation-title
+      const url = new URL(item.link);
+      const pathParts = url.pathname.split("/").filter((part) => part);
+      // pathParts = ['tabe', 'presentation-title']
+      const username = pathParts[0] || "";
+      const presentationSlug = pathParts[1] || "";
 
       return {
         id: `speakerdeck-${presentationSlug}`,
@@ -223,7 +217,7 @@ export async function fetchSpeakerDeckSlides(): Promise<SlideArticle[]> {
           "...",
         date: new Date(item.pubDate).toISOString().split("T")[0],
         url: item.link,
-        embedUrl: `https://speakerdeck.com/player/${presentationId}`,
+        embedUrl: `https://speakerdeck.com/player/${username}/${presentationSlug}`,
         tags: ["slides", "speakerdeck", ...(item.category ?? [])],
         source: "speakerdeck",
       };
