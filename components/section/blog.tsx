@@ -7,6 +7,7 @@ import { ChevronDown } from "lucide-react";
 import type { BlogPost } from "@/lib/blog-data";
 import Link from "next/link";
 import { truncateText } from "@/utils/formatting";
+import { getEmojiForPost } from "@/utils/emoji";
 
 interface BlogProps {
   initialPosts: BlogPost[];
@@ -49,58 +50,19 @@ export default function Blog({ initialPosts }: BlogProps) {
               >
                 <article className="bg-card rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                   <div
-                    className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden transform-gpu"
+                    className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-700 flex items-center justify-center relative overflow-hidden transform-gpu"
                     style={{
                       viewTransitionName: `blog-image-${post.id}`,
                       contain: "layout paint",
                     }}
                   >
-                    {post.imageType === "green" && (
-                      <div className="w-32 h-24 relative">
-                        <div className="absolute inset-0 bg-green-200 rounded-t-3xl"></div>
-                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-28 h-16 bg-white rounded-full"></div>
-                        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-12 bg-pink-100 rounded-full"></div>
-                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-20 h-8 bg-pink-200 rounded-full"></div>
-                      </div>
-                    )}
-                    {post.imageType === "orange" && (
-                      <div className="w-32 h-32 relative">
-                        <div className="absolute inset-0 bg-orange-400 rounded-full"></div>
-                        <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-28 h-4 bg-orange-300 rounded-full"></div>
-                        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-24 h-3 bg-green-400 rounded-full"></div>
-                        <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-20 h-8 bg-amber-800 rounded-full"></div>
-                        <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-18 h-6 bg-yellow-300 rounded-full"></div>
-                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-28 h-8 bg-orange-300 rounded-full"></div>
-                      </div>
-                    )}
-                    {post.imageType === "black" && (
-                      <div className="w-32 h-32 relative">
-                        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-16 bg-white rounded-t-full"></div>
-                        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-black rounded-full"></div>
-                        <div className="absolute bottom-12 right-8 w-4 h-4 bg-red-500 rounded-full"></div>
-                        <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 w-16 h-8 bg-gray-800 rounded-full"></div>
-                        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 w-12 h-6 bg-orange-400 rounded-full"></div>
-                      </div>
-                    )}
-                    {post.imageType === "purple" && (
-                      <div className="w-32 h-32 relative">
-                        <div className="absolute inset-0 bg-purple-400 rounded-lg"></div>
-                        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-24 h-16 bg-white rounded"></div>
-                        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-20 h-12 bg-purple-200 rounded"></div>
-                        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-28 h-2 bg-purple-600"></div>
-                      </div>
-                    )}
-                    {post.imageType === "blue" && (
-                      <div className="w-32 h-32 relative">
-                        <div className="absolute inset-0 bg-blue-400 rounded-lg"></div>
-                        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-24 h-16 bg-white rounded shadow-md"></div>
-                        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-20 h-12 bg-blue-100 rounded"></div>
-                        <div className="absolute bottom-4 left-4 w-3 h-3 bg-red-400 rounded-full"></div>
-                        <div className="absolute bottom-4 left-10 w-3 h-3 bg-yellow-400 rounded-full"></div>
-                        <div className="absolute bottom-4 right-10 w-3 h-3 bg-green-400 rounded-full"></div>
-                        <div className="absolute bottom-4 right-4 w-3 h-3 bg-blue-600 rounded-full"></div>
-                      </div>
-                    )}
+                    <span
+                      className="text-8xl"
+                      role="img"
+                      aria-label="thumbnail"
+                    >
+                      {getEmojiForPost(post.id)}
+                    </span>
                   </div>
                   <div className="p-6 flex-grow flex flex-col">
                     <div className="flex items-center mb-2 text-xs text-muted-foreground space-x-2">
