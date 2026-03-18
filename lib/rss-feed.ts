@@ -3,6 +3,8 @@ import {
   ExternalArticle,
   QIITA_FEED_URL,
   ZENN_FEED_URL,
+  SlideArticle,
+  SPEAKERDECK_FEED_URL,
 } from "./external-articles";
 
 // キャッシュに関するインターフェースの定義
@@ -14,6 +16,7 @@ interface CacheData<T> {
 // キャッシュ保存用のオブジェクト
 const feedCache: {
   externalArticles?: CacheData<ExternalArticle[]>;
+  speakerDeckSlides?: CacheData<SlideArticle[]>;
 } = {};
 
 // キャッシュの有効期限（ミリ秒）- 現在は10分に設定
@@ -40,7 +43,7 @@ interface RSSFeed {
  */
 async function fetchRSSFeed(
   url: string,
-  type: "Qiita" | "Zenn"
+  type: "Qiita" | "Zenn" | "SpeakerDeck",
 ): Promise<RSSFeed> {
   try {
     const response = await fetch(url);
@@ -68,6 +71,10 @@ async function fetchRSSFeed(
         feed = result.rss?.channel;
         items = (Array.isArray(feed.item) ? feed.item : [feed.item]) ?? [];
         break;
+      case "SpeakerDeck":
+        feed = result.feed;
+        items = (Array.isArray(feed.entry) ? feed.entry : [feed.entry]) ?? [];
+        break;
       default:
         throw new Error(`Unsupported feed type: ${type}`);
     }
@@ -84,8 +91,8 @@ async function fetchRSSFeed(
           ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
             item.category.map((c: any) => c?.term ?? c)
           : item.category
-          ? [item.category?.term ?? item.category]
-          : [],
+            ? [item.category?.term ?? item.category]
+            : [],
         likes: item.likes ?? undefined,
         "content:encoded": item["content:encoded"],
         "dc:creator": item["dc:creator"],
@@ -130,7 +137,7 @@ export async function fetchExternalArticles(): Promise<ExternalArticle[]> {
         tags: item.category ?? [],
         source: "qiita",
         likes: item.likes,
-      })
+      }),
     );
 
     const zennArticles = zennFeed.items.map(
@@ -145,11 +152,11 @@ export async function fetchExternalArticles(): Promise<ExternalArticle[]> {
         url: item.link,
         tags: item.category ?? [],
         source: "zenn",
-      })
+      }),
     );
 
     const allArticles = [...qiitaArticles, ...zennArticles].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     );
 
     // 取得したデータをキャッシュに保存
@@ -169,4 +176,56 @@ export async function fetchExternalArticles(): Promise<ExternalArticle[]> {
 export function clearFeedCache(): void {
   console.log("Clearing RSS feed cache");
   delete feedCache.externalArticles;
+  delete feedCache.speakerDeckSlides;
+}
+
+/**
+ * Speaker Deckからスライドを取得します
+ */
+export async function fetchSpeakerDeckSlides(): Promise<SlideArticle[]> {
+  // キャッシュが有効な場合はキャッシュから取得
+  const cachedData = feedCache.speakerDeckSlides;
+  const now = Date.now();
+  if (
+    cachedData &&
+    now - cachedData.timestamp < FEED_CACHE_TTL &&
+    cachedData.data
+  ) {
+    return cachedData.data;
+  }
+
+  try {
+    const feed = await fetchRSSFeed(SPEAKERDECK_FEED_URL, "SpeakerDeck");
+
+    const slides = feed.items.map((item: RSSItem): SlideArticle => {
+      // Speaker DeckのURLから presentation IDを抽出
+      // 例: https://speakerdeck.com/tabe/presentation-title -> presentation-title
+      const urlParts = item.link.split("/");
+      const presentationId = urlParts[urlParts.length - 1] || "";
+
+      return {
+        id: `speakerdeck-${presentationId}`,
+        title: item.title,
+        description:
+          (item.description ?? "").replace(/<[^>]*>/g, "").slice(0, 200) +
+          "...",
+        date: new Date(item.pubDate).toISOString().split("T")[0],
+        url: item.link,
+        embedUrl: `https://speakerdeck.com/player/${presentationId}`,
+        tags: ["slides", "speakerdeck", ...(item.category ?? [])],
+        source: "speakerdeck",
+      };
+    });
+
+    // 取得したデータをキャッシュに保存
+    feedCache.speakerDeckSlides = {
+      data: slides,
+      timestamp: Date.now(),
+    };
+
+    return slides;
+  } catch (error) {
+    console.error("Error fetching Speaker Deck slides:", error);
+    return []; // エラーが発生した場合は空の配列を返す
+  }
 }

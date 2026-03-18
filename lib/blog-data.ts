@@ -1,5 +1,6 @@
 import { ExternalArticle } from "./external-articles";
 import { fetchExternalArticles } from "./rss-feed";
+import { getAllSlides, convertSlideToBlogPost } from "./slides-data";
 
 // キャッシュに関するインターフェースの定義
 interface CacheData<T> {
@@ -21,10 +22,11 @@ export interface BlogPost {
   description: string;
   date: string;
   content?: string;
-  imageType?: "green" | "orange" | "black";
+  imageType?: "green" | "orange" | "black" | "purple" | "blue";
   tags: string[];
-  type?: "blog" | "qiita" | "zenn";
+  type?: "blog" | "qiita" | "zenn" | "speakerdeck" | "googleslides";
   url?: string;
+  embedUrl?: string; // スライド埋め込み用URL
   likes?: number;
 }
 
@@ -81,11 +83,11 @@ export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
 
   return posts
     .filter((post: BlogPost) =>
-      post.tags.some((t: string) => t.toLowerCase() === normalizedTag)
+      post.tags.some((t: string) => t.toLowerCase() === normalizedTag),
     )
     .sort(
       (a: BlogPost, b: BlogPost) =>
-        new Date(b.date).getTime() - new Date(a.date).getTime()
+        new Date(b.date).getTime() - new Date(a.date).getTime(),
     );
 }
 
@@ -99,7 +101,7 @@ export async function getPostById(id: string): Promise<BlogPost | undefined> {
 
 // 年月ごとに記事をグループ化
 export async function groupPostsByYearMonth(
-  postsPromise: Promise<BlogPost[]> = getAllPosts()
+  postsPromise: Promise<BlogPost[]> = getAllPosts(),
 ): Promise<Record<string, BlogPost[]>> {
   const posts = await postsPromise;
 
@@ -142,8 +144,13 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
   try {
     console.log("Fetching fresh posts data");
-    const externalArticles = await fetchExternalArticles();
+    const [externalArticles, slides] = await Promise.all([
+      fetchExternalArticles(),
+      getAllSlides(),
+    ]);
+
     const externalPosts = externalArticles.map(convertExternalToBlogPost);
+    const slidePosts = slides.map(convertSlideToBlogPost);
 
     const { loadMarkdownPosts } = await import("./markdown-loader");
     const markdownPosts = loadMarkdownPosts();
@@ -151,11 +158,15 @@ export async function getAllPosts(): Promise<BlogPost[]> {
       (post: BlogPost) => ({
         ...post,
         type: "blog" as const,
-      })
+      }),
     );
-    const sortedPosts = [...internalPosts, ...externalPosts].sort(
+    const sortedPosts = [
+      ...internalPosts,
+      ...externalPosts,
+      ...slidePosts,
+    ].sort(
       (a: BlogPost, b: BlogPost) =>
-        new Date(b.date).getTime() - new Date(a.date).getTime()
+        new Date(b.date).getTime() - new Date(a.date).getTime(),
     );
     // キャッシュの更新
     cache.posts = {
@@ -180,7 +191,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
       (post: BlogPost) => ({
         ...post,
         type: "blog" as const,
-      })
+      }),
     );
 
     // エラー時のデータもキャッシュしておく
