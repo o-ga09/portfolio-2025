@@ -32,6 +32,7 @@ interface RSSItem {
   comments?: number;
   "content:encoded"?: string;
   "dc:creator"?: string;
+  id?: string;
 }
 
 interface RSSFeed {
@@ -96,6 +97,7 @@ async function fetchRSSFeed(
         likes: item.likes ?? undefined,
         "content:encoded": item["content:encoded"],
         "dc:creator": item["dc:creator"],
+        id: item.id ?? undefined,
       })),
     };
   } catch (error) {
@@ -201,10 +203,20 @@ export async function fetchSpeakerDeckSlides(): Promise<SlideArticle[]> {
       // Speaker DeckのURLから presentation IDを抽出
       // 例: https://speakerdeck.com/tabe/presentation-title -> presentation-title
       const urlParts = item.link.split("/");
-      const presentationId = urlParts[urlParts.length - 1] || "";
+      const presentationSlug = urlParts[urlParts.length - 1] || "";
+
+      // IDフィールドから数値IDを抽出
+      // 例: tag:speakerdeck.com,2005:Talk/1507741 -> 1507741
+      let presentationId = presentationSlug;
+      if (item.id) {
+        const idMatch = item.id.match(/Talk\/(\d+)/);
+        if (idMatch && idMatch[1]) {
+          presentationId = idMatch[1];
+        }
+      }
 
       return {
-        id: `speakerdeck-${presentationId}`,
+        id: `speakerdeck-${presentationSlug}`,
         title: item.title,
         description:
           (item.description ?? "").replace(/<[^>]*>/g, "").slice(0, 200) +

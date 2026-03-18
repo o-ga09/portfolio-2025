@@ -111,8 +111,10 @@ export default async function SlidePage({
             >
               <iframe
                 src={slide.embedUrl}
-                className="absolute top-0 left-0 w-full h-full"
+                className="absolute top-0 left-0 w-full h-full border-0"
                 allowFullScreen
+                allow="fullscreen; accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                loading="lazy"
                 title={slide.title}
               />
             </div>
