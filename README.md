@@ -111,7 +111,86 @@ portfolio-2025/
 └── ...設定ファイル
 ```
 
-## 🔍 主要機能の詳細
+## � ブログ・スライド管理
+
+このポートフォリオは、ブログ記事とスライドを統合表示する機能を持っています。
+
+### ブログ記事の追加
+
+`contents/` ディレクトリに `.md` ファイルを作成してください。
+
+**ファイル名形式**: `YYYY-MM-DD-slug.md`
+
+**例**: `2025-03-15-my-first-post.md`
+
+**フロントマター**:
+```yaml
+---
+title: "記事のタイトル"
+description: "記事の概要説明"
+date: "2025-03-15"
+tags: ["React", "TypeScript", "Next.js"]
+---
+
+ここに記事の本文を書きます...
+```
+
+### 外部記事の自動取得
+
+- **Qiita**: `https://qiita.com/o-ga/feed` から自動取得
+- **Zenn**: `https://zenn.dev/o_ga/feed` から自動取得
+- **Speaker Deck**: `https://speakerdeck.com/tabe.atom` から自動取得
+
+これらの外部記事は10分間キャッシュされ、ブログ一覧に統合表示されます。
+
+### Google スライドの手動登録
+
+Google スライドを追加する場合は、`public/slides.json` を編集してください。
+
+**スライドの登録例**:
+```json
+[
+  {
+    "id": "2025-03-18-my-presentation",
+    "title": "プレゼンテーションタイトル",
+    "description": "プレゼンテーションの概要説明",
+    "date": "2025-03-18",
+    "url": "https://docs.google.com/presentation/d/YOUR_PRESENTATION_ID/edit",
+    "embedUrl": "https://docs.google.com/presentation/d/YOUR_PRESENTATION_ID/embed",
+    "tags": ["slides", "googleslides", "React"]
+  }
+]
+```
+
+**フィールドの説明**:
+- `id`: 一意な識別子（日付-スラッグ形式を推奨）
+- `title`: スライドのタイトル
+- `description`: スライドの説明文
+- `date`: 作成日または公開日（YYYY-MM-DD形式）
+- `url`: Google スライドの編集/閲覧URL
+- `embedUrl`: 埋め込み用URL（`/edit` を `/embed` に変更）
+- `tags`: タグの配列（"slides", "googleslides" を含めることを推奨）
+
+**埋め込みURLの取得方法**:
+1. Google スライドを開く
+2. 「ファイル」→「共有」→「ウェブに公開」を選択
+3. 「埋め込む」タブから埋め込みコードをコピー
+4. `src="..."` 内のURLを `embedUrl` に使用
+
+または、編集URLの `/edit` を `/embed` に置き換えることでも動作します。
+
+**PRでの登録手順**:
+1. `public/slides.json` を編集
+2. 上記の形式でスライド情報を追加
+3. PRを作成してマージ
+
+### スライドの表示
+
+- スライドはブログ一覧（`/blog`）に混在して表示されます
+- 詳細ページ（`/slides/[id]`）でiframe埋め込み表示されます
+- タグフィルター（`/tags/[tag]`）でも検索可能です
+
+## �🔍 主要機能の詳細
 
 ### 🪪 Aboutページ（パスポート/名刺風）
 
