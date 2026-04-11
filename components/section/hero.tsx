@@ -50,12 +50,14 @@ export default function Hero() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
               <Button
+                asChild
                 size="default"
                 className="bg-accent/90 hover:bg-accent/80 text-accent-foreground border-0 shadow-md text-sm sm:text-base"
               >
                 <Link href="/blog">ブログを読む →</Link>
               </Button>
               <Button
+                asChild
                 size="default"
                 variant="outline"
                 className="bg-secondary/40 border-accent/90 text-accent-foreground hover:bg-accent/20 hover:border-accent/80 shadow-md font-medium backdrop-blur-sm text-sm sm:text-base"
