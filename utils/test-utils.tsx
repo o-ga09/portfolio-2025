@@ -21,10 +21,8 @@ const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
  * @param options - 追加のレンダリングオプション
  * @returns レンダリング結果とヘルパー関数
  */
-const customRender = (
-  ui: React.ReactElement,
-  options?: Omit<RenderOptions, "wrapper">
-) => render(ui, { wrapper: AllTheProviders, ...options });
+const customRender = (ui: React.ReactElement, options?: Omit<RenderOptions, "wrapper">) =>
+  render(ui, { wrapper: AllTheProviders, ...options });
 
 // testing-libraryのすべてのエクスポートを再エクスポート
 export * from "@testing-library/react";

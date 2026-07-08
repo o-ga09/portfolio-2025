@@ -13,13 +13,10 @@ interface TagPageProps {
   }>;
 }
 
-export async function generateMetadata({
-  params,
-}: TagPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
   const { tag } = await params;
   const decodedTag = decodeURIComponent(tag);
-  const normalizedTag =
-    decodedTag.charAt(0).toUpperCase() + decodedTag.slice(1);
+  const normalizedTag = decodedTag.charAt(0).toUpperCase() + decodedTag.slice(1);
 
   return generateTagMetadata(tag, normalizedTag);
 }
@@ -44,8 +41,7 @@ export default async function TagPage({ params }: TagPageProps) {
   }
 
   const posts = await getPostsByTag(decodedTag);
-  const normalizedTag =
-    decodedTag.charAt(0).toUpperCase() + decodedTag.slice(1);
+  const normalizedTag = decodedTag.charAt(0).toUpperCase() + decodedTag.slice(1);
 
   return (
     <main className="min-h-screen bg-background flex flex-col">
@@ -61,9 +57,7 @@ export default async function TagPage({ params }: TagPageProps) {
           <h1 className="text-3xl font-bold mb-3 mt-4 border-b border-border pb-4 text-gray-900 dark:text-white">
             「{normalizedTag}」に関する記事
           </h1>
-          <p className="text-muted-foreground mb-6">
-            {posts.length}件の記事が見つかりました
-          </p>
+          <p className="text-muted-foreground mb-6">{posts.length}件の記事が見つかりました</p>
 
           <div className="mb-8 flex gap-2">
             <Button asChild variant="outline" size="sm">
@@ -77,19 +71,13 @@ export default async function TagPage({ params }: TagPageProps) {
 
         <div className="space-y-8">
           {posts.map((post) => (
-            <article
-              key={post.id}
-              className="border-b border-gray-100 pb-8 last:border-0"
-            >
+            <article key={post.id} className="border-b border-gray-100 pb-8 last:border-0">
               <Link href={`/blog/${post.id}`} className="block">
                 <h2 className="text-2xl font-semibold hover:text-primary transition-colors mb-2 text-gray-900 dark:text-white">
                   {post.title}
                 </h2>
               </Link>
-              <time
-                dateTime={post.date}
-                className="text-sm text-muted-foreground mb-3 block"
-              >
+              <time dateTime={post.date} className="text-sm text-muted-foreground mb-3 block">
                 {post.date}
               </time>
               <p className="text-muted-foreground mb-4">{post.description}</p>
@@ -114,9 +102,7 @@ export default async function TagPage({ params }: TagPageProps) {
 
         {posts.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-500 mb-4">
-              このタグの記事はまだありません。
-            </p>
+            <p className="text-gray-500 mb-4">このタグの記事はまだありません。</p>
             <Button asChild>
               <Link href="/blog">ブログトップへ戻る</Link>
             </Button>

@@ -11,12 +11,7 @@ import ThemeToggle from "../theme/theme-toggle";
 // X（旧Twitter）のロゴ。lucide-react には X ロゴがないため自前の SVG を使用する。
 function XIcon({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      fill="currentColor"
-      className={className}
-    >
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" className={className}>
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
     </svg>
   );
@@ -62,9 +57,7 @@ export default function Header() {
   const handleKeyDown = (e: KeyboardEvent) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "k") {
       e.preventDefault();
-      const searchInput = document.querySelector(
-        'input[type="search"]'
-      ) as HTMLInputElement;
+      const searchInput = document.querySelector('input[type="search"]') as HTMLInputElement;
       if (searchInput) {
         searchInput.focus();
         setIsSearchFocused(true);
@@ -87,10 +80,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
-            <Link
-              href="/"
-              className="text-xl font-bold text-gray-900 dark:text-white"
-            >
+            <Link href="/" className="text-xl font-bold text-gray-900 dark:text-white">
               o-ga09 blog
             </Link>
             <nav className="hidden md:flex space-x-6">
@@ -140,9 +130,7 @@ export default function Header() {
             >
               <Search
                 className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 transition-colors ${
-                  isSearchFocused
-                    ? "text-primary"
-                    : "text-gray-900 dark:text-white/50"
+                  isSearchFocused ? "text-primary" : "text-gray-900 dark:text-white/50"
                 }`}
               />
               <Input
@@ -162,16 +150,12 @@ export default function Header() {
               >
                 <Command
                   className={`w-3 h-3 transition-colors ${
-                    isSearchFocused
-                      ? "text-primary"
-                      : "text-gray-900 dark:text-white/50"
+                    isSearchFocused ? "text-primary" : "text-gray-900 dark:text-white/50"
                   }`}
                 />
                 <span
                   className={`text-xs transition-colors ${
-                    isSearchFocused
-                      ? "text-primary"
-                      : "text-gray-900 dark:text-white/50"
+                    isSearchFocused ? "text-primary" : "text-gray-900 dark:text-white/50"
                   }`}
                 >
                   K
@@ -208,11 +192,7 @@ export default function Header() {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label="メニュー"
               >
-                {isMobileMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </Button>
             </div>
           </div>
@@ -349,12 +329,7 @@ export default function Header() {
               </Button>
             </div>
             <div className="flex justify-center rounded-2xl bg-white p-4">
-              <QRCodeSVG
-                value={qrSocial.href}
-                size={200}
-                level="M"
-                marginSize={2}
-              />
+              <QRCodeSVG value={qrSocial.href} size={200} level="M" marginSize={2} />
             </div>
             <p className="mt-4 text-center text-sm text-gray-500 dark:text-white/60 break-all">
               {qrSocial.href}

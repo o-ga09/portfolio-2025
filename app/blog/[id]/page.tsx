@@ -36,11 +36,7 @@ export async function generateMetadata({
   return generateBlogPostMetadata(post, id);
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const post = await getPostById(id);
 
@@ -115,10 +111,7 @@ export default async function BlogPostPage({
             </time>
           </div>
 
-          <div
-            className="znc"
-            dangerouslySetInnerHTML={{ __html: contentHtml }}
-          />
+          <div className="znc" dangerouslySetInnerHTML={{ __html: contentHtml }} />
 
           <div className="mt-12 pt-8 border-t border-border mb-8">
             <Button asChild>

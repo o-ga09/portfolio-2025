@@ -27,9 +27,7 @@ export default function RootLayout({
         <meta name="view-transition" content="same-origin" />
       </head>
       <ThemeProvider defaultTheme="system" storageKey="theme">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
           {children}
         </body>
       </ThemeProvider>

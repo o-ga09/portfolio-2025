@@ -42,10 +42,7 @@ interface RSSFeed {
 /**
  * RSSフィードを取得して解析します
  */
-async function fetchRSSFeed(
-  url: string,
-  type: "Qiita" | "Zenn" | "SpeakerDeck",
-): Promise<RSSFeed> {
+async function fetchRSSFeed(url: string, type: "Qiita" | "Zenn" | "SpeakerDeck"): Promise<RSSFeed> {
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -86,8 +83,7 @@ async function fetchRSSFeed(
         title: item.title?._ ?? item.title ?? "",
         link: item.link?.href ?? item.link ?? "",
         pubDate: item.pubDate ?? item.published ?? item.updated ?? "",
-        description:
-          item.description ?? item["content:encoded"] ?? item.content?._ ?? "",
+        description: item.description ?? item["content:encoded"] ?? item.content?._ ?? "",
         category: Array.isArray(item.category)
           ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
             item.category.map((c: any) => c?.term ?? c)
@@ -113,11 +109,7 @@ export async function fetchExternalArticles(): Promise<ExternalArticle[]> {
   // キャッシュが有効な場合はキャッシュから取得
   const cachedData = feedCache.externalArticles;
   const now = Date.now();
-  if (
-    cachedData &&
-    now - cachedData.timestamp < FEED_CACHE_TTL &&
-    cachedData.data
-  ) {
+  if (cachedData && now - cachedData.timestamp < FEED_CACHE_TTL && cachedData.data) {
     return cachedData.data;
   }
 
@@ -188,11 +180,7 @@ export async function fetchSpeakerDeckSlides(): Promise<SlideArticle[]> {
   // キャッシュが有効な場合はキャッシュから取得
   const cachedData = feedCache.speakerDeckSlides;
   const now = Date.now();
-  if (
-    cachedData &&
-    now - cachedData.timestamp < FEED_CACHE_TTL &&
-    cachedData.data
-  ) {
+  if (cachedData && now - cachedData.timestamp < FEED_CACHE_TTL && cachedData.data) {
     return cachedData.data;
   }
 
@@ -212,9 +200,7 @@ export async function fetchSpeakerDeckSlides(): Promise<SlideArticle[]> {
       return {
         id: `speakerdeck-${presentationSlug}`,
         title: item.title,
-        description:
-          (item.description ?? "").replace(/<[^>]*>/g, "").slice(0, 200) +
-          "...",
+        description: (item.description ?? "").replace(/<[^>]*>/g, "").slice(0, 200) + "...",
         date: new Date(item.pubDate).toISOString().split("T")[0],
         url: item.link,
         embedUrl: `https://speakerdeck.com/player/${username}/${presentationSlug}`,

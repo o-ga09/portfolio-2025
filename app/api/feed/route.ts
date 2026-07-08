@@ -4,8 +4,7 @@ import { blogPosts } from "@/lib/blog-data";
 export async function GET() {
   const feed = new Feed({
     title: "o-ga09.dev Blog",
-    description:
-      "Web開発に関する記事をお届けします。バックエンドに関する分野の記事が中心です。",
+    description: "Web開発に関する記事をお届けします。バックエンドに関する分野の記事が中心です。",
     id: "https://o-ga09.dev/",
     link: "https://o-ga09.dev/",
     language: "ja",

@@ -8,7 +8,7 @@
 export function formatNumber(
   value: number,
   locale: string = "ja-JP",
-  options?: Intl.NumberFormatOptions
+  options?: Intl.NumberFormatOptions,
 ): string {
   return new Intl.NumberFormat(locale, options).format(value);
 }
@@ -27,7 +27,7 @@ export function formatDate(
     year: "numeric",
     month: "long",
     day: "numeric",
-  }
+  },
 ): string {
   return new Intl.DateTimeFormat(locale, options).format(date);
 }
@@ -39,11 +39,7 @@ export function formatDate(
  * @param suffix - 省略記号 (デフォルト: '...')
  * @returns 省略されたテキスト
  */
-export function truncateText(
-  text: string,
-  maxLength: number,
-  suffix: string = "..."
-): string {
+export function truncateText(text: string, maxLength: number, suffix: string = "..."): string {
   if (text.length <= maxLength) {
     return text;
   }

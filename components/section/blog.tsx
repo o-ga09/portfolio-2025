@@ -31,8 +31,7 @@ export default function Blog({ initialPosts }: BlogProps) {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {displayPosts.map((post) => {
-            const isSlide =
-              post.type === "speakerdeck" || post.type === "googleslides";
+            const isSlide = post.type === "speakerdeck" || post.type === "googleslides";
             const isExternal = post.type !== "blog";
             const href = isSlide
               ? `/slides/${post.id}`
@@ -56,11 +55,7 @@ export default function Blog({ initialPosts }: BlogProps) {
                       contain: "layout paint",
                     }}
                   >
-                    <span
-                      className="text-8xl"
-                      role="img"
-                      aria-label="thumbnail"
-                    >
+                    <span className="text-8xl" role="img" aria-label="thumbnail">
                       {getEmojiForPost(post.id)}
                     </span>
                   </div>

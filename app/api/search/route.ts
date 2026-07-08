@@ -17,9 +17,7 @@ export async function GET(request: NextRequest) {
       const matches: string[] = [];
       const titleMatch = post.title.toLowerCase().includes(searchQuery);
       const descMatch = post.description.toLowerCase().includes(searchQuery);
-      const tagMatch = post.tags.some((tag) =>
-        tag.toLowerCase().includes(searchQuery)
-      );
+      const tagMatch = post.tags.some((tag) => tag.toLowerCase().includes(searchQuery));
       const contentMatch = post.content?.toLowerCase().includes(searchQuery);
 
       if (titleMatch) matches.push("タイトル");

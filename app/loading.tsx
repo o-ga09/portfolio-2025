@@ -39,9 +39,7 @@ export default function Loading() {
 
         {/* メッセージ */}
         <div className="space-y-4">
-          <h1 className="text-4xl font-bold text-white drop-shadow-lg">
-            準備中クマ♪
-          </h1>
+          <h1 className="text-4xl font-bold text-white drop-shadow-lg">準備中クマ♪</h1>
           <p className="text-xl text-white/80">素敵な音楽を準備してるクマ...</p>
         </div>
 

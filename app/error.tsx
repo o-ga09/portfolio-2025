@@ -40,30 +40,21 @@ export default function Error({
 
         {/* メッセージ */}
         <div className="space-y-4">
-          <h1 className="text-4xl font-bold text-white drop-shadow-lg">
-            おっと！
-          </h1>
+          <h1 className="text-4xl font-bold text-white drop-shadow-lg">おっと！</h1>
           <p className="text-xl text-white/80">何かエラーが発生したクマ...</p>
-          <p className="text-white/60 text-sm">
-            ギターの弦が切れちゃったみたい
-          </p>
+          <p className="text-white/60 text-sm">ギターの弦が切れちゃったみたい</p>
         </div>
 
         {/* エラー詳細（開発時のみ表示） */}
         {process.env.NODE_ENV === "development" && (
           <div className="bg-black/20 rounded-lg p-4 text-left">
-            <p className="text-white/80 text-xs font-mono break-all">
-              {error.message}
-            </p>
+            <p className="text-white/80 text-xs font-mono break-all">{error.message}</p>
           </div>
         )}
 
         {/* アクションボタン */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button
-            onClick={reset}
-            className="bg-white text-error hover:bg-error-light/10 shadow-lg"
-          >
+          <Button onClick={reset} className="bg-white text-error hover:bg-error-light/10 shadow-lg">
             <RefreshCw size={20} className="mr-2" />
             もう一度試す
           </Button>

@@ -5,10 +5,9 @@ export const useViewTransitionRouter = (): ReturnType<typeof useNextRouter> => {
   const router = useNextRouter();
   const pathname = usePathname();
 
-  const promiseCallbacks = useRef<Record<
-    "resolve" | "reject",
-    (value: unknown) => void
-  > | null>(null);
+  const promiseCallbacks = useRef<Record<"resolve" | "reject", (value: unknown) => void> | null>(
+    null,
+  );
 
   const transitionHelper = (updateDOM: () => Promise<void> | void) => {
     if (!document.startViewTransition) {

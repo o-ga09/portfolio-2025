@@ -47,9 +47,7 @@ export function generateSiteMetadata({
   const url = getAbsoluteUrl(path);
   const absoluteOgImage = getAbsoluteUrl(ogImage);
   const absoluteOgTwitterImage = getAbsoluteUrl(ogTwitterImage);
-  const keywordsString = Array.isArray(keywords)
-    ? keywords.join(", ")
-    : keywords;
+  const keywordsString = Array.isArray(keywords) ? keywords.join(", ") : keywords;
 
   const metadata: Metadata = {
     title: fullTitle,
@@ -123,10 +121,7 @@ export function generateBlogPostMetadata(
 /**
  * タグページ用のメタデータを生成
  */
-export function generateTagMetadata(
-  tag: string,
-  normalizedTag: string,
-): Metadata {
+export function generateTagMetadata(tag: string, normalizedTag: string): Metadata {
   return generateSiteMetadata({
     title: `${normalizedTag} に関する記事`,
     description: `${normalizedTag} のタグが付いた記事の一覧`,
@@ -170,8 +165,7 @@ export const archiveMetadata: Metadata = generateSiteMetadata({
  */
 export const aboutMetadata: Metadata = generateSiteMetadata({
   title: "About Me",
-  description:
-    "オーガの自己紹介ページ。経歴、スキル、趣味などを紹介しています。",
+  description: "オーガの自己紹介ページ。経歴、スキル、趣味などを紹介しています。",
   path: "/about",
   keywords: "自己紹介, プロフィール, エンジニア, バックエンド",
 });
@@ -181,8 +175,7 @@ export const aboutMetadata: Metadata = generateSiteMetadata({
  */
 export const aboutDetailsMetadata: Metadata = generateSiteMetadata({
   title: "詳細プロフィール",
-  description:
-    "オーガの詳細プロフィール。略歴、資格、スキル、趣味、プロダクトなどの詳細情報。",
+  description: "オーガの詳細プロフィール。略歴、資格、スキル、趣味、プロダクトなどの詳細情報。",
   path: "/about/details",
   keywords: "プロフィール, 略歴, 資格, スキル, 趣味, プロダクト",
 });
@@ -213,9 +206,7 @@ export function generateHomeMetadata(): Metadata {
   // ホームページ専用の追加設定
   return {
     ...baseMetadata,
-    metadataBase: new URL(
-      process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000",
-    ),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000"),
     robots: {
       index: true,
       follow: true,
@@ -240,9 +231,7 @@ export function generateHomeMetadata(): Metadata {
           type: "image/webp",
         },
       ],
-      apple: [
-        { url: "/apple-touch-icon.webp", sizes: "180x180", type: "image/webp" },
-      ],
+      apple: [{ url: "/apple-touch-icon.webp", sizes: "180x180", type: "image/webp" }],
     },
     manifest: "/manifest.json",
   };
