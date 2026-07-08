@@ -12,7 +12,7 @@
     "lint:fix": "oxlint --fix",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "node_modules/typescript-native-rc/bin/tsc --noEmit",
     "build:cloudflare": "node scripts/generate-posts.js && next build && opennextjs-cloudflare build",
     "copy:contents": "cp -r contents .open-next/server-functions/default/contents 2>/dev/null || true",
     "deploy": "npm run build:cloudflare && opennextjs-cloudflare deploy",
@@ -61,7 +61,8 @@
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.0",
     "tw-animate-css": "^1.3.0",
-    "typescript": "7.0.1-rc",
+    "typescript": "6.0.3",
+    "typescript-native-rc": "npm:typescript@7.0.1-rc",
     "vitest": "^3.1.4",
     "wrangler": "^4.16.1"
   }
