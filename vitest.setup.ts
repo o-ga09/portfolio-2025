@@ -15,15 +15,7 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
 
 // next/imageモックを追加
 vi.mock("next/image", () => ({
-  default: ({
-    src,
-    alt,
-    ...props
-  }: {
-    src: string;
-    alt: string;
-    [key: string]: unknown;
-  }) => {
+  default: ({ src, alt, ...props }: { src: string; alt: string; [key: string]: unknown }) => {
     return React.createElement("img", { src, alt, ...props });
   },
 }));

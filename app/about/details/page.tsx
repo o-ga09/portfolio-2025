@@ -72,20 +72,17 @@ export default function AboutDetails() {
     {
       name: "AWS Certified Solutions Architect Associate",
       year: "2025年取得",
-      description:
-        "AWS上でのアーキテクチャ設計に関する専門知識を証明する資格。",
+      description: "AWS上でのアーキテクチャ設計に関する専門知識を証明する資格。",
     },
     {
       name: "AWS Certified Developer Associate",
       year: "2024年取得",
-      description:
-        "AWS上でのアプリケーション開発に関する専門知識を証明する資格。",
+      description: "AWS上でのアプリケーション開発に関する専門知識を証明する資格。",
     },
     {
       name: "AWS Certified Cloud Practitioner",
       year: "2023年取得",
-      description:
-        "AWSの基本的なサービスとクラウドコンセプトに関する知識を証明する資格。",
+      description: "AWSの基本的なサービスとクラウドコンセプトに関する知識を証明する資格。",
     },
   ];
 
@@ -197,8 +194,7 @@ export default function AboutDetails() {
     },
     {
       name: "パワプロのパワフェスモードの計算ツール",
-      description:
-        "パワプロのパワフェスモードでの試合結果や選手のステータスを計算するツール。",
+      description: "パワプロのパワフェスモードでの試合結果や選手のステータスを計算するツール。",
       link: "https://pawafes-calc-20220223.dt.r.appspot.com/",
     },
     {
@@ -256,9 +252,7 @@ export default function AboutDetails() {
                       {item.year}
                     </div>
                     <div>
-                      <h3 className="font-bold text-gray-900 dark:text-white">
-                        {item.company}
-                      </h3>
+                      <h3 className="font-bold text-gray-900 dark:text-white">{item.company}</h3>
                       <p className="text-muted-foreground mt-1">
                         {item.position}として、{item.description}
                       </p>
@@ -287,16 +281,10 @@ export default function AboutDetails() {
                       <div key={index} className="flex items-start">
                         <div className="flex-shrink-0 h-5 w-5 rounded-full bg-yellow-400 mt-1"></div>
                         <div className="ml-3">
-                          <p className="font-medium text-gray-900 dark:text-white">
-                            {qual.name}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {qual.year}
-                          </p>
+                          <p className="font-medium text-gray-900 dark:text-white">{qual.name}</p>
+                          <p className="text-xs text-muted-foreground">{qual.year}</p>
                           {qual.description && (
-                            <p className="text-sm text-muted-foreground mt-1">
-                              {qual.description}
-                            </p>
+                            <p className="text-sm text-muted-foreground mt-1">{qual.description}</p>
                           )}
                         </div>
                       </div>
@@ -316,20 +304,14 @@ export default function AboutDetails() {
                         <div key={index} className="flex items-start">
                           <div className="flex-shrink-0 h-5 w-5 rounded-full bg-yellow-400 mt-1"></div>
                           <div className="ml-3">
-                            <p className="font-medium text-gray-900 dark:text-white">
-                              {qual.name}
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              {qual.year}
-                            </p>
+                            <p className="font-medium text-gray-900 dark:text-white">{qual.name}</p>
+                            <p className="text-xs text-muted-foreground">{qual.year}</p>
                           </div>
                         </div>
                       ))
                     ) : (
                       <>
-                        <p className="text-gray-600 dark:text-gray-400">
-                          特にありません
-                        </p>
+                        <p className="text-gray-600 dark:text-gray-400">特にありません</p>
                       </>
                     )}
                   </div>
@@ -338,9 +320,7 @@ export default function AboutDetails() {
                     <></>
                   ) : (
                     <div className="bg-secondary/20 border border-border rounded-lg p-4 mt-6">
-                      <p className="text-sm text-gray-900 dark:text-white/80 italic">
-                        {remark}
-                      </p>
+                      <p className="text-sm text-gray-900 dark:text-white/80 italic">{remark}</p>
                     </div>
                   )}
                 </div>
@@ -442,12 +422,8 @@ export default function AboutDetails() {
                       <div key={index} className="flex items-start">
                         <div className="flex-shrink-0 h-5 w-5 rounded-full bg-purple-400 mt-1"></div>
                         <div className="ml-3">
-                          <p className="font-medium text-gray-900 dark:text-white">
-                            {hobby.title}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            {hobby.description}
-                          </p>
+                          <p className="font-medium text-gray-900 dark:text-white">{hobby.title}</p>
+                          <p className="text-sm text-muted-foreground">{hobby.description}</p>
                         </div>
                       </div>
                     ))}
@@ -464,12 +440,8 @@ export default function AboutDetails() {
                       <div key={index} className="flex items-start">
                         <div className="flex-shrink-0 h-5 w-5 rounded-full bg-purple-400 mt-1"></div>
                         <div className="ml-3">
-                          <p className="font-medium text-gray-900 dark:text-white">
-                            {other.title}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            {other.description}
-                          </p>
+                          <p className="font-medium text-gray-900 dark:text-white">{other.title}</p>
+                          <p className="text-sm text-muted-foreground">{other.description}</p>
                         </div>
                       </div>
                     ))}
@@ -490,12 +462,8 @@ export default function AboutDetails() {
                   <div key={index} className="flex items-start">
                     <div className="flex-shrink-0 h-5 w-5 rounded-full bg-blue-400 mt-1"></div>
                     <div className="ml-3">
-                      <p className="font-medium text-gray-900 dark:text-white">
-                        {product.name}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {product.description}
-                      </p>
+                      <p className="font-medium text-gray-900 dark:text-white">{product.name}</p>
+                      <p className="text-sm text-muted-foreground">{product.description}</p>
                       <a
                         href={product.link}
                         target="_blank"

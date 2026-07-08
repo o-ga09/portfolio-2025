@@ -13,9 +13,7 @@ describe("formatNumber", () => {
   });
 
   it("applies formatting options correctly", () => {
-    expect(
-      formatNumber(1000.5, "ja-JP", { style: "currency", currency: "JPY" })
-    ).toBe("￥1,001");
+    expect(formatNumber(1000.5, "ja-JP", { style: "currency", currency: "JPY" })).toBe("￥1,001");
     expect(formatNumber(0.5, "ja-JP", { style: "percent" })).toBe("50%");
   });
 });
@@ -37,7 +35,7 @@ describe("formatDate", () => {
         year: "numeric",
         month: "long",
         day: "numeric",
-      })
+      }),
     ).toMatch(/2025年5月27日火曜日/);
   });
 });

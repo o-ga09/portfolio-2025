@@ -82,13 +82,8 @@ export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
   const posts = await getAllPosts();
 
   return posts
-    .filter((post: BlogPost) =>
-      post.tags.some((t: string) => t.toLowerCase() === normalizedTag),
-    )
-    .sort(
-      (a: BlogPost, b: BlogPost) =>
-        new Date(b.date).getTime() - new Date(a.date).getTime(),
-    );
+    .filter((post: BlogPost) => post.tags.some((t: string) => t.toLowerCase() === normalizedTag))
+    .sort((a: BlogPost, b: BlogPost) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 // IDから記事を取得
@@ -144,29 +139,19 @@ export async function getAllPosts(): Promise<BlogPost[]> {
 
   try {
     console.log("Fetching fresh posts data");
-    const [externalArticles, slides] = await Promise.all([
-      fetchExternalArticles(),
-      getAllSlides(),
-    ]);
+    const [externalArticles, slides] = await Promise.all([fetchExternalArticles(), getAllSlides()]);
 
     const externalPosts = externalArticles.map(convertExternalToBlogPost);
     const slidePosts = slides.map(convertSlideToBlogPost);
 
     const { loadMarkdownPosts } = await import("./markdown-loader");
     const markdownPosts = loadMarkdownPosts();
-    const internalPosts = [...markdownPosts, ...blogPosts].map(
-      (post: BlogPost) => ({
-        ...post,
-        type: "blog" as const,
-      }),
-    );
-    const sortedPosts = [
-      ...internalPosts,
-      ...externalPosts,
-      ...slidePosts,
-    ].sort(
-      (a: BlogPost, b: BlogPost) =>
-        new Date(b.date).getTime() - new Date(a.date).getTime(),
+    const internalPosts = [...markdownPosts, ...blogPosts].map((post: BlogPost) => ({
+      ...post,
+      type: "blog" as const,
+    }));
+    const sortedPosts = [...internalPosts, ...externalPosts, ...slidePosts].sort(
+      (a: BlogPost, b: BlogPost) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     );
     // キャッシュの更新
     cache.posts = {
@@ -187,12 +172,10 @@ export async function getAllPosts(): Promise<BlogPost[]> {
     // キャッシュもない場合は内部記事のみを返す
     const { loadMarkdownPosts } = await import("./markdown-loader");
     const markdownPosts = loadMarkdownPosts();
-    const internalPosts = [...markdownPosts, ...blogPosts].map(
-      (post: BlogPost) => ({
-        ...post,
-        type: "blog" as const,
-      }),
-    );
+    const internalPosts = [...markdownPosts, ...blogPosts].map((post: BlogPost) => ({
+      ...post,
+      type: "blog" as const,
+    }));
 
     // エラー時のデータもキャッシュしておく
     cache.posts = {

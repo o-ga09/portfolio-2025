@@ -32,9 +32,7 @@ export default async function BlogArchivePage() {
           <h1 className="text-4xl font-bold mb-2 mt-4 border-b border-border pb-4 text-gray-900 dark:text-white">
             ブログアーカイブ
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mt-2">
-            過去の記事をすべて表示しています
-          </p>
+          <p className="text-gray-600 dark:text-gray-300 mt-2">過去の記事をすべて表示しています</p>
         </div>
 
         <div className="mb-8">
@@ -52,15 +50,9 @@ export default async function BlogArchivePage() {
             </h2>
             <ul className="space-y-6">
               {groupedPosts[yearMonth].map((post) => (
-                <li
-                  key={post.id}
-                  className="border-l-4 border-primary pl-4 py-1"
-                >
+                <li key={post.id} className="border-l-4 border-primary pl-4 py-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <time
-                      dateTime={post.date}
-                      className="text-sm text-muted-foreground block"
-                    >
+                    <time dateTime={post.date} className="text-sm text-muted-foreground block">
                       {post.date}
                     </time>
                     {post.type !== "blog" && (
@@ -74,11 +66,7 @@ export default async function BlogArchivePage() {
                         {post.type === "qiita" ? "Qiita" : "Zenn"}
                         {post.likes && (
                           <span className="ml-1 flex items-center">
-                            <svg
-                              className="w-3 h-3 mr-0.5"
-                              fill="currentColor"
-                              viewBox="0 0 20 20"
-                            >
+                            <svg className="w-3 h-3 mr-0.5" fill="currentColor" viewBox="0 0 20 20">
                               <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
                             </svg>
                             {post.likes}
@@ -88,22 +76,16 @@ export default async function BlogArchivePage() {
                     )}
                   </div>
                   <Link
-                    href={
-                      post.type !== "blog" ? post.url ?? "" : `/blog/${post.id}`
-                    }
+                    href={post.type !== "blog" ? (post.url ?? "") : `/blog/${post.id}`}
                     className="block"
                     target={post.type !== "blog" ? "_blank" : undefined}
-                    rel={
-                      post.type !== "blog" ? "noopener noreferrer" : undefined
-                    }
+                    rel={post.type !== "blog" ? "noopener noreferrer" : undefined}
                   >
                     <h3 className="text-xl font-semibold text-gray-900 hover:text-primary dark:text-white dark:hover:text-primary transition-colors">
                       {post.title}
                     </h3>
                   </Link>
-                  <p className="text-gray-600 dark:text-gray-300 mt-1">
-                    {post.description}
-                  </p>
+                  <p className="text-gray-600 dark:text-gray-300 mt-1">{post.description}</p>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {post.tags.map((tag) => (
                       <Link

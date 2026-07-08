@@ -3,13 +3,7 @@
 import React from "react";
 import { useParams } from "next/navigation";
 
-function NumberReel({
-  value,
-  className = "",
-}: {
-  value: number;
-  className?: string;
-}) {
+function NumberReel({ value, className = "" }: { value: number; className?: string }) {
   const formatted = value.toLocaleString();
   const chars = formatted.split("");
   const [start, setStart] = React.useState(false);
@@ -41,9 +35,7 @@ function NumberReel({
         const target = Number(ch);
         // Use em-based translation so it scales with current font-size
         const translateEm = 10 + target; // two cycles (0-9 twice) then target
-        const transform = start
-          ? `translateY(-${translateEm}em)`
-          : `translateY(0)`;
+        const transform = start ? `translateY(-${translateEm}em)` : `translateY(0)`;
         return (
           <div
             key={i}
@@ -53,18 +45,13 @@ function NumberReel({
             <div
               style={{
                 transform,
-                transition: start
-                  ? "transform 900ms cubic-bezier(.2,.8,.2,1)"
-                  : "none",
+                transition: start ? "transform 900ms cubic-bezier(.2,.8,.2,1)" : "none",
                 willChange: "transform",
                 display: "block",
               }}
             >
               {Array.from({ length: 20 }).map((_, n) => (
-                <span
-                  key={n}
-                  style={{ display: "block", height: "1em", lineHeight: "1em" }}
-                >
+                <span key={n} style={{ display: "block", height: "1em", lineHeight: "1em" }}>
                   {n % 10}
                 </span>
               ))}
@@ -85,9 +72,7 @@ export default function RecapPage() {
     <main className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#3b0764] to-[#7c2dff] text-white py-20 px-6">
       <div className="max-w-6xl mx-auto">
         <header className="text-center mb-12">
-          <h2 className="text-sm tracking-widest text-indigo-200/80 mb-3">
-            RECAP
-          </h2>
+          <h2 className="text-sm tracking-widest text-indigo-200/80 mb-3">RECAP</h2>
           <h1 className="text-6xl sm:text-7xl font-extrabold leading-tight drop-shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
             {year}
           </h1>
@@ -113,35 +98,27 @@ export default function RecapPage() {
               <div className="text-5xl sm:text-6xl font-extrabold leading-none">
                 <NumberReel value={9} />
               </div>
-              <div className="text-base sm:text-lg text-indigo-100/80 mt-2">
-                テックブログ記事
-              </div>
+              <div className="text-base sm:text-lg text-indigo-100/80 mt-2">テックブログ記事</div>
             </div>
 
             <div className="rounded-xl bg-white/6 p-8 text-center">
               <div className="text-5xl sm:text-6xl font-extrabold leading-none">
                 <NumberReel value={2} />
               </div>
-              <div className="text-base sm:text-lg text-indigo-100/80 mt-2">
-                読んだ本
-              </div>
+              <div className="text-base sm:text-lg text-indigo-100/80 mt-2">読んだ本</div>
             </div>
 
             <div className="rounded-xl bg-white/6 p-8 text-center">
               <div className="text-5xl sm:text-6xl font-extrabold leading-none">
                 <NumberReel value={29} />
               </div>
-              <div className="text-base sm:text-lg text-indigo-100/80 mt-2">
-                いいね
-              </div>
+              <div className="text-base sm:text-lg text-indigo-100/80 mt-2">いいね</div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="rounded-2xl bg-white/6 p-6">
-              <h4 className="text-xl sm:text-2xl font-bold mb-3">
-                参加したカンファレンス
-              </h4>
+              <h4 className="text-xl sm:text-2xl font-bold mb-3">参加したカンファレンス</h4>
               <ul className="list-disc list-inside text-indigo-100/80">
                 <li>AWS Summit</li>
                 <li>AWS CDK conference</li>
@@ -154,17 +131,13 @@ export default function RecapPage() {
 
             {/* ブログの詳細 */}
             <div className="rounded-2xl bg-white/6 p-6">
-              <h4 className="text-xl sm:text-2xl font-bold mb-3">
-                ブログの詳細
-              </h4>
+              <h4 className="text-xl sm:text-2xl font-bold mb-3">ブログの詳細</h4>
               <div className="flex flex-col gap-4">
                 <div className="text-center p-3 bg-white/3 rounded-lg">
                   <div className="text-3xl sm:text-4xl font-extrabold">
                     <NumberReel value={32495} />
                   </div>
-                  <div className="text-sm text-indigo-100/80 mt-1">
-                    文字の執筆
-                  </div>
+                  <div className="text-sm text-indigo-100/80 mt-1">文字の執筆</div>
                 </div>
 
                 <div className="text-center p-3 bg-white/3 rounded-lg">
@@ -191,9 +164,7 @@ export default function RecapPage() {
             </div>
 
             <div className="rounded-2xl bg-white/6 p-6">
-              <h4 className="text-xl sm:text-2xl font-bold mb-3">
-                その他の指標
-              </h4>
+              <h4 className="text-xl sm:text-2xl font-bold mb-3">その他の指標</h4>
               <div className="grid grid-cols-2 gap-3 text-base text-indigo-100/80">
                 <div>X フォロワー</div>
                 <div className="font-extrabold text-2xl">
@@ -208,9 +179,7 @@ export default function RecapPage() {
                   <NumberReel value={13} />
                 </div>
                 <div>取得した資格</div>
-                <div className="font-semibold">
-                  AWS Solution Architect Associate
-                </div>
+                <div className="font-semibold">AWS Solution Architect Associate</div>
               </div>
             </div>
           </div>
@@ -218,9 +187,7 @@ export default function RecapPage() {
 
         {/* 運営に参加したカンファレンス */}
         <section className="rounded-3xl bg-white/5 p-8 mb-8">
-          <h3 className="text-2xl font-bold mb-4">
-            運営に参加したカンファレンス
-          </h3>
+          <h3 className="text-2xl font-bold mb-4">運営に参加したカンファレンス</h3>
           <ul className="list-disc list-inside text-indigo-100/80">
             <li>Go Conference</li>
             <li>Hono Conference</li>

@@ -46,11 +46,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function SlidePage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function SlidePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const slide = await getSlideById(id);
 
@@ -80,9 +76,7 @@ export default async function SlidePage({
                     : "bg-sky-100 text-sky-800"
                 }`}
               >
-                {slide.source === "speakerdeck"
-                  ? "Speaker Deck"
-                  : "Google Slides"}
+                {slide.source === "speakerdeck" ? "Speaker Deck" : "Google Slides"}
               </span>
             </div>
 
@@ -98,17 +92,12 @@ export default async function SlidePage({
               ))}
             </div>
 
-            <p className="text-gray-600 dark:text-gray-300 mb-8">
-              {slide.description}
-            </p>
+            <p className="text-gray-600 dark:text-gray-300 mb-8">{slide.description}</p>
           </div>
 
           {/* スライド埋め込み */}
           <div className="bg-card rounded-lg shadow-lg overflow-hidden mb-8">
-            <div
-              className="relative w-full"
-              style={{ paddingBottom: "56.25%" }}
-            >
+            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
               <iframe
                 src={slide.embedUrl}
                 className="absolute top-0 left-0 w-full h-full border-0"
@@ -129,12 +118,7 @@ export default async function SlidePage({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2"
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"

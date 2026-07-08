@@ -27,9 +27,7 @@ function generatePostsJson() {
     const slug = filename.replace(/\.md$/, "");
     const dateMatch = slug.match(/^(\d{4}-\d{2}-\d{2})-(.+)$/);
     const id = dateMatch ? dateMatch[2] : slug;
-    const date = dateMatch
-      ? dateMatch[1]
-      : data.date || new Date().toISOString().split("T")[0];
+    const date = dateMatch ? dateMatch[1] : data.date || new Date().toISOString().split("T")[0];
 
     // imageTypeをランダムに割り当て
     const imageTypes = ["green", "orange", "black"];
@@ -48,9 +46,7 @@ function generatePostsJson() {
   });
 
   // 日付でソート（新しい順）
-  const sortedPosts = posts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  const sortedPosts = posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   // JSONファイルとして出力
   fs.writeFileSync(outputFile, JSON.stringify(sortedPosts, null, 2));

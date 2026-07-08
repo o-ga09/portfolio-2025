@@ -55,7 +55,7 @@ export default function Stamp() {
           <div
             key={index}
             className={`w-8 h-8 rounded-full bg-indigo-100 border border-indigo-300 flex items-center justify-center opacity-70 transform rotate-${Math.floor(
-              Math.random() * 45 - 22
+              Math.random() * 45 - 22,
             )}`}
           >
             <span className="text-indigo-700 font-bold text-[7px]">DEV</span>

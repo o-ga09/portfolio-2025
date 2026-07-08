@@ -33,9 +33,7 @@ export default async function TagsPage() {
           <h1 className="text-4xl font-bold mb-3 mt-4 border-b border-border pb-4 text-black dark:text-white">
             タグ一覧
           </h1>
-          <p className="text-gray-600 dark:text-gray-300 mt-2">
-            記事のタグから探す
-          </p>
+          <p className="text-gray-600 dark:text-gray-300 mt-2">記事のタグから探す</p>
         </div>
 
         <div className="mb-8">

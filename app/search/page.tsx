@@ -34,9 +34,7 @@ export default function SearchPage() {
 
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `/api/search?q=${encodeURIComponent(searchQuery)}`
-      );
+      const response = await fetch(`/api/search?q=${encodeURIComponent(searchQuery)}`);
       const results: SearchResult[] = await response.json();
       setSearchResults(results);
     } catch (error) {
@@ -61,9 +59,7 @@ export default function SearchPage() {
       <Header />
       <main className="flex-grow container max-w-4xl mx-auto px-4 py-8">
         <div className="mb-12">
-          <h1 className="text-4xl font-bold mb-3 mt-4 text-gray-900 dark:text-white">
-            検索結果
-          </h1>
+          <h1 className="text-4xl font-bold mb-3 mt-4 text-gray-900 dark:text-white">検索結果</h1>
           <form onSubmit={handleSubmit} className="flex gap-2 mb-8">
             <div className="relative flex-grow">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-900 dark:text-white/50 w-4 h-4" />
@@ -91,10 +87,7 @@ export default function SearchPage() {
           ) : searchResults.length > 0 ? (
             <div className="space-y-6">
               {searchResults.map((result) => (
-                <article
-                  key={result.id}
-                  className="bg-card rounded-lg p-6 shadow-md"
-                >
+                <article key={result.id} className="bg-card rounded-lg p-6 shadow-md">
                   <Link href={`/blog/${result.id}`}>
                     <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2 hover:text-primary transition-colors">
                       {result.title}
@@ -103,9 +96,7 @@ export default function SearchPage() {
                   <div className="flex items-center mb-2 text-xs text-muted-foreground">
                     <time dateTime={result.date}>{result.date}</time>
                   </div>
-                  <p className="text-muted-foreground text-sm mb-4">
-                    {result.description}
-                  </p>
+                  <p className="text-muted-foreground text-sm mb-4">{result.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {result.tags.map((tag) => (
                       <Link
@@ -122,9 +113,7 @@ export default function SearchPage() {
             </div>
           ) : query ? (
             <div className="text-center py-12">
-              <p className="text-muted-foreground">
-                検索結果が見つかりませんでした。
-              </p>
+              <p className="text-muted-foreground">検索結果が見つかりませんでした。</p>
               <p className="text-muted-foreground text-sm mt-2">
                 別のキーワードで試してみてください。
               </p>

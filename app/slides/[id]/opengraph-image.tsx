@@ -11,11 +11,7 @@ export const size = {
 };
 export const contentType = "image/png";
 
-export default async function Image({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function Image({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const slide = await getSlideById(id);
 
@@ -93,8 +89,7 @@ export default async function Image({
               style={{
                 width: "72px",
                 height: "72px",
-                background:
-                  slide.source === "speakerdeck" ? "#9333ea" : "#0ea5e9",
+                background: slide.source === "speakerdeck" ? "#9333ea" : "#0ea5e9",
                 borderRadius: "12px",
                 display: "flex",
                 alignItems: "center",
@@ -108,22 +103,13 @@ export default async function Image({
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <rect
-                  x="3"
-                  y="6"
-                  width="18"
-                  height="12"
-                  rx="2"
-                  stroke="white"
-                  strokeWidth="2"
-                />
+                <rect x="3" y="6" width="18" height="12" rx="2" stroke="white" strokeWidth="2" />
                 <path d="M7 19L12 16L17 19" stroke="white" strokeWidth="2" />
               </svg>
             </div>
             <div
               style={{
-                background:
-                  slide.source === "speakerdeck" ? "#f3e8ff" : "#e0f2fe",
+                background: slide.source === "speakerdeck" ? "#f3e8ff" : "#e0f2fe",
                 color: slide.source === "speakerdeck" ? "#6b21a8" : "#075985",
                 padding: "8px 20px",
                 borderRadius: "8px",
@@ -132,9 +118,7 @@ export default async function Image({
                 display: "flex",
               }}
             >
-              {slide.source === "speakerdeck"
-                ? "Speaker Deck"
-                : "Google Slides"}
+              {slide.source === "speakerdeck" ? "Speaker Deck" : "Google Slides"}
             </div>
           </div>
 

@@ -83,9 +83,7 @@ export async function getAllSlides(): Promise<SlideArticle[]> {
 /**
  * IDからスライドを取得します
  */
-export async function getSlideById(
-  id: string,
-): Promise<SlideArticle | undefined> {
+export async function getSlideById(id: string): Promise<SlideArticle | undefined> {
   const slides = await getAllSlides();
   return slides.find((slide) => slide.id === id);
 }

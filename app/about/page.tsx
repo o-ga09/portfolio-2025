@@ -55,9 +55,7 @@ export default function About() {
                   />
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                    オーガ
-                  </p>
+                  <p className="text-2xl font-bold text-gray-900 dark:text-white">オーガ</p>
                   <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                     バックエンドエンジニア
                   </p>
@@ -67,9 +65,7 @@ export default function About() {
 
             {/* 自己紹介（ワイドタイル） */}
             <section className="sm:col-span-2 lg:col-span-2 lg:row-span-2 bg-card rounded-2xl shadow-sm border border-border hover:shadow-md transition-shadow duration-300 p-6 flex flex-col">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                自己紹介
-              </h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">自己紹介</h2>
               <div className="h-1 w-14 bg-primary rounded mb-4" />
               <p className="text-gray-800 dark:text-gray-200 leading-relaxed">
                 バックエンドとして活動しているオーガです。バックエンドはGoを中心に、フロントエンドはReact/Next.jsを得意としています。クラウドインフラの構築や運用も担当しています。趣味は推し活とライブ参戦で、特に山本彩さんの10年来のファンです。休日はゲーム（ゼノブレイド）やアニメ鑑賞を楽しんでいます。新潟出身で日本酒が大好きです。
@@ -78,9 +74,7 @@ export default function About() {
 
             {/* スキル（ワイドタイル） */}
             <section className="sm:col-span-2 bg-card rounded-2xl shadow-sm border border-border hover:shadow-md transition-shadow duration-300 p-6">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                スキル
-              </h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">スキル</h2>
               <div className="h-1 w-14 bg-primary rounded mb-4" />
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill) => (
@@ -133,12 +127,8 @@ export default function About() {
                 <span className="text-2xl" aria-hidden>
                   {item.icon}
                 </span>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
-                  {item.label}
-                </p>
-                <p className="font-medium text-gray-900 dark:text-white">
-                  {item.value}
-                </p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">{item.label}</p>
+                <p className="font-medium text-gray-900 dark:text-white">{item.value}</p>
               </section>
             ))}
 
@@ -151,9 +141,7 @@ export default function About() {
               <span className="text-3xl text-pink-600 group-hover:scale-110 transition-transform">
                 ♡
               </span>
-              <span className="text-xs font-medium text-pink-700 dark:text-pink-300">
-                Home
-              </span>
+              <span className="text-xs font-medium text-pink-700 dark:text-pink-300">Home</span>
             </Link>
 
             <Link

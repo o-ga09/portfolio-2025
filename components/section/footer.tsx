@@ -9,8 +9,8 @@ export default function Footer() {
             <br />
             このサイトは Google Analytics を使用しています。詳しくは{" "}
             <a href="https://policies.google.com/technologies/partner-sites?hl=ja">
-              Google のサービスを使用するサイトやアプリから収集した情報の Google
-              による使用 – ポリシーと規約
+              Google のサービスを使用するサイトやアプリから収集した情報の Google による使用 –
+              ポリシーと規約
             </a>
             をご覧ください。
             <br />
