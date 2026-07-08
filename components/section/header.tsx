@@ -1,16 +1,50 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, Command, Rss, Github, Menu, X } from "lucide-react";
+import { Search, Command, Rss, Github, Instagram, Menu, X } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
 import React from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import ThemeToggle from "../theme/theme-toggle";
 
+// X（旧Twitter）のロゴ。lucide-react には X ロゴがないため自前の SVG を使用する。
+function XIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+    </svg>
+  );
+}
+
+// SNS リンク定義
+type SocialLink = {
+  label: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+};
+
+const SOCIAL_LINKS: SocialLink[] = [
+  { label: "GitHub", href: "https://github.com/o-ga09", icon: Github },
+  { label: "X", href: "https://x.com/o_ga09", icon: XIcon },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/o_ga09",
+    icon: Instagram,
+  },
+];
+
 export default function Header() {
   const router = useRouter();
   const [isSearchFocused, setIsSearchFocused] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  // モバイルで QR コードを表示中の SNS（null なら非表示）
+  const [qrSocial, setQrSocial] = React.useState<SocialLink | null>(null);
 
   // スクロール制御
   React.useEffect(() => {
@@ -152,16 +186,19 @@ export default function Header() {
                   <Rss className="h-4 w-4" />
                 </Button>
               </Link>
-              <Link
-                href="https://github.com/o-ga09"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden sm:block"
-              >
-                <Button variant="ghost" size="icon" aria-label="GitHub">
-                  <Github className="h-4 w-4" />
-                </Button>
-              </Link>
+              {SOCIAL_LINKS.map((social) => (
+                <Link
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden sm:block"
+                >
+                  <Button variant="ghost" size="icon" aria-label={social.label}>
+                    <social.icon className="h-4 w-4" />
+                  </Button>
+                </Link>
+              ))}
 
               {/* モバイルメニューボタン */}
               <Button
@@ -258,22 +295,20 @@ export default function Header() {
                   </div>
                 </Button>
               </Link>
-              <Link
-                href="https://github.com/o-ga09"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              {SOCIAL_LINKS.map((social) => (
                 <Button
+                  key={social.label}
                   variant="ghost"
                   size="icon"
-                  aria-label="GitHub"
+                  aria-label={`${social.label} のQRコードを表示`}
+                  onClick={() => setQrSocial(social)}
                   className="text-gray-900 dark:text-white hover:bg-primary/10 dark:hover:bg-primary/20 rounded-xl transition-all duration-200"
                 >
                   <div className="p-2 rounded-lg bg-secondary/20 dark:bg-secondary/10">
-                    <Github className="h-5 w-5" />
+                    <social.icon className="h-5 w-5" />
                   </div>
                 </Button>
-              </Link>
+              ))}
             </div>
           </nav>
         </div>
@@ -283,6 +318,50 @@ export default function Header() {
         <div className="absolute top-20 -left-6 w-12 h-12 bg-accent/20 rounded-full blur-xl" />
         <div className="absolute bottom-40 -right-6 w-16 h-16 bg-secondary/20 rounded-full blur-xl" />
       </div>
+
+      {/* QRコードモーダル（モバイル） */}
+      {qrSocial && (
+        <div
+          className="md:hidden fixed inset-0 z-[60] flex items-center justify-center p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${qrSocial.label} のQRコード`}
+        >
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            onClick={() => setQrSocial(null)}
+            aria-hidden="true"
+          />
+          <div className="relative z-10 w-full max-w-xs rounded-3xl bg-white dark:bg-gray-900 p-6 shadow-2xl">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center space-x-2 text-gray-900 dark:text-white">
+                <qrSocial.icon className="h-5 w-5" />
+                <span className="font-medium">{qrSocial.label}</span>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setQrSocial(null)}
+                aria-label="閉じる"
+                className="text-gray-900 dark:text-white hover:bg-primary/10 dark:hover:bg-primary/20 rounded-full"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="flex justify-center rounded-2xl bg-white p-4">
+              <QRCodeSVG
+                value={qrSocial.href}
+                size={200}
+                level="M"
+                marginSize={2}
+              />
+            </div>
+            <p className="mt-4 text-center text-sm text-gray-500 dark:text-white/60 break-all">
+              {qrSocial.href}
+            </p>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
