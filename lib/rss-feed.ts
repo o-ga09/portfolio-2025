@@ -174,6 +174,28 @@ export function clearFeedCache(): void {
 }
 
 /**
+ * Speaker DeckのoEmbed APIから埋め込みプレイヤーURLを取得します
+ * プレイヤーURLは https://speakerdeck.com/player/{data-id} 形式で、
+ * data-idはスライドURLから機械的に導出できないためoEmbed経由で解決する
+ */
+async function fetchSpeakerDeckEmbedUrl(slideUrl: string): Promise<string | null> {
+  try {
+    const response = await fetch(
+      `https://speakerdeck.com/oembed.json?url=${encodeURIComponent(slideUrl)}`,
+    );
+    if (!response.ok) {
+      return null;
+    }
+    const oembed: { html?: string } = await response.json();
+    const match = oembed.html?.match(/src="([^"]+)"/);
+    return match?.[1] ?? null;
+  } catch (error) {
+    console.error(`Error fetching Speaker Deck oEmbed for ${slideUrl}:`, error);
+    return null;
+  }
+}
+
+/**
  * Speaker Deckからスライドを取得します
  */
 export async function fetchSpeakerDeckSlides(): Promise<SlideArticle[]> {
@@ -187,27 +209,27 @@ export async function fetchSpeakerDeckSlides(): Promise<SlideArticle[]> {
   try {
     const feed = await fetchRSSFeed(SPEAKERDECK_FEED_URL, "SpeakerDeck");
 
-    const slides = feed.items.map((item: RSSItem): SlideArticle => {
-      // Speaker DeckのURLから埋め込みURLを生成
-      // 元のURL: https://speakerdeck.com/tabe/presentation-title
-      // 埋め込みURL: https://speakerdeck.com/player/tabe/presentation-title
-      const url = new URL(item.link);
-      const pathParts = url.pathname.split("/").filter((part) => part);
-      // pathParts = ['tabe', 'presentation-title']
-      const username = pathParts[0] || "";
-      const presentationSlug = pathParts[1] || "";
+    const slides = await Promise.all(
+      feed.items.map(async (item: RSSItem): Promise<SlideArticle> => {
+        const url = new URL(item.link);
+        const pathParts = url.pathname.split("/").filter((part) => part);
+        // pathParts = ['tabe', 'presentation-title']
+        const presentationSlug = pathParts[1] || "";
 
-      return {
-        id: `speakerdeck-${presentationSlug}`,
-        title: item.title,
-        description: (item.description ?? "").replace(/<[^>]*>/g, "").slice(0, 200) + "...",
-        date: new Date(item.pubDate).toISOString().split("T")[0],
-        url: item.link,
-        embedUrl: `https://speakerdeck.com/player/${username}/${presentationSlug}`,
-        tags: ["slides", "speakerdeck", ...(item.category ?? [])],
-        source: "speakerdeck",
-      };
-    });
+        const embedUrl = await fetchSpeakerDeckEmbedUrl(item.link);
+
+        return {
+          id: `speakerdeck-${presentationSlug}`,
+          title: item.title,
+          description: (item.description ?? "").replace(/<[^>]*>/g, "").slice(0, 200) + "...",
+          date: new Date(item.pubDate).toISOString().split("T")[0],
+          url: item.link,
+          embedUrl: embedUrl ?? item.link,
+          tags: ["slides", "speakerdeck", ...(item.category ?? [])],
+          source: "speakerdeck",
+        };
+      }),
+    );
 
     // 取得したデータをキャッシュに保存
     feedCache.speakerDeckSlides = {
