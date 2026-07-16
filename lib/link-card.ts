@@ -29,8 +29,14 @@ function escapeHtml(text: string): string {
 
 function extractMetaContent(html: string, key: string): string | undefined {
   const patterns = [
-    new RegExp(`<meta[^>]+(?:property|name)=["']${key}["'][^>]*content=["']([^"']*)["'][^>]*>`, "i"),
-    new RegExp(`<meta[^>]+content=["']([^"']*)["'][^>]*(?:property|name)=["']${key}["'][^>]*>`, "i"),
+    new RegExp(
+      `<meta[^>]+(?:property|name)=["']${key}["'][^>]*content=["']([^"']*)["'][^>]*>`,
+      "i",
+    ),
+    new RegExp(
+      `<meta[^>]+content=["']([^"']*)["'][^>]*(?:property|name)=["']${key}["'][^>]*>`,
+      "i",
+    ),
   ];
   for (const pattern of patterns) {
     const match = html.match(pattern);
@@ -86,7 +92,8 @@ export async function fetchOgp(url: string): Promise<OgpData | null> {
 
     const html = await res.text();
     const title = extractMetaContent(html, "og:title") ?? extractTitleTag(html) ?? url;
-    const description = extractMetaContent(html, "og:description") ?? extractMetaContent(html, "description");
+    const description =
+      extractMetaContent(html, "og:description") ?? extractMetaContent(html, "description");
     const image = extractMetaContent(html, "og:image");
     const siteName = extractMetaContent(html, "og:site_name");
 
