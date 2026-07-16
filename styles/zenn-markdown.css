@@ -63,8 +63,41 @@
   padding-left: 1.5rem;
 }
 
+.znc ul {
+  list-style-type: disc;
+}
+
+.znc ol {
+  list-style-type: decimal;
+}
+
+.znc ul ul {
+  list-style-type: circle;
+}
+
+.znc ul ul ul {
+  list-style-type: square;
+}
+
 .znc li {
   margin: 0.5rem 0;
+}
+
+.znc li::marker {
+  color: var(--muted-foreground);
+}
+
+.znc ul.contains-task-list {
+  list-style: none;
+  padding-left: 0.5rem;
+}
+
+.znc li.task-list-item {
+  list-style: none;
+}
+
+.znc .task-list-item-checkbox {
+  margin-right: 0.5rem;
 }
 
 .znc pre {
@@ -139,4 +172,208 @@
   border: none;
   border-top: 1px solid var(--border);
   margin: 2rem 0;
+}
+
+.znc .code-block-container {
+  margin: 1.5rem 0;
+}
+
+.znc .code-block-container pre {
+  margin: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.znc .code-block-filename-container {
+  background-color: oklch(0.92 0 0);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  font-family: var(--font-mono);
+  color: var(--muted-foreground);
+}
+
+.dark .znc .code-block-filename-container {
+  background-color: oklch(0.25 0 0);
+}
+
+.znc aside.msg {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: oklch(0.95 0.03 250);
+  border: 1px solid oklch(0.8 0.06 250);
+}
+
+.znc aside.msg.alert {
+  background-color: oklch(0.95 0.05 30);
+  border-color: oklch(0.8 0.1 30);
+}
+
+.znc aside.msg .msg-symbol {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background-color: oklch(0.6 0.15 250);
+  color: white;
+  font-weight: 700;
+  font-size: 0.875rem;
+  font-style: normal;
+  line-height: 1;
+}
+
+.znc aside.msg.alert .msg-symbol {
+  background-color: oklch(0.7 0.17 55);
+}
+
+.znc aside.msg .msg-content > :first-child {
+  margin-top: 0;
+}
+
+.znc aside.msg .msg-content > :last-child {
+  margin-bottom: 0;
+}
+
+.dark .znc aside.msg {
+  background-color: oklch(0.28 0.05 250);
+  border-color: oklch(0.4 0.08 250);
+}
+
+.dark .znc aside.msg.alert {
+  background-color: oklch(0.3 0.07 30);
+  border-color: oklch(0.45 0.1 30);
+}
+
+.znc details {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+}
+
+.znc details summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.znc details .details-content > :first-child {
+  margin-top: 0.75rem;
+}
+
+.znc details .details-content > :last-child {
+  margin-bottom: 0;
+}
+
+.znc .footnotes {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+
+.znc .footnotes-title {
+  font-weight: 700;
+}
+
+.znc .footnotes-list {
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+  list-style-type: decimal;
+}
+
+.znc .footnote-backref {
+  margin-left: 0.25rem;
+}
+
+.znc .zenn-link-card {
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s;
+}
+
+.znc .zenn-link-card:hover {
+  border-color: var(--muted-foreground);
+  text-decoration: none;
+}
+
+.znc .zenn-link-card-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.znc .zenn-link-card-title {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.znc .zenn-link-card-description {
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.znc .zenn-link-card-domain {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  margin-top: 0.25rem;
+}
+
+.znc .zenn-link-card-favicon {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border-radius: 0.125rem;
+}
+
+.znc .zenn-link-card-thumbnail {
+  flex: 0 0 120px;
+  margin: 0;
+}
+
+.znc .zenn-link-card-thumbnail-img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+  object-fit: cover;
+}
+
+@media (max-width: 480px) {
+  .znc .zenn-link-card-thumbnail {
+    flex-basis: 88px;
+  }
 }
