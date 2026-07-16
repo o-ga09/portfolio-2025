@@ -7,6 +7,7 @@ import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
 import Link from "next/link";
 import markdownToHtml from "zenn-markdown-html";
+import { buildLinkCardMap, renderLinkCard } from "@/lib/link-card";
 
 // 静的パスを生成
 export async function generateStaticParams() {
@@ -45,8 +46,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
   }
 
   // Zennマークダウンを使用してHTML変換
+  // 単独行のURLはリンクカード化するため、事前にOGP情報を取得しておく
+  const linkCardMap = post.content ? await buildLinkCardMap(post.content) : new Map();
   const contentHtml = post.content
-    ? markdownToHtml(post.content)
+    ? markdownToHtml(post.content, {
+        customEmbed: {
+          card: (url: string) => renderLinkCard(url, linkCardMap.get(url) ?? null),
+        },
+      })
     : "<p>この記事にはコンテンツがありません。</p>";
 
   return (
