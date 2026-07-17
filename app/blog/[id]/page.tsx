@@ -6,8 +6,22 @@ import { generateBlogPostMetadata } from "@/lib/metadata";
 import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
 import Link from "next/link";
+import { Github } from "lucide-react";
 import markdownToHtml from "zenn-markdown-html";
 import { buildLinkCardMap, renderLinkCard } from "@/lib/link-card";
+
+const GITHUB_REPO_URL = "https://github.com/o-ga09/portfolio-2025";
+const APP_URL = process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000";
+
+// ブログ記事の修正を提案するGitHub Issue作成URLを生成する
+function buildEditProposalUrl(post: { title: string; date: string }, id: string): string {
+  const blogUrl = `${APP_URL}/blog/${id}`;
+  const title = `記事「${post.title}」の修正提案`;
+  const body = [`対象記事: ${blogUrl}`, `投稿日: ${post.date}`, "", "## 修正内容", ""].join("\n");
+
+  const params = new URLSearchParams({ title, body });
+  return `${GITHUB_REPO_URL}/issues/new?${params.toString()}`;
+}
 
 // 静的パスを生成
 export async function generateStaticParams() {
@@ -120,9 +134,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
 
           <div className="znc" dangerouslySetInnerHTML={{ __html: contentHtml }} />
 
-          <div className="mt-12 pt-8 border-t border-border mb-8">
+          <div className="mt-12 pt-8 border-t border-border mb-8 flex flex-wrap gap-4">
             <Button asChild>
               <Link href="/blog">← ブログ一覧に戻る</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <a href={buildEditProposalUrl(post, id)} target="_blank" rel="noopener noreferrer">
+                <Github className="w-4 h-4" />
+                GitHubで修正を提案
+              </a>
             </Button>
           </div>
         </article>
