@@ -6,6 +6,14 @@
   color: var(--foreground);
 }
 
+.znc h1,
+.znc h2,
+.znc h3,
+.znc h4 {
+  /* 目次クリック時のスムーズスクロールで見出しが画面上端に隠れないようにする */
+  scroll-margin-top: 6rem;
+}
+
 .znc h1 {
   font-size: 1.875rem;
   font-weight: 700;

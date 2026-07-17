@@ -2,9 +2,6 @@ import { getPostById } from "@/lib/blog-data-edge";
 import { ImageResponse } from "next/og";
 import { ICON_BASE64 } from "@/lib/icon-base64";
 
-// Node.js Runtimeを使用
-export const runtime = "nodejs";
-
 export const alt = "Blog Post OG Image";
 export const size = {
   width: 1200,
