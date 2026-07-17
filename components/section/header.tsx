@@ -106,8 +106,7 @@ export default function Header() {
                 href="#"
                 onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                   e.preventDefault();
-                  const year = String(new Date().getFullYear());
-                  router.push(`/recap/${year}`);
+                  router.push(`/recap/2025`);
                 }}
                 className="text-gray-900 dark:text-white/70 hover:text-gray-900 dark:hover:text-white dark:hover:bg-white/10 rounded-md px-2 py-1 transition-colors"
               >
@@ -245,8 +244,7 @@ export default function Header() {
                 onClick={(e) => {
                   if (item.href === "/recap") {
                     e.preventDefault();
-                    const year = String(new Date().getFullYear());
-                    router.push(`/recap/${year}`);
+                    router.push(`/recap/2025`);
                     closeMenu();
                     return;
                   }
