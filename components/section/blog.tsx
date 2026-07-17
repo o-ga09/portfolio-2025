@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ViewTransitionsLink } from "@/lib/viewTransitonLink";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
@@ -13,9 +13,24 @@ interface BlogProps {
   initialPosts: BlogPost[];
 }
 
+// 記事詳細から「戻る」で再訪した際に折りたたみ状態にリセットされないよう、
+// 展開状態はタブ単位でsessionStorageに保持する
+const SHOW_ALL_POSTS_STORAGE_KEY = "blog:showAllPosts";
+
 export default function Blog({ initialPosts }: BlogProps) {
   const [showAllPosts, setShowAllPosts] = useState(false);
   const [posts] = useState(initialPosts);
+
+  useEffect(() => {
+    if (sessionStorage.getItem(SHOW_ALL_POSTS_STORAGE_KEY) === "true") {
+      setShowAllPosts(true);
+    }
+  }, []);
+
+  const handleShowAllPosts = () => {
+    setShowAllPosts(true);
+    sessionStorage.setItem(SHOW_ALL_POSTS_STORAGE_KEY, "true");
+  };
 
   const displayPosts = showAllPosts ? posts : posts.slice(0, 3);
 
@@ -133,7 +148,7 @@ export default function Blog({ initialPosts }: BlogProps) {
               variant="outline"
               size="lg"
               className="w-full max-w-xs mx-auto flex items-center justify-center gap-2"
-              onClick={() => setShowAllPosts(true)}
+              onClick={handleShowAllPosts}
             >
               <ChevronDown className="w-5 h-5" />
               もっと読む
