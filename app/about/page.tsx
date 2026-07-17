@@ -4,7 +4,6 @@ import { aboutMetadata } from "@/lib/metadata";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Stamp from "@/components/item/stemp";
 
 export const metadata = aboutMetadata;
 
@@ -88,11 +87,6 @@ export default function About() {
               </div>
             </section>
 
-            {/* DEV STAMP（インタラクティブタイル） */}
-            <section className="bg-card rounded-2xl shadow-sm border border-border hover:shadow-md transition-shadow duration-300 p-6 flex flex-col items-center justify-center gap-3">
-              <Stamp />
-            </section>
-
             {/* 詳細ページへのリンクタイル */}
             <Link
               href="/about/details"
@@ -134,14 +128,21 @@ export default function About() {
 
             {/* リンクタイル群（旧フローティングナビを統合） */}
             <Link
-              href="/"
+              href="https://x.com/o_ga09"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group bg-pink-100 dark:bg-pink-950/40 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-5 flex flex-col items-center justify-center gap-2 border border-pink-200 dark:border-pink-900"
-              title="ホームへ戻る"
+              title="Xを見る"
             >
-              <span className="text-3xl text-pink-600 group-hover:scale-110 transition-transform">
-                ♡
-              </span>
-              <span className="text-xs font-medium text-pink-700 dark:text-pink-300">Home</span>
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                fill="currentColor"
+                className="w-7 h-7 text-pink-600 group-hover:scale-110 transition-transform"
+              >
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+              </svg>
+              <span className="text-xs font-medium text-pink-700 dark:text-pink-300">X</span>
             </Link>
 
             <Link
@@ -158,21 +159,22 @@ export default function About() {
                 GitHub
               </span>
             </Link>
-
-            <Link
-              href="https://music.apple.com/jp/song/%E3%82%AB%E3%83%95%E3%82%A7%E3%83%A2%E3%82%AB/1784641766"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-indigo-100 dark:bg-indigo-950/40 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-5 flex flex-col items-center justify-center gap-2 border border-indigo-200 dark:border-indigo-900"
-              title="好きな曲"
-            >
-              <span className="text-3xl text-indigo-600 group-hover:scale-110 transition-transform">
-                ♪
-              </span>
-              <span className="text-xs font-medium text-indigo-700 dark:text-indigo-300">
-                Music
-              </span>
-            </Link>
+            {/* Apple Music（埋め込みタイル） */}
+            <section className="sm:col-span-2 bg-card rounded-2xl shadow-sm border border-border hover:shadow-md transition-shadow duration-300 p-4 flex items-center justify-center">
+              <iframe
+                allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                frameBorder={0}
+                height="175"
+                style={{
+                  width: "100%",
+                  maxWidth: "660px",
+                  overflow: "hidden",
+                  borderRadius: "10px",
+                }}
+                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+                src="https://embed.music.apple.com/jp/song/%E3%83%A9%E3%82%BA%E3%83%99%E3%83%AA%E3%83%BC%E3%82%B5%E3%83%9E%E3%83%BC/6786945714"
+              ></iframe>
+            </section>
           </div>
         </div>
       </main>
