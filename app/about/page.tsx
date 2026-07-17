@@ -162,6 +162,7 @@ export default function About() {
             {/* Apple Music（埋め込みタイル） */}
             <section className="sm:col-span-2 bg-card rounded-2xl shadow-sm border border-border hover:shadow-md transition-shadow duration-300 p-4 flex items-center justify-center">
               <iframe
+                title="Apple Musicで「ラズベリーサマー / 山本彩」を再生"
                 allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
                 frameBorder={0}
                 height="175"
