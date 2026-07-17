@@ -22,7 +22,7 @@ export interface BlogPost {
   description: string;
   date: string;
   content?: string;
-  imageType?: "green" | "orange" | "black" | "purple" | "blue";
+  image?: string;
   tags: string[];
   type?: "blog" | "qiita" | "zenn" | "speakerdeck" | "googleslides";
   url?: string;
@@ -124,7 +124,6 @@ export function convertExternalToBlogPost(article: ExternalArticle): BlogPost {
     type: article.source,
     url: article.url,
     likes: article.likes,
-    imageType: article.source === "qiita" ? "green" : "orange",
   };
 }
 

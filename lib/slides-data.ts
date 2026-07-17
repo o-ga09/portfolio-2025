@@ -101,7 +101,6 @@ export function convertSlideToBlogPost(slide: SlideArticle): BlogPost {
     type: slide.source === "speakerdeck" ? "speakerdeck" : "googleslides",
     url: slide.url,
     embedUrl: slide.embedUrl,
-    imageType: slide.source === "speakerdeck" ? "purple" : "blue",
   };
 }
 
