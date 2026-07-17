@@ -78,35 +78,14 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
           <div className="mb-8">
             {/* ブログ画像部分 - viewTransitionで対応するためのイメージ要素 */}
             <div
-              className="h-64 bg-card flex items-center justify-center mb-8 rounded-xl overflow-hidden shadow-lg transform-gpu"
+              className="h-64 relative mb-8 rounded-xl overflow-hidden shadow-lg transform-gpu"
               style={{ viewTransitionName: `blog-image-${id}` }}
             >
-              {post.imageType === "green" && (
-                <div className="w-48 h-36 relative">
-                  <div className="absolute inset-0 bg-green-200 rounded-t-3xl"></div>
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-40 h-24 bg-white rounded-full"></div>
-                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-36 h-18 bg-pink-100 rounded-full"></div>
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-12 bg-pink-200 rounded-full"></div>
-                </div>
-              )}
-              {post.imageType === "orange" && (
-                <div className="w-48 h-48 relative">
-                  <div className="absolute inset-0 bg-orange-400 rounded-full"></div>
-                  <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-40 h-6 bg-orange-300 rounded-full"></div>
-                  <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-36 h-4 bg-green-400 rounded-full"></div>
-                  <div className="absolute top-18 left-1/2 transform -translate-x-1/2 w-32 h-12 bg-amber-800 rounded-full"></div>
-                  <div className="absolute top-24 left-1/2 transform -translate-x-1/2 w-28 h-8 bg-yellow-300 rounded-full"></div>
-                  <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-36 h-10 bg-orange-300 rounded-full"></div>
-                </div>
-              )}
-              {post.imageType === "black" && (
-                <div className="w-48 h-48 relative">
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-36 h-24 bg-white rounded-t-full"></div>
-                  <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-black rounded-full"></div>
-                  <div className="absolute bottom-18 right-12 w-6 h-6 bg-red-500 rounded-full"></div>
-                  <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 w-24 h-12 bg-gray-800 rounded-full"></div>
-                  <div className="absolute bottom-30 left-1/2 transform -translate-x-1/2 w-16 h-8 bg-orange-400 rounded-full"></div>
-                </div>
+              {post.image ? (
+                // eslint-disable-next-line @next/next/no-img-element -- 任意のURLを許容するためnext/imageのドメイン許可設定を回避する
+                <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600" />
               )}
             </div>
 
