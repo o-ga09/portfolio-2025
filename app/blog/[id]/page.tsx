@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Github } from "lucide-react";
 import markdownToHtml from "zenn-markdown-html";
 import { buildLinkCardMap, renderLinkCard } from "@/lib/link-card";
+import { extractGithubAlerts, renderGithubAlerts } from "@/lib/github-alert";
 
 const GITHUB_REPO_URL = "https://github.com/o-ga09/portfolio-2025";
 const APP_URL = process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000";
@@ -62,13 +63,24 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
   // Zennマークダウンを使用してHTML変換
   // 単独行のURLはリンクカード化するため、事前にOGP情報を取得しておく
   const linkCardMap = post.content ? await buildLinkCardMap(post.content) : new Map();
-  const contentHtml = post.content
-    ? markdownToHtml(post.content, {
-        customEmbed: {
-          card: (url: string) => renderLinkCard(url, linkCardMap.get(url) ?? null),
-        },
-      })
-    : "<p>この記事にはコンテンツがありません。</p>";
+  const markdownOptions = {
+    customEmbed: {
+      card: (url: string) => renderLinkCard(url, linkCardMap.get(url) ?? null),
+    },
+  };
+  let contentHtml = "<p>この記事にはコンテンツがありません。</p>";
+  if (post.content) {
+    // GitHubのNote記法(`> [!NOTE]`等)はzenn-markdown-htmlが解釈できないため、
+    // 該当ブロッククォートをプレースホルダーに退避してから変換し、変換後のHTMLに
+    // alert表示用のマークアップを差し戻す。
+    const { markdown, alerts } = extractGithubAlerts(post.content);
+    contentHtml = markdownToHtml(markdown, markdownOptions);
+    if (alerts.size > 0) {
+      contentHtml = renderGithubAlerts(contentHtml, alerts, (body) =>
+        markdownToHtml(body, markdownOptions),
+      );
+    }
+  }
 
   return (
     <main className="min-h-screen bg-background flex flex-col">

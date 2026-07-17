@@ -254,6 +254,79 @@
   border-color: oklch(0.45 0.1 30);
 }
 
+/* GitHub Alert記法 ( > [!NOTE] など ) */
+.znc aside.gh-alert {
+  display: block;
+  margin: 1.5rem 0;
+  padding: 0.5rem 1rem;
+  border-left: 0.25rem solid var(--gh-alert-color, #656d76);
+}
+
+.znc aside.gh-alert .gh-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--gh-alert-color, #656d76);
+}
+
+.znc aside.gh-alert .gh-alert-icon {
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.znc aside.gh-alert .gh-alert-body {
+  margin-top: 0.5rem;
+}
+
+.znc aside.gh-alert .gh-alert-body > :first-child {
+  margin-top: 0;
+}
+
+.znc aside.gh-alert .gh-alert-body > :last-child {
+  margin-bottom: 0;
+}
+
+.znc aside.gh-alert-note {
+  --gh-alert-color: #0969da;
+}
+
+.znc aside.gh-alert-tip {
+  --gh-alert-color: #1a7f37;
+}
+
+.znc aside.gh-alert-important {
+  --gh-alert-color: #8250df;
+}
+
+.znc aside.gh-alert-warning {
+  --gh-alert-color: #9a6700;
+}
+
+.znc aside.gh-alert-caution {
+  --gh-alert-color: #cf222e;
+}
+
+.dark .znc aside.gh-alert-note {
+  --gh-alert-color: #4493f8;
+}
+
+.dark .znc aside.gh-alert-tip {
+  --gh-alert-color: #3fb950;
+}
+
+.dark .znc aside.gh-alert-important {
+  --gh-alert-color: #ab7df8;
+}
+
+.dark .znc aside.gh-alert-warning {
+  --gh-alert-color: #d29922;
+}
+
+.dark .znc aside.gh-alert-caution {
+  --gh-alert-color: #f85149;
+}
+
 .znc details {
   margin: 1.5rem 0;
   padding: 0.75rem 1rem;
