@@ -13,7 +13,7 @@
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "typecheck": "node_modules/typescript-native/bin/tsc --noEmit",
-    "build:cloudflare": "node scripts/generate-posts.js && next build && opennextjs-cloudflare build",
+    "build:cloudflare": "node scripts/generate-posts.js && node scripts/generate-icon-base64.js && next build && opennextjs-cloudflare build",
     "copy:contents": "cp -r contents .open-next/server-functions/default/contents 2>/dev/null || true",
     "deploy": "npm run build:cloudflare && opennextjs-cloudflare deploy",
     "preview": "npm run build:cloudflare && opennextjs-cloudflare preview",
