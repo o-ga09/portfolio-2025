@@ -27,6 +27,13 @@
    * databases, object storage, AI inference, real-time communication and more.
    * https://developers.cloudflare.com/workers/runtime-apis/bindings/
    */
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "portfolio-analytics",
+      "database_id": "1af55ad6-11c0-428c-b198-635a3848e353",
+    },
+  ],
 
   /**
    * Environment Variables
