@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Github } from "lucide-react";
 import markdownToHtml from "zenn-markdown-html";
 import { buildLinkCardMap, renderLinkCard } from "@/lib/link-card";
+import { renderSocialEmbed } from "@/lib/social-embed";
 import { extractGithubAlerts, renderGithubAlerts } from "@/lib/github-alert";
 import { extractHeadings } from "@/lib/toc";
 
@@ -68,7 +69,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
   const linkCardMap = post.content ? await buildLinkCardMap(post.content) : new Map();
   const markdownOptions = {
     customEmbed: {
-      card: (url: string) => renderLinkCard(url, linkCardMap.get(url) ?? null),
+      // 単独行のURLは、X/Instagram/TikTok/YouTube Shortsであれば埋め込みプレイヤーに、
+      // それ以外はOGP情報を使ったリンクカードに変換する
+      card: (url: string) =>
+        renderSocialEmbed(url) ?? renderLinkCard(url, linkCardMap.get(url) ?? null),
+      // X(Twitter)の投稿URLはzenn-markdown-html側でtweet埋め込み用に判定されるため、
+      // 通常のcardではなくtweetのカスタム埋め込みとして処理する
+      tweet: (url: string) =>
+        renderSocialEmbed(url) ??
+        `<a href="${url}" rel="noreferrer noopener nofollow" target="_blank">${url}</a>`,
     },
   };
   let contentHtml = "<p>この記事にはコンテンツがありません。</p>";
