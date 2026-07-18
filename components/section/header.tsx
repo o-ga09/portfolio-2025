@@ -7,15 +7,7 @@ import React from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import ThemeToggle from "../theme/theme-toggle";
-
-// X（旧Twitter）のロゴ。lucide-react には X ロゴがないため自前の SVG を使用する。
-function XIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" className={className}>
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
-    </svg>
-  );
-}
+import { XIcon } from "../icons/social-icons";
 
 // SNS リンク定義
 type SocialLink = {
@@ -106,8 +98,7 @@ export default function Header() {
                 href="#"
                 onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
                   e.preventDefault();
-                  const year = String(new Date().getFullYear());
-                  router.push(`/recap/${year}`);
+                  router.push(`/recap/2025`);
                 }}
                 className="text-gray-900 dark:text-white/70 hover:text-gray-900 dark:hover:text-white dark:hover:bg-white/10 rounded-md px-2 py-1 transition-colors"
               >
@@ -245,8 +236,7 @@ export default function Header() {
                 onClick={(e) => {
                   if (item.href === "/recap") {
                     e.preventDefault();
-                    const year = String(new Date().getFullYear());
-                    router.push(`/recap/${year}`);
+                    router.push(`/recap/2025`);
                     closeMenu();
                     return;
                   }

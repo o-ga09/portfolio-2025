@@ -1,0 +1,22 @@
+/**
+ * Admin dashboard (Vite + React SPA). Static-assets-only Worker.
+ * https://developers.cloudflare.com/workers/static-assets/
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio-admin-dashboard",
+  "compatibility_date": "2025-03-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+  },
+  "observability": {
+    "enabled": true,
+  },
+  "routes": [
+    {
+      "pattern": "dashboard.o-ga09.com",
+      "custom_domain": true,
+    },
+  ],
+}

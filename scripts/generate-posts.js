@@ -29,17 +29,13 @@ function generatePostsJson() {
     const id = dateMatch ? dateMatch[2] : slug;
     const date = dateMatch ? dateMatch[1] : data.date || new Date().toISOString().split("T")[0];
 
-    // imageTypeをランダムに割り当て
-    const imageTypes = ["green", "orange", "black"];
-    const imageType = imageTypes[Math.floor(Math.random() * imageTypes.length)];
-
     return {
       id,
       title: data.title || slug,
       description: data.description || content.substring(0, 100) + "...",
       date,
       content,
-      imageType,
+      image: data.image || undefined,
       tags: data.topics || data.tags || [],
       type: "blog",
     };

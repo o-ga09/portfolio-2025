@@ -5,9 +5,28 @@ import { getPostById, getAllPosts } from "@/lib/blog-data";
 import { generateBlogPostMetadata } from "@/lib/metadata";
 import Header from "@/components/section/header";
 import Footer from "@/components/section/footer";
+import BlogToc from "@/components/section/blog-toc";
+import BlogShare from "@/components/section/blog-share";
 import Link from "next/link";
+import { Github } from "lucide-react";
 import markdownToHtml from "zenn-markdown-html";
 import { buildLinkCardMap, renderLinkCard } from "@/lib/link-card";
+import { renderSocialEmbed } from "@/lib/social-embed";
+import { extractGithubAlerts, renderGithubAlerts } from "@/lib/github-alert";
+import { extractHeadings } from "@/lib/toc";
+
+const GITHUB_REPO_URL = "https://github.com/o-ga09/portfolio-2025";
+const APP_URL = process.env.NEXT_PUBLIC_FRONT_URL || "http://localhost:3000";
+
+// ブログ記事の修正を提案するGitHub Issue作成URLを生成する
+function buildEditProposalUrl(post: { title: string; date: string }, id: string): string {
+  const blogUrl = `${APP_URL}/blog/${id}`;
+  const title = `記事「${post.title}」の修正提案`;
+  const body = [`対象記事: ${blogUrl}`, `投稿日: ${post.date}`, "", "## 修正内容", ""].join("\n");
+
+  const params = new URLSearchParams({ title, body });
+  return `${GITHUB_REPO_URL}/issues/new?${params.toString()}`;
+}
 
 // 静的パスを生成
 export async function generateStaticParams() {
@@ -48,84 +67,99 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
   // Zennマークダウンを使用してHTML変換
   // 単独行のURLはリンクカード化するため、事前にOGP情報を取得しておく
   const linkCardMap = post.content ? await buildLinkCardMap(post.content) : new Map();
-  const contentHtml = post.content
-    ? markdownToHtml(post.content, {
-        customEmbed: {
-          card: (url: string) => renderLinkCard(url, linkCardMap.get(url) ?? null),
-        },
-      })
-    : "<p>この記事にはコンテンツがありません。</p>";
+  const markdownOptions = {
+    customEmbed: {
+      // 単独行のURLは、X/Instagram/TikTok/YouTube Shortsであれば埋め込みプレイヤーに、
+      // それ以外はOGP情報を使ったリンクカードに変換する
+      card: (url: string) =>
+        renderSocialEmbed(url) ?? renderLinkCard(url, linkCardMap.get(url) ?? null),
+      // X(Twitter)の投稿URLはzenn-markdown-html側でtweet埋め込み用に判定されるため、
+      // 通常のcardではなくtweetのカスタム埋め込みとして処理する
+      tweet: (url: string) =>
+        renderSocialEmbed(url) ??
+        `<a href="${url}" rel="noreferrer noopener nofollow" target="_blank">${url}</a>`,
+    },
+  };
+  let contentHtml = "<p>この記事にはコンテンツがありません。</p>";
+  if (post.content) {
+    // GitHubのNote記法(`> [!NOTE]`等)はzenn-markdown-htmlが解釈できないため、
+    // 該当ブロッククォートをプレースホルダーに退避してから変換し、変換後のHTMLに
+    // alert表示用のマークアップを差し戻す。
+    const { markdown, alerts } = extractGithubAlerts(post.content);
+    contentHtml = markdownToHtml(markdown, markdownOptions);
+    if (alerts.size > 0) {
+      contentHtml = renderGithubAlerts(contentHtml, alerts, (body) =>
+        markdownToHtml(body, markdownOptions),
+      );
+    }
+  }
+  const headings = extractHeadings(contentHtml);
+  const postUrl = `${APP_URL}/blog/${id}`;
 
   return (
     <main className="min-h-screen bg-background flex flex-col">
       <Header />
-      <div className="flex-grow container max-w-3xl mx-auto px-4 py-8">
-        <article>
-          <div className="mb-8">
-            {/* ブログ画像部分 - viewTransitionで対応するためのイメージ要素 */}
-            <div
-              className="h-64 bg-card flex items-center justify-center mb-8 rounded-xl overflow-hidden shadow-lg transform-gpu"
-              style={{ viewTransitionName: `blog-image-${id}` }}
-            >
-              {post.imageType === "green" && (
-                <div className="w-48 h-36 relative">
-                  <div className="absolute inset-0 bg-green-200 rounded-t-3xl"></div>
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-40 h-24 bg-white rounded-full"></div>
-                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-36 h-18 bg-pink-100 rounded-full"></div>
-                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-12 bg-pink-200 rounded-full"></div>
-                </div>
-              )}
-              {post.imageType === "orange" && (
-                <div className="w-48 h-48 relative">
-                  <div className="absolute inset-0 bg-orange-400 rounded-full"></div>
-                  <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-40 h-6 bg-orange-300 rounded-full"></div>
-                  <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-36 h-4 bg-green-400 rounded-full"></div>
-                  <div className="absolute top-18 left-1/2 transform -translate-x-1/2 w-32 h-12 bg-amber-800 rounded-full"></div>
-                  <div className="absolute top-24 left-1/2 transform -translate-x-1/2 w-28 h-8 bg-yellow-300 rounded-full"></div>
-                  <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 w-36 h-10 bg-orange-300 rounded-full"></div>
-                </div>
-              )}
-              {post.imageType === "black" && (
-                <div className="w-48 h-48 relative">
-                  <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-36 h-24 bg-white rounded-t-full"></div>
-                  <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-black rounded-full"></div>
-                  <div className="absolute bottom-18 right-12 w-6 h-6 bg-red-500 rounded-full"></div>
-                  <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 w-24 h-12 bg-gray-800 rounded-full"></div>
-                  <div className="absolute bottom-30 left-1/2 transform -translate-x-1/2 w-16 h-8 bg-orange-400 rounded-full"></div>
-                </div>
-              )}
+      <div className="flex-grow container max-w-5xl mx-auto px-4 py-8">
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_260px] lg:gap-12">
+          <article className="max-w-3xl">
+            <div className="mb-8">
+              {/* ブログ画像部分 - viewTransitionで対応するためのイメージ要素 */}
+              <div
+                className="h-64 relative mb-8 rounded-xl overflow-hidden shadow-lg transform-gpu"
+                style={{ viewTransitionName: `blog-image-${id}` }}
+              >
+                {post.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element -- 任意のURLを許容するためnext/imageのドメイン許可設定を回避する
+                  <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600" />
+                )}
+              </div>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {post.tags.map((tag) => (
+                  <Link
+                    key={tag}
+                    href={`/tags/${tag.toLowerCase()}`}
+                    className="bg-secondary/50 text-secondary-foreground hover:bg-secondary text-xs px-2 py-1 rounded transition-colors"
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </div>
+              <h1
+                className="text-4xl font-bold mb-4 border-b border-border pb-4 text-gray-900 dark:text-white"
+                style={{ viewTransitionName: `blog-title-${id}` }}
+              >
+                {post.title}
+              </h1>
+              <time dateTime={post.date} className="text-muted-foreground">
+                {post.date}
+              </time>
             </div>
 
-            <div className="flex flex-wrap gap-2 mb-4">
-              {post.tags.map((tag) => (
-                <Link
-                  key={tag}
-                  href={`/tags/${tag.toLowerCase()}`}
-                  className="bg-secondary/50 text-secondary-foreground hover:bg-secondary text-xs px-2 py-1 rounded transition-colors"
-                >
-                  {tag}
-                </Link>
-              ))}
+            <div className="znc" dangerouslySetInnerHTML={{ __html: contentHtml }} />
+
+            <div className="mt-12 pt-8 border-t border-border mb-8 flex flex-wrap gap-4">
+              <Button asChild>
+                <Link href="/blog">← ブログ一覧に戻る</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <a href={buildEditProposalUrl(post, id)} target="_blank" rel="noopener noreferrer">
+                  <Github className="w-4 h-4" />
+                  GitHubで修正を提案
+                </a>
+              </Button>
             </div>
-            <h1
-              className="text-4xl font-bold mb-4 border-b border-border pb-4 text-gray-900 dark:text-white"
-              style={{ viewTransitionName: `blog-title-${id}` }}
-            >
-              {post.title}
-            </h1>
-            <time dateTime={post.date} className="text-muted-foreground">
-              {post.date}
-            </time>
-          </div>
+          </article>
 
-          <div className="znc" dangerouslySetInnerHTML={{ __html: contentHtml }} />
-
-          <div className="mt-12 pt-8 border-t border-border mb-8">
-            <Button asChild>
-              <Link href="/blog">← ブログ一覧に戻る</Link>
-            </Button>
-          </div>
-        </article>
+          <aside className="hidden lg:block">
+            <div className="lg:sticky lg:top-8 space-y-6">
+              <BlogShare url={postUrl} title={post.title} />
+              <BlogToc items={headings} />
+            </div>
+          </aside>
+        </div>
       </div>
       <Footer />
     </main>
