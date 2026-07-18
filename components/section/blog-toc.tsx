@@ -31,7 +31,25 @@ export default function BlogToc({ items }: { items: TocItem[] }) {
 
     headingElements.forEach((el) => observer.observe(el));
 
-    return () => observer.disconnect();
+    // ページ最下部までスクロールした場合、末尾の見出しが監視領域
+    // （画面上部30%以内）を通過済みでIntersectionObserverが検知
+    // できないことがあるため、最下部到達を明示的に検知して補完する。
+    const lastId = items[items.length - 1]?.id;
+    const handleScroll = () => {
+      if (!lastId) return;
+      const scrolledToBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (scrolledToBottom) {
+        setActiveId(lastId);
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [items]);
 
   if (items.length === 0) return null;
