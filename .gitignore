@@ -48,3 +48,8 @@ next-env.d.ts
 /public/posts.json
 
 screenshots/
+
+# admin dashboard (separate Vite app)
+admin/node_modules
+admin/dist
+admin/.wrangler

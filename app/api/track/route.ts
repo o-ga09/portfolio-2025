@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
-import { getPageStats } from "@/lib/pageviews";
 
 const MAX_PATH_LENGTH = 512;
 
@@ -32,13 +31,6 @@ async function hashVisitor(ip: string, userAgent: string, day: string): Promise<
   return Array.from(new Uint8Array(digest))
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
-}
-
-export async function GET(request: NextRequest) {
-  const year = request.nextUrl.searchParams.get("year") ?? undefined;
-  const pages = await getPageStats(year);
-
-  return NextResponse.json({ pages });
 }
 
 export async function POST(request: NextRequest) {
