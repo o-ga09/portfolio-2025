@@ -47,8 +47,8 @@ export function Pages() {
         </div>
       )}
 
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
-        <table className="w-full text-left">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-x-auto">
+        <table className="w-full text-left min-w-[480px]">
           <thead>
             <tr className="border-b border-gray-200 dark:border-gray-800 text-sm text-gray-500 dark:text-gray-400">
               <th className="px-4 py-3">パス</th>
