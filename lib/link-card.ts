@@ -1,4 +1,5 @@
 import "server-only";
+import { isSocialEmbedUrl } from "./social-embed";
 
 const OGP_FETCH_TIMEOUT_MS = 5000;
 
@@ -104,7 +105,9 @@ export async function fetchOgp(url: string): Promise<OgpData | null> {
 }
 
 export async function buildLinkCardMap(markdown: string): Promise<Map<string, OgpData | null>> {
-  const urls = extractStandaloneUrls(markdown);
+  // X/Instagram/TikTok/YouTube ShortsのURLは埋め込みプレイヤーとして描画され
+  // OGP情報を使わないため、OGP取得の対象から除外する。
+  const urls = extractStandaloneUrls(markdown).filter((url) => !isSocialEmbedUrl(url));
   const entries = await Promise.all(urls.map(async (url) => [url, await fetchOgp(url)] as const));
   return new Map(entries);
 }

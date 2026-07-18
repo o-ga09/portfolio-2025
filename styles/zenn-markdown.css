@@ -458,3 +458,36 @@
     flex-basis: 88px;
   }
 }
+
+.znc .embed-block {
+  display: block;
+  margin: 1.5rem auto;
+}
+
+.znc .embed-block iframe {
+  display: block;
+  max-width: 100%;
+}
+
+.znc .embed-youtube {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.znc .embed-youtube iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.znc .embed-tweet {
+  max-width: 550px;
+}
+
+.znc .embed-instagram,
+.znc .embed-tiktok {
+  display: flex;
+  justify-content: center;
+}
