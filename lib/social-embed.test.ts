@@ -2,19 +2,12 @@ import { describe, it, expect } from "vitest";
 import { renderSocialEmbed, isSocialEmbedUrl } from "./social-embed";
 
 describe("renderSocialEmbed", () => {
-  it("embeds an X (twitter.com) status URL via twitframe", () => {
-    const url = "https://twitter.com/jack/status/20";
-    const html = renderSocialEmbed(url);
-
-    expect(html).toContain('class="embed-block embed-tweet"');
-    expect(html).toContain("https://twitframe.com/show?url=");
-    expect(html).toContain(encodeURIComponent(url));
+  it("returns null for a twitter.com status URL (twitframe.com embedding was removed)", () => {
+    expect(renderSocialEmbed("https://twitter.com/jack/status/20")).toBeNull();
   });
 
-  it("embeds an x.com status URL", () => {
-    const html = renderSocialEmbed("https://x.com/jack/status/20");
-
-    expect(html).toContain('class="embed-block embed-tweet"');
+  it("returns null for an x.com status URL (twitframe.com embedding was removed)", () => {
+    expect(renderSocialEmbed("https://x.com/jack/status/20")).toBeNull();
   });
 
   it("embeds an Instagram post URL", () => {
