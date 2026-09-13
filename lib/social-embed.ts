@@ -12,8 +12,10 @@
 // X(Twitter)投稿の埋め込みは、以前はtwitframe.com経由のiframeで行っていたが、
 // twitframe.comのドメインが第三者に渡り無関係なドメインへ301リダイレクトされる
 // ようになったことを確認したため廃止した(素性不明のiframeを読み込む状態になっていた)。
-// X投稿URLはOGPリンクカード化の対象からは引き続き除外しつつ(isSocialEmbedUrl)、
-// 埋め込み自体は行わずcustomEmbed.tweetのフォールバック(プレーンリンク)に委ねる。
+// 代わりにX公式のツイート埋め込み記法(publish.twitter.comが生成するものと同形式の
+// <blockquote class="twitter-tweet">)を使う。実際の埋め込み表示への変換はX公式ドメイン
+// (https://platform.twitter.com/widgets.js)から読み込むスクリプトが行うため、
+// widgets.jsをページ側(app/blog/[id]/page.tsx)で読み込む必要がある。
 
 const TWEET_URL_REGEX = /^https:\/\/(?:twitter|x)\.com\/[a-zA-Z0-9_-]+\/status\/\d+/;
 const INSTAGRAM_URL_REGEX = /^https:\/\/(?:www\.)?instagram\.com\/(p|reel|tv)\/([a-zA-Z0-9_-]+)/;
@@ -51,16 +53,21 @@ function renderTiktokEmbed(videoId: string): string {
   );
 }
 
-function isTweetUrl(url: string): boolean {
-  return TWEET_URL_REGEX.test(url);
+function renderTweetEmbed(url: string): string {
+  // publish.twitter.comが生成する埋め込みコードと同形式。中身のURLリンクは
+  // widgets.js読み込み前のフォールバック表示(プレーンリンク)としても機能する。
+  return (
+    `<span class="embed-block embed-tweet">` +
+    `<blockquote class="twitter-tweet">` +
+    `<a href="${escapeAttribute(url)}"></a>` +
+    `</blockquote></span>`
+  );
 }
 
-// URLがInstagram/TikTok/YouTube Shortsのいずれかに一致すれば埋め込みHTMLを返す。
-// X(Twitter)投稿URLはtwitframe.com廃止のため埋め込みを行わずnullを返す
-// (呼び出し側のcustomEmbed.tweetがプレーンリンクにフォールバックする)。
-// それ以外の一致しないURLもnullを返し、呼び出し側で通常のリンクカード等にフォールバックする。
+// URLがX/Instagram/TikTok/YouTube Shortsのいずれかに一致すれば埋め込みHTMLを返す。
+// 一致しなければnullを返し、呼び出し側で通常のリンクカード等にフォールバックする。
 export function renderSocialEmbed(url: string): string | null {
-  if (isTweetUrl(url)) return null;
+  if (TWEET_URL_REGEX.test(url)) return renderTweetEmbed(url);
 
   const instagramMatch = url.match(INSTAGRAM_URL_REGEX);
   if (instagramMatch) return renderInstagramEmbed(instagramMatch[1], instagramMatch[2]);
@@ -74,8 +81,6 @@ export function renderSocialEmbed(url: string): string | null {
   return null;
 }
 
-// X投稿URLは埋め込み自体は行わないが、OGPリンクカード化の対象からは除外したい
-// (どうせcustomEmbed.tweet側で処理されカード化されないOGP取得が無駄になるため)。
 export function isSocialEmbedUrl(url: string): boolean {
-  return isTweetUrl(url) || renderSocialEmbed(url) !== null;
+  return renderSocialEmbed(url) !== null;
 }

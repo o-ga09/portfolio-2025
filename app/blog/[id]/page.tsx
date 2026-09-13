@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Script from "next/script";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { getPostById, getAllPosts } from "@/lib/blog-data";
@@ -95,6 +96,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
   }
   const headings = extractHeadings(contentHtml);
   const postUrl = `${APP_URL}/blog/${id}`;
+  // X投稿の埋め込み(customEmbed.tweetが生成するblockquote)が含まれる場合のみ、
+  // X公式の埋め込みスクリプトを読み込んでツイート表示に変換する
+  const hasTweetEmbed = contentHtml.includes('class="twitter-tweet"');
 
   return (
     <main className="min-h-screen bg-background flex flex-col">
@@ -162,6 +166,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
         </div>
       </div>
       <Footer />
+      {hasTweetEmbed && (
+        <Script src="https://platform.twitter.com/widgets.js" strategy="lazyOnload" />
+      )}
     </main>
   );
 }
