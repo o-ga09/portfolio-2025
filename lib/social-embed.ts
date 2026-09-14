@@ -8,6 +8,14 @@
 // にディスパッチする。tweetとyoutube(通常URL)はzenn側の判定・呼び出しに乗るため、
 // ここではHTML生成のみを担当する。Instagram・TikTok・YouTube Shorts はzenn側に
 // 判定ロジックがないため、URL判定もこのモジュールで行い customEmbed.card から呼び出す。
+//
+// X(Twitter)投稿の埋め込みは、以前はtwitframe.com経由のiframeで行っていたが、
+// twitframe.comのドメインが第三者に渡り無関係なドメインへ301リダイレクトされる
+// ようになったことを確認したため廃止した(素性不明のiframeを読み込む状態になっていた)。
+// 代わりにX公式のツイート埋め込み記法(publish.twitter.comが生成するものと同形式の
+// <blockquote class="twitter-tweet">)を使う。実際の埋め込み表示への変換はX公式ドメイン
+// (https://platform.twitter.com/widgets.js)から読み込むスクリプトが行うため、
+// widgets.jsをページ側(app/blog/[id]/page.tsx)で読み込む必要がある。
 
 const TWEET_URL_REGEX = /^https:\/\/(?:twitter|x)\.com\/[a-zA-Z0-9_-]+\/status\/\d+/;
 const INSTAGRAM_URL_REGEX = /^https:\/\/(?:www\.)?instagram\.com\/(p|reel|tv)\/([a-zA-Z0-9_-]+)/;
@@ -24,17 +32,6 @@ function renderYoutubeEmbed(videoId: string): string {
     `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}" ` +
     `allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ` +
     `allowfullscreen loading="lazy"></iframe></span>`
-  );
-}
-
-function renderTweetEmbed(url: string): string {
-  // Twitter/XはウィジェットJSなしで単体のiframe埋め込みができないため、
-  // 静的サイトの埋め込みに広く使われているtwitframe.com経由でレンダリングする。
-  const src = `https://twitframe.com/show?url=${encodeURIComponent(url)}`;
-  return (
-    `<span class="embed-block embed-tweet">` +
-    `<iframe src="${escapeAttribute(src)}" style="width:100%;height:600px;border:none;overflow:hidden" ` +
-    `scrolling="no" frameborder="0" loading="lazy"></iframe></span>`
   );
 }
 
@@ -56,11 +53,21 @@ function renderTiktokEmbed(videoId: string): string {
   );
 }
 
+function renderTweetEmbed(url: string): string {
+  // publish.twitter.comが生成する埋め込みコードと同形式。中身のURLリンクは
+  // widgets.js読み込み前のフォールバック表示(プレーンリンク)としても機能する。
+  return (
+    `<span class="embed-block embed-tweet">` +
+    `<blockquote class="twitter-tweet">` +
+    `<a href="${escapeAttribute(url)}"></a>` +
+    `</blockquote></span>`
+  );
+}
+
 // URLがX/Instagram/TikTok/YouTube Shortsのいずれかに一致すれば埋め込みHTMLを返す。
 // 一致しなければnullを返し、呼び出し側で通常のリンクカード等にフォールバックする。
 export function renderSocialEmbed(url: string): string | null {
-  const tweetMatch = TWEET_URL_REGEX.test(url);
-  if (tweetMatch) return renderTweetEmbed(url);
+  if (TWEET_URL_REGEX.test(url)) return renderTweetEmbed(url);
 
   const instagramMatch = url.match(INSTAGRAM_URL_REGEX);
   if (instagramMatch) return renderInstagramEmbed(instagramMatch[1], instagramMatch[2]);

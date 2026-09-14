@@ -2,19 +2,20 @@ import { describe, it, expect } from "vitest";
 import { renderSocialEmbed, isSocialEmbedUrl } from "./social-embed";
 
 describe("renderSocialEmbed", () => {
-  it("embeds an X (twitter.com) status URL via twitframe", () => {
+  it("embeds a twitter.com status URL via the official twitter-tweet blockquote", () => {
     const url = "https://twitter.com/jack/status/20";
     const html = renderSocialEmbed(url);
 
     expect(html).toContain('class="embed-block embed-tweet"');
-    expect(html).toContain("https://twitframe.com/show?url=");
-    expect(html).toContain(encodeURIComponent(url));
+    expect(html).toContain('class="twitter-tweet"');
+    expect(html).toContain(`<a href="${url}">`);
+    expect(html).not.toContain("twitframe.com");
   });
 
-  it("embeds an x.com status URL", () => {
+  it("embeds an x.com status URL via the official twitter-tweet blockquote", () => {
     const html = renderSocialEmbed("https://x.com/jack/status/20");
 
-    expect(html).toContain('class="embed-block embed-tweet"');
+    expect(html).toContain('class="twitter-tweet"');
   });
 
   it("embeds an Instagram post URL", () => {
